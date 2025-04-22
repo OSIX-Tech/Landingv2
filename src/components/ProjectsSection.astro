@@ -1,0 +1,51 @@
+---
+import ProjectCard from './ProjectCard.astro';
+
+const featuredProjects = [
+  {
+    title: 'Web Opills',
+    category: 'Desarrollo Web',
+    imageUrl: '/opills.png',
+    projectUrl: 'https://opills.app'  },
+  {
+    title: 'Paso de Informatica',
+    category: 'Desarrollo Web',
+    imageUrl: '/pasoinfo.jpg',
+    projectUrl: 'https://pasoinfousc.com/index.html'
+  },
+  {
+    title: 'Web Shearn',
+    category: 'Diseño Web',
+    imageUrl: '/shearn.jpg',
+    projectUrl: 'https://shearn-agent-local.vercel.app/ '
+  }
+];
+---
+
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Proyectos Destacados</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Explora algunos de nuestros trabajos recientes y descubre cómo hemos ayudado a nuestros clientes a alcanzar sus objetivos.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      {featuredProjects.map(project => (
+        <ProjectCard
+          title={project.title}
+          category={project.category}
+          imageUrl={project.imageUrl}
+          projectUrl={project.projectUrl}
+        />
+      ))}
+    </div>
+    
+    <div class="mt-12 text-center">
+      <a href="/projects" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+        Ver todos los proyectos
+      </a>
+    </div>
+  </div>
+</section>

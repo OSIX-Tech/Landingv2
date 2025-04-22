@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Estilos adicionales para elementos globales */
+::selection {
+  background-color: #2563eb; /* blue-600 */
+  color: white;
+}
+
+/* Personalizaciones de elementos de formulario que Tailwind no cubre completamente */
+input:focus, 
+textarea:focus, 
+select:focus {
+  outline: none;
+}
+
+/* Animaciones personalizadas */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-in-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Clases de utilidad personalizadas */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Estilos específicos para secciones */
+.section {
+  padding: 5rem 0;
+}
+
+.section-title {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+/* Estilos para el hero section */
+.hero-gradient {
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+}
+
+/* Mejoras de accesibilidad */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #2563eb;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Media queries para ajustes responsive más allá de Tailwind */
+@media (max-width: 640px) {
+  .section {
+    padding: 3rem 0;
+  }
+}
+
+/* Personalizaciones para el tema oscuro si decides implementarlo */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-support {
+    background-color: #1e293b;
+    color: #f8fafc;
+  }
+}
+
+/* Estilos de los proyectos */
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.05);
+}
+
+/* Estilos para el loader */
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #2563eb;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos para las imágenes con aspecto ratio */
+.aspect-ratio-box {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.aspect-ratio-box-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+[id] {
+  scroll-margin-top: 8rem;
+}
