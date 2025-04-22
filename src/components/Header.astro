@@ -10,55 +10,97 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="bg-white shadow-md sticky top-0 z-50">
-  <div class="container mx-auto px-4 sm:px-6 py-4 md:py-5 flex justify-between items-center">
-    <a href="/" class="group flex items-center">
-      <span class="text-2xl md:text-3xl font-bold relative">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-800">OS</span><span class="text-blue-600 relative">IX</span>
-        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 transform origin-left transition-all duration-300 scale-x-0 group-hover:scale-x-100"></span>
-      </span>
+<header class="bg-[#121212] shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-4 sm:px-6 py-3 md:py-4 flex justify-between items-center">
+    <a href="/" class="group relative flex items-center">
+      <!-- Contenedor del logo con hexágono más grande -->
+      <div class="relative h-20 w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 flex items-center justify-center">
+        <!-- Hexágono base (siempre visible) -->
+        <svg 
+          viewBox="0 0 100 100"
+          class="absolute inset-0 w-full h-full scale-125 transition-all duration-300"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <polygon 
+            points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" 
+            fill="none"
+            stroke="#333333"
+            stroke-width="2"
+            opacity="0.4"
+          />
+        </svg>
+        
+        <!-- Hexágono animado por segmentos -->
+        <svg 
+          viewBox="0 0 100 100"
+          class="absolute inset-0 w-full h-full transition-all scale-125 duration-300 ease-out hexagon-draw group-hover:opacity-100 opacity-0"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <polygon 
+            points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" 
+            fill="none"
+            stroke="#CD1C18"
+            stroke-width="2"
+            class="hexagon-path"
+          />
+        </svg>
+
+        <!-- Logo mucho más grande -->
+        <img 
+          src="/logo.png" 
+          alt="OSIX logo" 
+          class="relative z-20 h-14 md:h-16 lg:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          onerror="this.src='/api/placeholder/150/150'; this.alt='OSIX'"
+        />
+      </div>
+      
     </a>
     
+
+
     <!-- Menú para móvil -->
     <div class="md:hidden">
-      <button id="menu-toggle" class="text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2.5 rounded-md" aria-label="Abrir menú">
+      <button id="menu-toggle" class="text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#CD1C18] p-2.5 rounded-md" aria-label="Abrir menú">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
-    
+
     <!-- Menú para pantallas medianas y grandes -->
     <nav class="hidden md:flex items-center space-x-1 lg:space-x-8">
       {navItems.map(item => {
         const isActive = currentPath === item.href || 
                          (item.href !== '/' && currentPath.startsWith(item.href));
         return (
-          <a
-            href={item.href}
-            class={`font-medium px-3 py-2 rounded-md transition-colors ${
-              isActive 
-                ? 'text-blue-600 bg-blue-50' 
-                : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-            }`}
-          >
-            {item.label}
-          </a>
+        <a
+  href={item.href}
+  class={`group relative font-medium px-3 py-2 rounded-md transition-colors ${
+    isActive
+      ? 'text-[#CD1C18]'
+      : 'text-gray-300 hover:text-[#CD1C18]'
+  }`}
+>
+  <span class="relative">
+    {item.label}
+    <span class="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[#CD1C18] transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
+  </span>
+</a>
         );
       })}
       <a
         href="/contact"
-        class={`ml-2 bg-blue-600 text-white px-5 py-2.5 rounded-md hover:bg-blue-700 transition-colors font-medium shadow-sm ${
-          currentPath === '/contact' ? 'ring-4 ring-blue-100' : ''
+        class={`ml-2 bg-[#CD1C18] text-white px-5 py-2.5 rounded-md hover:bg-[#A51713] transition-colors font-medium shadow-sm ${
+          currentPath === '/contact' ? 'ring-4 ring-red-900' : ''
         }`}
       >
         Contáctanos
       </a>
     </nav>
   </div>
-  
+
   <!-- Menú móvil desplegable -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg fixed left-0 right-0 z-40 transition-all duration-300 ease-in-out">
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800 shadow-lg fixed left-0 right-0 z-40 transition-all duration-300 ease-in-out">
     <div class="px-4 py-3">
       <nav class="flex flex-col space-y-2">
         {navItems.map(item => {
@@ -69,8 +111,8 @@ const currentPath = Astro.url.pathname;
               href={item.href}
               class={`py-3 px-4 rounded-md transition-colors text-lg ${
                 isActive 
-                  ? 'text-blue-600 bg-blue-50 font-medium' 
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                  ? 'text-[#CD1C18] bg-gray-800 font-medium' 
+                  : 'text-gray-300 hover:text-[#CD1C18] hover:bg-gray-800'
               }`}
             >
               {item.label}
@@ -79,7 +121,7 @@ const currentPath = Astro.url.pathname;
         })}
         <a
           href="/contact"
-          class="mt-2 bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors text-center font-medium text-lg"
+          class="mt-2 bg-[#CD1C18] text-white py-3 px-4 rounded-md hover:bg-[#A51713] transition-colors text-center font-medium text-lg"
         >
           Contáctanos
         </a>
@@ -95,20 +137,14 @@ const currentPath = Astro.url.pathname;
     const mobileMenu = document.getElementById('mobile-menu');
     const body = document.body;
     let isMenuOpen = false;
-    
+
     if (menuToggle && mobileMenu) {
-      // Función para abrir el menú
       const openMenu = () => {
         mobileMenu.classList.remove('hidden');
-        body.classList.add('overflow-hidden'); // Previene scroll
+        body.classList.add('overflow-hidden');
         isMenuOpen = true;
-        
-        // Dar tiempo para que se aplique la transición
         setTimeout(() => {
-          mobileMenu.classList.add('opacity-100');
-          mobileMenu.classList.add('max-h-screen');
-          
-          // Cambia el ícono del botón a X
+          mobileMenu.classList.add('opacity-100', 'max-h-screen');
           const menuIcon = menuToggle.querySelector('svg');
           if (menuIcon) {
             menuIcon.innerHTML = `
@@ -117,53 +153,39 @@ const currentPath = Astro.url.pathname;
           }
         }, 10);
       };
-      
-      // Función para cerrar el menú
+
       const closeMenu = () => {
-        mobileMenu.classList.remove('opacity-100');
-        mobileMenu.classList.remove('max-h-screen');
+        mobileMenu.classList.remove('opacity-100', 'max-h-screen');
         isMenuOpen = false;
-        
-        // Cambia el ícono de vuelta a hamburguesa
         const menuIcon = menuToggle.querySelector('svg');
         if (menuIcon) {
           menuIcon.innerHTML = `
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           `;
         }
-        
-        // Esperar a que termine la transición antes de ocultar
         setTimeout(() => {
           mobileMenu.classList.add('hidden');
           body.classList.remove('overflow-hidden');
         }, 300);
       };
-      
-      // Toggle del menú
+
       menuToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (isMenuOpen) {
-          closeMenu();
-        } else {
-          openMenu();
-        }
+        isMenuOpen ? closeMenu() : openMenu();
       });
-      
-      // Cerrar el menú al hacer clic en cualquier enlace
+
       mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
           closeMenu();
         });
       });
-      
-      // Cerrar el menú cuando se hace clic fuera de él
+
       document.addEventListener('click', (event) => {
         if (isMenuOpen && !menuToggle.contains(event.target) && !mobileMenu.contains(event.target)) {
           closeMenu();
         }
       });
-      
-      // Cerrar el menú cuando se presiona ESC
+
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && isMenuOpen) {
           closeMenu();
@@ -174,7 +196,6 @@ const currentPath = Astro.url.pathname;
 </script>
 
 <style>
-  /* Estilos para animar el menú móvil */
   #mobile-menu {
     max-height: 0;
     opacity: 0;
@@ -182,13 +203,12 @@ const currentPath = Astro.url.pathname;
     transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
-  
+
   #mobile-menu.max-h-screen {
     max-height: 100vh;
     opacity: 1;
   }
-  
-  /* Mejoras para dispositivos táctiles */
+
   @media (hover: none) {
     #mobile-menu a {
       padding-top: 0.875rem;
@@ -196,10 +216,32 @@ const currentPath = Astro.url.pathname;
     }
   }
 
-  /* Estilos adicionales para el título */
   @keyframes subtle-fade {
     0% { opacity: 0.8; }
     50% { opacity: 1; }
     100% { opacity: 0.8; }
   }
+  /* Estilo para la animación del hexágono */
+  .hexagon-path {
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+    transition: stroke-dashoffset 0s;
+  }
+  
+  .group:hover .hexagon-path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.5s ease-in-out;
+  }
+  
+  /* Para controlar la visibilidad */
+  .hexagon-draw {
+    visibility: hidden;
+  }
+  
+  .group:hover .hexagon-draw {
+    visibility: visible;
+  }
+
+
+
 </style>

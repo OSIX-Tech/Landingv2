@@ -4,30 +4,85 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos base */
+:root {
+  --primary: #CD1C18;
+  --primary-dark: #A51713;
+  --primary-light: #E84844;
+  --black: #121212;
+  --dark-gray: #1E1E1E;
+  --light-gray: #F5F5F5;
+}
+
+/* ---------- Base ---------- */
 html {
   scroll-behavior: smooth;
+  font-size: 100%; /* facilita el uso de rem */
 }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
+  background-color: var(--light-gray);
+  color: var(--black);
+  line-height: 1.6;
 }
 
-/* Estilos adicionales para elementos globales */
-::selection {
-  background-color: #2563eb; /* blue-600 */
-  color: white;
+/* ---------- OSIX Utility Classes ---------- */
+.osix-primary {
+  color: var(--primary);
 }
 
-/* Personalizaciones de elementos de formulario que Tailwind no cubre completamente */
-input:focus, 
-textarea:focus, 
-select:focus {
-  outline: none;
+.osix-primary-bg {
+  background-color: var(--primary);
 }
 
-/* Animaciones personalizadas */
+.osix-gradient {
+  background: linear-gradient(to right, var(--primary), var(--primary-dark));
+}
+
+.osix-gradient-dark {
+  background: linear-gradient(to right, var(--primary-dark), var(--black));
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  @apply bg-[#CD1C18] text-white hover:bg-[#A51713] transition-colors font-medium shadow-md px-6 py-2 rounded-md;
+}
+
+.btn-secondary {
+  @apply border-2 border-[#CD1C18] text-[#CD1C18] hover:bg-[#CD1C18] hover:text-white transition-colors font-medium px-6 py-2 rounded-md;
+}
+
+/* ---------- Typography & Layout ---------- */
+.section-title {
+  @apply text-3xl sm:text-4xl font-bold mb-6 text-[#121212] text-center sm:text-left;
+}
+
+.accent-line {
+  @apply w-20 h-1.5 bg-[#CD1C18] mb-8 rounded-full mx-auto sm:mx-0;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 1.875rem; /* 30px */
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero-gradient {
+  background: linear-gradient(to right, #CD1C18, #A51713);
+}
+
+/* ---------- Animations ---------- */
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -46,60 +101,23 @@ select:focus {
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Clases de utilidad personalizadas */
-.container {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Estilos específicos para secciones */
-.section {
-  padding: 5rem 0;
-}
-
-.section-title {
-  margin-bottom: 2.5rem;
-  text-align: center;
-}
-
-/* Estilos para el hero section */
-.hero-gradient {
-  background: linear-gradient(to right, #2563eb, #4f46e5);
-}
-
-/* Mejoras de accesibilidad */
+/* ---------- Accessibility ---------- */
 .skip-link {
   position: absolute;
   top: -40px;
   left: 0;
-  background: #2563eb;
+  background: #CD1C18;
   color: white;
   padding: 8px;
   z-index: 100;
+  font-weight: 600;
 }
 
 .skip-link:focus {
   top: 0;
 }
 
-/* Media queries para ajustes responsive más allá de Tailwind */
-@media (max-width: 640px) {
-  .section {
-    padding: 3rem 0;
-  }
-}
-
-/* Personalizaciones para el tema oscuro si decides implementarlo */
-@media (prefers-color-scheme: dark) {
-  .dark-mode-support {
-    background-color: #1e293b;
-    color: #f8fafc;
-  }
-}
-
-/* Estilos de los proyectos */
+/* ---------- Project Cards ---------- */
 .project-card:hover .project-overlay {
   opacity: 1;
 }
@@ -108,35 +126,34 @@ select:focus {
   transform: scale(1.05);
 }
 
-/* Estilos para el loader */
-.loader {
-  border: 4px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top: 4px solid #2563eb;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Estilos para las imágenes con aspecto ratio */
-.aspect-ratio-box {
-  position: relative;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-}
-
-.aspect-ratio-box-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* ---------- Scroll Adjustment ---------- */
 [id] {
   scroll-margin-top: 8rem;
+}
+
+/* ---------- Dark Mode ---------- */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-support {
+    background-color: var(--dark-gray);
+    color: var(--light-gray);
+  }
+}
+
+/* ---------- Extras para móvil ---------- */
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }

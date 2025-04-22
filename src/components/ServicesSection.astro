@@ -32,29 +32,29 @@ const services = [
 ];
 ---
 
-<section class="py-20 bg-white">
+<section class="py-20 bg-[#121212] text-white">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Nuestros Servicios</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">
+      <p class="text-gray-300 max-w-2xl mx-auto">
         Ofrecemos soluciones completas para todas tus necesidades digitales con un enfoque personalizado.
       </p>
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {services.map(service => (
-        <div class="bg-gray-50 p-8 rounded-lg hover:shadow-lg transition-shadow">
-          <div class="text-blue-600 mb-4">
+        <div class="bg-[#1A1A1A] p-8 rounded-lg hover:shadow-lg hover:shadow-[#CD1C18]/20 transition-shadow">
+          <div class="text-[#CD1C18] mb-4">
             <Fragment set:html={service.icon} />
           </div>
           <h3 class="text-xl font-semibold mb-3">{service.title}</h3>
-          <p class="text-gray-600">{service.description}</p>
+          <p class="text-gray-300">{service.description}</p>
         </div>
       ))}
     </div>
     
     <div class="mt-12 text-center">
-      <a href="/services" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+      <a href="/services" class="inline-block bg-[#CD1C18] text-white px-6 py-3 rounded-lg hover:bg-[#A51713] transition-colors shadow-md hover:shadow-red-500/30">
         Ver todos los servicios
       </a>
     </div>
