@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,21 +11,26 @@
   --black: #121212;
   --dark-gray: #1E1E1E;
   --light-gray: #F5F5F5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* ---------- Base ---------- */
 html {
+  font-family: 'Plus Jakarta Sans', sans-serif;  
+  font-weight: 800;
   scroll-behavior: smooth;
   font-size: 100%; /* facilita el uso de rem */
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;  
+  font-weight: 600;
   overflow-x: hidden;
   background-color: var(--light-gray);
   color: var(--black);
   line-height: 1.6;
 }
+
 
 /* ---------- OSIX Utility Classes ---------- */
 .osix-primary {
