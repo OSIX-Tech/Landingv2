@@ -1,216 +1,44 @@
 ---
-// Hero.astro - Versión minimalista que complementa el Header
+// Hero.astro - Fondo geométrico separado del header
 ---
-<section class="relative min-h-screen flex items-center bg-white overflow-hidden pt-24 font-sans">
-	<div class="absolute inset-0 z-0">
-  
-	  <!-- 5 hexágonos medianos-pequeños, baja opacidad, repartidos entre 1/3 y 1/4 del alto -->
-<!-- 1: arriba a 1/3, izquierda -->
-<div class="absolute top-1/3 left-8 w-40 h-40 opacity-5 animate-float-slow">
-	<img src="/logo_pre.svg" alt="" class="w-full h-full" />
-  </div>
-  
-  <!-- 2: arriba a 1/3, derecha -->
-  <div class="absolute top-1/3 right-8 w-36 h-36 opacity-10 animate-float-medium">
-	<img src="/logo_pre.svg" alt="" class="w-full h-full" />
-  </div>
-  
-  <!-- 3: abajo a 1/3, izquierda -->
-  <div class="absolute bottom-1/4 left-12 w-32 h-32 opacity-15 animate-float-fast">
-	<img src="/logo_pre.svg" alt="" class="w-full h-full" />
-  </div>
-  
-  <!-- 4: abajo a 1/3, derecha -->
-  <div class="absolute bottom-1/3 right-12 w-28 h-28 opacity-20 animate-float-medium-reverse">
-	<img src="/logo_pre.svg" alt="" class="w-full h-full" />
-  </div>
-  
-  <!-- 5: justo por encima de bottom-1/4, centrado horizontal -->
-  <div class="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 w-24 h-24 opacity-25 animate-float-slow-reverse">
-	<img src="/logo_pre.svg" alt="" class="w-full h-full" />
-  </div>
-  
-  
-	</div>
-	  
-	  <!-- Líneas decorativas -->
-	  <div class="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/5 to-transparent"></div>
-	  <div class="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-black/5 to-transparent"></div>
+<section class="relative min-h-screen flex items-center justify-center font-sans overflow-hidden">
+	<!-- Fondo geométrico empieza más abajo (por ejemplo: 5rem) -->
+	<div class="absolute inset-x-0 top-[5rem] bottom-0 z-0">
+	  <div class="absolute w-full h-full bg-black clip-bottom-left"></div>
+	  <div class="absolute w-full h-full bg-black clip-top-right"></div>
 	</div>
   
-	<div class="container mx-auto px-6 md:px-10 relative z-10">
-	  <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
-		<!-- Pequeño detalle visual hexagonal antes del título -->
-		<div class="mb-6 relative">
-		  <div class="w-16 h-16">
-			<svg viewBox="0 0 100 100" class="w-full h-full">
-			  <polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" fill="none" stroke="black" stroke-width="2" class="opacity-80"></polygon>
-			</svg>
-		  </div>
-		</div>
-		
-		<!-- Título principal con énfasis tipográfico y ligero degradado -->
-		<h1 class="text-5xl md:text-7xl font-light tracking-tight mb-4 leading-tight">
-		  Diseño que <span class="font-medium text-transparent bg-clip-text bg-gradient-to-r from-black to-black/70">inspira</span> innovación
-		</h1>
-		
-		<!-- Subtítulo con espaciado elegante -->
-		<p class="text-xl md:text-2xl text-black/60 font-light leading-relaxed max-w-3xl mx-auto mb-10 tracking-wide">
-		  Creamos experiencias digitales únicas que conectan con tu audiencia y elevan tu marca en el mundo digital.
-		</p>
-		
-		<!-- Botones de CTA con diseño limpio y consistente -->
-		<div class="flex flex-col sm:flex-row items-center gap-4 mt-4">
-		  <a href="/services" class="inline-flex items-center justify-center h-14 px-8 py-0 text-base font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105 group">
-			<span>Nuestros servicios</span>
-			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-			  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-			</svg>
-		  </a>
-		  <a href="/projects" class="inline-flex items-center justify-center h-14 px-8 py-0 text-base font-medium border border-black/10 bg-white text-black transition-all duration-300 rounded-full hover:border-black/30 hover:scale-105">
-			Ver proyectos
-		  </a>
-		</div>
-		
-		<!-- Clientes o logos minimalistas con motivo hexagonal -->
-		<div class="mt-20 flex flex-col items-center">
-		  <p class="text-sm text-black/40 mb-8 uppercase tracking-widest">Confían en nosotros</p>
-		  <div class="flex flex-wrap justify-center gap-10 md:gap-16 opacity-60">
-			<div class="h-12 w-12 relative">
-			  <svg viewBox="0 0 100 100" class="w-full h-full">
-				<polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" fill="black" fill-opacity="0.7"></polygon>
-			  </svg>
-			</div>
-			<div class="h-12 w-12 relative">
-			  <svg viewBox="0 0 100 100" class="w-full h-full">
-				<polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" stroke="black" stroke-width="3" fill="none"></polygon>
-			  </svg>
-			</div>
-			<div class="h-12 w-12 relative">
-			  <svg viewBox="0 0 100 100" class="w-full h-full">
-				<polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" fill="black" fill-opacity="0.5"></polygon>
-			  </svg>
-			</div>
-			<div class="h-12 w-12 relative">
-			  <svg viewBox="0 0 100 100" class="w-full h-full">
-				<polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" stroke="black" stroke-width="2" fill="black" fill-opacity="0.1"></polygon>
-			  </svg>
-			</div>
-		  </div>
-		</div>
+	<!-- Contenido perfectamente centrado -->
+	<div class="relative z-10 text-center px-6">
+	  <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-tight text-black tracking-wide">
+		TUS SERVICIOS DE SOFTWARE<br />
+		<span class="block">TODOTERRRENO CON LAS MUJERES</span>
+	  </h1>
+  
+	  <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+		<a href="/about" class="px-6 py-3 bg-black text-white text-sm tracking-wider uppercase border-2 border-black hover:bg-white hover:text-black transition-all">
+		  Conócenos
+		</a>
+		<a href="/projects" class="px-6 py-3 bg-black text-white text-sm tracking-wider uppercase border-2 border-black hover:bg-white hover:text-black transition-all">
+		  Ver proyectos
+		</a>
 	  </div>
 	</div>
-	
-	
-	
-	<!-- Indicador sutil de scroll (ahora más abajo) -->
-	<div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce opacity-70">
-	  <span class="text-sm text-black/40 mb-2">Explora</span>
-	  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-black/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-		<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-	  </svg>
-	</div>
   </section>
-  
-  <style>
 
-	/* Animaciones más notorias para los elementos decorativos */
-	@keyframes float-slow {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(-25px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes float-slow-reverse {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(25px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes float-medium {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(-18px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes float-medium-reverse {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(18px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes float-fast {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(-12px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes float-fast-reverse {
-	  0% { transform: translateY(0); }
-	  50% { transform: translateY(12px); }
-	  100% { transform: translateY(0); }
-	}
-	
-	@keyframes rotate-slow {
-	  0% { transform: rotate(0deg); }
-	  100% { transform: rotate(360deg); }
-	}
-	
-	/* Aplicar las animaciones flotantes */
-	.animate-float-slow {
-	  animation: float-slow 8s ease-in-out infinite;
-	}
-	
-	.animate-float-slow-reverse {
-	  animation: float-slow-reverse 9s ease-in-out infinite;
-	}
-	
-	.animate-float-medium {
-	  animation: float-medium 6s ease-in-out infinite;
-	  animation-delay: 1s;
-	}
-	
-	.animate-float-medium-reverse {
-	  animation: float-medium-reverse 7s ease-in-out infinite;
-	  animation-delay: 0.5s;
-	}
-	
-	.animate-float-fast {
-	  animation: float-fast 4s ease-in-out infinite;
-	  animation-delay: 0.5s;
-	}
-	
-	.animate-float-fast-reverse {
-	  animation: float-fast-reverse 5s ease-in-out infinite;
-	  animation-delay: 0.75s;
-	}
-	
-	.animate-rotate-slow {
-	  animation: rotate-slow 20s linear infinite;
-	}
-	
-	/* Animación para el indicador de scroll */
-	@keyframes fadeIn {
-	  from { opacity: 0; transform: translateY(20px); }
-	  to { opacity: 0.7; transform: translateY(0); }
-	}
-	
-	/* Aplicar la animación con retraso */
-	.animate-bounce {
-	  animation: fadeIn 0.8s ease forwards, bounce 2s infinite;
-	  animation-delay: 1.5s, 2.3s;
-	  opacity: 0;
-	}
-	
-	@keyframes bounce {
-	  0%, 100% { transform: translateY(0); }
-	  50% { transform: translateY(-10px); }
-	}
-	
-	/* Efecto de resplandor sutil para elementos activos */
-	@keyframes pulse {
-	  0% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); }
-	  70% { box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
-	  100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
-	}
-  </style>
+<style>
+  /* Triángulo negro desde abajo a la izquierda */
+  .clip-bottom-left {
+    clip-path: polygon(0% 100%, 0% 0%, 50% 100%);
+  }
+
+  /* Triángulo negro desde arriba a la derecha */
+  .clip-top-right {
+    clip-path: polygon(100% 0%, 100% 100%, 50% 0%);
+  }
+
+  section {
+    font-family: 'Orbitron', 'Coda', 'Arial Black', sans-serif;
+    letter-spacing: 0.01em;
+  }
+</style>

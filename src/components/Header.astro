@@ -1,11 +1,10 @@
 ---
-// Header.astro - Versión ultralimpia y moderna
+// Header.astro - Con funcionalidad de scroll a secciones mejorada
 
 const navItems = [
-  { label: 'Inicio', href: '/' },
-  { label: 'About Us', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Projects', href: '/projects' },
+  { label: 'About Us', href: '#about' },
+  { label: 'Services', href: '#services' },
+  { label: 'Projects', href: '#projects' },
 ];
 
 // Añadir clase activa para la página actual
@@ -15,7 +14,7 @@ const currentPath = Astro.url.pathname;
 <header class="fixed w-full z-50 transition-all duration-300" id="main-header">
   <div class="mx-auto px-6 md:px-10 py-5">
     <div class="flex items-center justify-between">
-      <a href="/" class="flex items-center z-10">
+      <a href="#home" class="flex items-center z-10 logo-link">
         <img
           src="/full_logo.png"
           alt="YourCompany Logo"
@@ -28,14 +27,10 @@ const currentPath = Astro.url.pathname;
       <nav class="hidden md:flex items-center justify-center">
         <div class="relative flex items-center">
           {navItems.map((item, index) => {
-            const isActive = currentPath === item.href || 
-                           (item.href !== '/' && currentPath.startsWith(item.href));
             return (
               <a
                 href={item.href}
-                class={`relative px-5 py-3 text-base font-normal transition-colors duration-200 rounded-full hover:bg-white/10 ${
-                  isActive ? 'font-medium nav-active' : 'nav-item'
-                }`}
+                class="relative px-5 py-3 text-base font-normal transition-colors duration-200 rounded-full hover:bg-white/10 nav-item"
                 data-index={index}
               >
                 {item.label}
@@ -43,7 +38,7 @@ const currentPath = Astro.url.pathname;
             );
           })}
           <!-- Indicador activo -->
-          <div id="nav-indicator" class="absolute bottom-0 h-1 bg-black rounded-full transition-all duration-300 pointer-events-none"></div>
+          <div id="nav-indicator" class="absolute bottom-0 h-1 bg-black rounded-full transition-all duration-300 pointer-events-none opacity-0"></div>
         </div>
       </nav>
       
@@ -71,14 +66,10 @@ const currentPath = Astro.url.pathname;
   <div id="mobile-menu" class="fixed inset-0 bg-white flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500 z-40">
     <nav class="flex flex-col items-center space-y-6 px-6 w-full">
       {navItems.map(item => {
-        const isActive = currentPath === item.href || 
-                        (item.href !== '/' && currentPath.startsWith(item.href));
         return (
           <a
             href={item.href}
-            class={`text-2xl font-light transition-colors duration-200 py-2 ${
-              isActive ? 'text-black font-normal' : 'text-gray-500 hover:text-black'
-            }`}
+            class="text-2xl font-light transition-colors duration-200 py-2 mobile-nav-item text-gray-500 hover:text-black"
           >
             {item.label}
           </a>
@@ -121,48 +112,143 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
+  let isScrollingToSection = false;
+
   // Script para manejar la navegación interactiva
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     const logoText = document.getElementById('logo-text');
-    const navItems = document.querySelectorAll('.nav-item, .nav-active');
+    const navItems = document.querySelectorAll('.nav-item');
     const navIndicator = document.getElementById('nav-indicator');
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const burgerIcon = document.querySelector('.burger-icon');
+    const allNavLinks = document.querySelectorAll('a[href^="#"]');
+    const logoLink = document.querySelector('.logo-link');
     let isMenuOpen = false;
+    let activeNavItem = null;
     
-    // Función para actualizar el indicador de navegación
-    function updateIndicator() {
-      const activeItem = document.querySelector('.nav-active');
-      if (activeItem && navIndicator) {
-        navIndicator.style.width = `${activeItem.offsetWidth - 20}px`;
-        navIndicator.style.left = `${activeItem.offsetLeft + 10}px`;
-        navIndicator.style.opacity = '1';
-      } else if (navIndicator) {
-        navIndicator.style.opacity = '0';
+    // Función para actualizar el indicador de navegación basado en la sección actual
+    function updateIndicatorBySection(sectionId) {
+      // Eliminar clase activa de todos los elementos
+      navItems.forEach(item => {
+        item.classList.remove('nav-active');
+      });
+      
+      // Si estamos en el hero, no activamos ningún elemento de navegación
+      if (sectionId === 'home') {
+        if (navIndicator) {
+          navIndicator.style.opacity = '0';
+        }
+        activeNavItem = null;
+        return;
+      }
+      
+      // Añadir clase activa al elemento correspondiente
+      const targetNavItem = document.querySelector(`a[href="#${sectionId}"]`);
+      if (targetNavItem) {
+        targetNavItem.classList.add('nav-active');
+        activeNavItem = targetNavItem;
+        
+        // Actualizar el indicador
+        if (navIndicator) {
+          navIndicator.style.width = `${targetNavItem.offsetWidth - 20}px`;
+          navIndicator.style.left = `${targetNavItem.offsetLeft + 10}px`;
+          navIndicator.style.opacity = '1';
+        }
       }
     }
     
-    // Hover en elementos del menú
+    // Hover en elementos del menú - versión mejorada
     navItems.forEach(item => {
       item.addEventListener('mouseenter', () => {
-        if (!isMenuOpen) {
+        if (!isMenuOpen && navIndicator) {
+          // Mantener el ancho y posición del indicador
           navIndicator.style.width = `${item.offsetWidth - 20}px`;
           navIndicator.style.left = `${item.offsetLeft + 10}px`;
           navIndicator.style.opacity = '1';
+          
+          // Añadir la clase hover al elemento actual
+          item.classList.add('nav-hover');
         }
       });
       
       item.addEventListener('mouseleave', () => {
-        if (!isMenuOpen) {
-          updateIndicator();
+        if (!isMenuOpen && navIndicator) {
+          // Eliminar la clase hover
+          item.classList.remove('nav-hover');
+          
+          if (activeNavItem) {
+            // Si hay un elemento activo, volver a él
+            navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
+            navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+            navIndicator.style.opacity = '1';
+          } else {
+            // Si no hay elemento activo, ocultar el indicador
+            navIndicator.style.opacity = '0';
+          }
         }
       });
     });
     
+    // Scroll suave a secciones mejorado
+    allNavLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Cerrar el menú móvil si está abierto
+        if (isMenuOpen) toggleMobileMenu();
+        
+        const targetId = link.getAttribute('href');
+        const targetIdClean = targetId.substring(1); // Eliminar el #
+        
+        if (targetIdClean === 'home') {
+          // Scroll al inicio de la página
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        } else {
+          // Scroll a la sección específica
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            // Cálculo del offset para tener en cuenta el header fijo
+            const headerHeight = header.offsetHeight;
+            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+    
+    // Activar enlaces de navegación según la sección visible - versión mejorada
+    function setActiveNavItem() {
+      const sections = document.querySelectorAll('section[id]');
+      let scrollPosition = window.scrollY + header.offsetHeight + 100; // Añadir un pequeño offset
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          updateIndicatorBySection(sectionId);
+        }
+      });
+      
+      // Si estamos al inicio de la página, desactivar todos los elementos de navegación
+      if (scrollPosition < 100 + header.offsetHeight) {
+        updateIndicatorBySection('home');
+      }
+    }
+    
     // Efectos de scroll
     function handleScroll() {
+      // Estilo del header al hacer scroll
       if (window.scrollY > 20) {
         header.classList.add('scrolled');
         if (logoText) logoText.classList.add('text-black');
@@ -170,6 +256,9 @@ const currentPath = Astro.url.pathname;
         header.classList.remove('scrolled');
         if (logoText) logoText.classList.remove('text-black');
       }
+      
+      // Actualizar la navegación activa
+      setActiveNavItem();
     }
     
     // Toggle del menú móvil
@@ -200,10 +289,14 @@ const currentPath = Astro.url.pathname;
       });
     });
     
-    // Inicializar indicador y efectos de scroll
-    updateIndicator();
+    // Inicializar efectos de scroll
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', updateIndicator);
+    window.addEventListener('resize', () => {
+      if (activeNavItem) {
+        navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
+        navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+      }
+    });
     
     // Scroll inicial
     handleScroll();
@@ -212,9 +305,10 @@ const currentPath = Astro.url.pathname;
 
 <style>
   #main-header {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 500;
-}
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+  }
+  
   /* Estilos para la navegación limpia */
   .scrolled {
     background-color: rgba(255, 255, 255, 0.95);
@@ -222,20 +316,67 @@ const currentPath = Astro.url.pathname;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   
+  /* Nuevos estilos para el hover y la navegación */
   .nav-item {
     color: rgba(0, 0, 0, 0.7);
     display: flex;
     align-items: center;
     justify-content: center;
     letter-spacing: 0.01em;
+    position: relative;
+    transition: color 0.3s ease, transform 0.2s ease;
+    overflow: hidden;
   }
   
+  /* Efecto hover con fondo y transformación */
+  .nav-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: inherit;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.2s ease;
+    z-index: -1;
+  }
+  
+  .nav-item:hover {
+    color: rgba(0, 0, 0, 0.9);
+    transform: translateY(-2px);
+  }
+  
+  .nav-item:hover:before {
+    transform: scaleY(1);
+  }
+  
+  /* Estilo para item activo */
   .nav-active {
     color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.01em;
+    font-weight: 500;
+  }
+  
+  /* Estilo para el hover específico de clase */
+  .nav-hover {
+    color: rgba(0, 0, 0, 0.9);
+  }
+  
+  /* Mejorar la transición del indicador y asegurar su visibilidad */
+  #nav-indicator {
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    z-index: 1; /* Asegurar que esté por encima del efecto :before */
+  }
+  
+  /* Efecto hover en el logo */
+  .logo-link {
+    transition: transform 0.3s ease;
+  }
+  
+  .logo-link:hover {
+    transform: scale(1.05);
   }
   
   /* Estilos para el botón hamburguesa */
@@ -246,6 +387,7 @@ const currentPath = Astro.url.pathname;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
   }
   
   .burger-line {
@@ -286,5 +428,27 @@ const currentPath = Astro.url.pathname;
   
   #mobile-menu.opacity-100 {
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  /* Mejora en animaciones de elementos del menu móvil */
+  .mobile-nav-item {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: #000;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .mobile-nav-item:hover::after {
+    width: 30px;
   }
 </style>
