@@ -1,0 +1,78 @@
+<div id="contact-dropdown" class="fixed top-20 right-0 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-white shadow-2xl z-50 transition-all duration-500 overflow-hidden rounded-bl-2xl max-h-none hidden">
+  <div class="contact-content flex flex-col gap-8 p-6 md:p-10 opacity-0 pointer-events-none transition-opacity duration-500">
+    <!-- Formulario -->
+    <div class="flex-1 min-w-[260px] max-w-md">
+      <h3 class="font-bold text-lg mb-4">Envía un mensaje</h3>
+      <input type="email" placeholder="Tu correo" class="w-full mb-3 p-2 rounded bg-black text-white placeholder:text-gray-400" />
+      <textarea placeholder="Tu mensaje" class="w-full mb-3 p-2 rounded bg-black text-white placeholder:text-gray-400"></textarea>
+      <button class="w-full bg-white text-black border border-black rounded py-2 font-medium hover:bg-black hover:text-white transition">Enviar</button>
+    </div>
+    <!-- Mapa y redes -->
+    <div class="flex-1 flex flex-col gap-4 min-w-[260px] max-w-md">
+      <div class="bg-black rounded-lg overflow-hidden h-24 flex items-center justify-center">
+        <span class="text-white text-xs">[Mapa de ejemplo]</span>
+      </div>
+      <div class="flex gap-3 justify-center">
+        <a href="#" class="text-black hover:text-gray-600"><i class="fab fa-linkedin"></i>in</a>
+        <a href="#" class="text-black hover:text-gray-600"><i class="fab fa-youtube"></i>yt</a>
+        <a href="#" class="text-black hover:text-gray-600"><i class="fab fa-google"></i>g+</a>
+      </div>
+    </div>
+    <!-- Calendario -->
+    <div class="flex-1 min-w-[260px] max-w-md">
+      <h3 class="font-bold text-lg mb-4">Reserva una reunión</h3>
+      <div class="bg-black text-white rounded-lg p-4 h-48 flex items-center justify-center">[Calendario de ejemplo]</div>
+      <button class="w-full mt-4 bg-white text-black border border-black rounded py-2 font-medium hover:bg-black hover:text-white transition">Reservar</button>
+    </div>
+  </div>
+  <button id="close-contact-dropdown" class="absolute top-2 right-4 text-black text-2xl font-bold">&times;</button>
+</div>
+
+<script>
+  // Mostrar/ocultar el panel
+  window.toggleContactDropdown = function(show) {
+    const panel = document.getElementById('contact-dropdown');
+    const content = panel ? panel.querySelector('.contact-content') : null;
+    if (!panel || !content) return;
+    if (show) {
+      panel.classList.remove('hidden');
+      panel.classList.add('open');
+      content.classList.remove('opacity-0', 'pointer-events-none');
+      content.classList.add('opacity-100', 'pointer-events-auto');
+    } else {
+      panel.classList.remove('open');
+      content.classList.remove('opacity-100', 'pointer-events-auto');
+      content.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        panel.classList.add('hidden');
+      }, 400); // Espera a que termine la transición de opacidad
+    }
+  };
+  // Cerrar al hacer clic en la X
+  document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.getElementById('close-contact-dropdown');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => window.toggleContactDropdown(false));
+    }
+  });
+</script>
+
+<style>
+#contact-dropdown {
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+}
+#contact-dropdown .contact-content {
+  opacity: 0;
+  pointer-events: none;
+}
+#contact-dropdown.open .contact-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+#contact-dropdown {
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18);
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+</style> 

@@ -3,7 +3,6 @@
 
 const navItems = [
   { label: 'About Us', href: '#about' },
-  { label: 'Services', href: '#services' },
   { label: 'Projects', href: '#projects' },
 ];
 
@@ -17,14 +16,14 @@ const currentPath = Astro.url.pathname;
       <a href="#home" class="flex items-center z-10 logo-link">
         <img
           src="/full_logo.png"
-          alt="YourCompany Logo"
+          alt="OSIX Logo"
           class="h-9 md:h-10 w-auto ml-3 transition-transform duration-200"
           id="logo-img"
         />
       </a>
       
       <!-- Navegación principal - Versión desktop -->
-      <nav class="hidden md:flex items-center justify-center">
+      <nav class="hidden md:flex items-center justify-center flex-1">
         <div class="relative flex items-center">
           {navItems.map((item, index) => {
             return (
@@ -44,7 +43,7 @@ const currentPath = Astro.url.pathname;
       
       <!-- CTA button -->
       <div class="hidden md:block">
-        <a href="/contact" class="inline-flex items-center justify-center h-10 px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105">
+        <a href="#" onclick="window.toggleContactDropdown && window.toggleContactDropdown(true); return false;" class="inline-flex items-center justify-center h-10 px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105">
           <span>Contacto</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -116,6 +115,8 @@ const currentPath = Astro.url.pathname;
 
   // Script para manejar la navegación interactiva
   document.addEventListener('DOMContentLoaded', () => {
+    // Variable para controlar si debemos actualizar el indicador durante el scroll
+    let disableIndicatorUpdate = false;
     const header = document.getElementById('main-header');
     const logoText = document.getElementById('logo-text');
     const navItems = document.querySelectorAll('.nav-item');
@@ -202,6 +203,23 @@ const currentPath = Astro.url.pathname;
         const targetId = link.getAttribute('href');
         const targetIdClean = targetId.substring(1); // Eliminar el #
         
+        // Deshabilitar la actualización del indicador durante el scroll
+        disableIndicatorUpdate = true;
+        
+        // Preseleccionar el ítem del menú en el que se hizo clic
+        navItems.forEach(item => {
+          item.classList.remove('nav-active');
+          if (item.getAttribute('href') === targetId) {
+            item.classList.add('nav-active');
+            if (navIndicator) {
+              navIndicator.style.width = `${item.offsetWidth - 20}px`;
+              navIndicator.style.left = `${item.offsetLeft + 10}px`;
+              navIndicator.style.opacity = '1';
+              activeNavItem = item;
+            }
+          }
+        });
+        
         if (targetIdClean === 'home') {
           // Scroll al inicio de la página
           window.scrollTo({
@@ -222,11 +240,19 @@ const currentPath = Astro.url.pathname;
             });
           }
         }
+        
+        // Reactivar la actualización del indicador después de 700ms
+        setTimeout(() => {
+          disableIndicatorUpdate = false;
+        }, 700);
       });
     });
     
     // Activar enlaces de navegación según la sección visible - versión mejorada
     function setActiveNavItem() {
+      // Si estamos deshabilitando temporalmente la actualización, no hacemos nada
+      if (disableIndicatorUpdate) return;
+
       const sections = document.querySelectorAll('section[id]');
       let scrollPosition = window.scrollY + header.offsetHeight + 100; // Añadir un pequeño offset
       
@@ -316,7 +342,7 @@ const currentPath = Astro.url.pathname;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
   
-  /* Nuevos estilos para el hover y la navegación */
+  /* Estilos para elementos de navegación */
   .nav-item {
     color: rgba(0, 0, 0, 0.7);
     display: flex;
@@ -324,33 +350,11 @@ const currentPath = Astro.url.pathname;
     justify-content: center;
     letter-spacing: 0.01em;
     position: relative;
-    transition: color 0.3s ease, transform 0.2s ease;
-    overflow: hidden;
-  }
-  
-  /* Efecto hover con fondo y transformación */
-  .nav-item:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: inherit;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.2s ease;
-    z-index: -1;
+    transition: color 0.3s ease;
   }
   
   .nav-item:hover {
     color: rgba(0, 0, 0, 0.9);
-    transform: translateY(-2px);
-  }
-  
-  .nav-item:hover:before {
-    transform: scaleY(1);
   }
   
   /* Estilo para item activo */
@@ -359,15 +363,10 @@ const currentPath = Astro.url.pathname;
     font-weight: 500;
   }
   
-  /* Estilo para el hover específico de clase */
-  .nav-hover {
-    color: rgba(0, 0, 0, 0.9);
-  }
-  
-  /* Mejorar la transición del indicador y asegurar su visibilidad */
+  /* Mejorar la transición del indicador */
   #nav-indicator {
     transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-    z-index: 1; /* Asegurar que esté por encima del efecto :before */
+    z-index: 1;
   }
   
   /* Efecto hover en el logo */

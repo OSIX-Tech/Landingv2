@@ -1,53 +1,179 @@
 ---
 const currentYear = new Date().getFullYear();
+
+// Enlaces de navegación
+const navLinks = [
+  { name: 'Inicio', url: '#home' },
+  { name: 'About Us', url: '#about' },
+  { name: 'Proyectos', url: '#projects' }
+];
+
+// Información de contacto
+const contactInfo = [
+  { 
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>`, 
+    text: 'Calle Principal 123, Ciudad' 
+  },
+  { 
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>`, 
+    text: 'info@osix.com' 
+  },
+  { 
+    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>`, 
+    text: '+123 456 7890' 
+  }
+];
+
+// Redes sociales
+const socialLinks = [
+  { 
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
+          </svg>`, 
+    url: '#' 
+  },
+  { 
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
+          </svg>`, 
+    url: '#' 
+  },
+  { 
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-4.5 16.5v-9.375h-1.875v9.375h1.875zm-.938-10.688c.604 0 1.13-.393 1.13-.984s-.526-.985-1.13-.985c-.63 0-1.162.393-1.162.985 0 .591.532.984 1.162.984zm8.663 10.688v-5.325c0-1.771-.931-2.625-2.18-2.625-1.037 0-1.704.615-1.987 1.205v-1.005h-1.993v7.75h1.976v-4.492c0-.719.543-1.289 1.259-1.289.699 0 1.025.521 1.025 1.289v4.492h1.9z"/>
+          </svg>`, 
+    url: '#' 
+  }
+];
 ---
 
-<footer class="bg-[#121212] text-white py-12">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div>
-        <h3 class="text-xl font-bold mb-4 text-[#CD1C18]">OSIX</h3>
-        <p class="text-gray-300">
-          Creando soluciones innovadoras para tu negocio desde 2010.
+<footer class="relative bg-black text-white py-20 overflow-hidden">
+  <!-- Eliminado el elemento diagonal decorativo superior -->
+  
+  <!-- Patrón hexagonal (decorativo) -->
+  <div class="absolute bottom-0 right-0 w-64 h-64 opacity-5 z-0 hidden md:block">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="white"/>
+    </svg>
+  </div>
+  
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-6xl mx-auto">
+      <!-- Columna 1: Logo y descripción -->
+      <div class="md:col-span-4 space-y-6">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2">
+            <img src="/logo.svg" alt="OSIX" class="w-full h-full" />
+          </div>
+          <h3 class="text-2xl font-orbitron text-white">OSIX</h3>
+        </div>
+        <p class="text-gray-400 font-light leading-relaxed">
+          Creamos soluciones innovadoras para tu negocio. Nos especializamos en desarrollo móvil, web y desktop con tecnologías de vanguardia.
         </p>
-      </div>
-
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
-        <ul class="space-y-2">
-          <li><a href="/" class="text-gray-300 hover:text-[#CD1C18] transition-colors">Inicio</a></li>
-          <li><a href="/about" class="text-gray-300 hover:text-[#CD1C18] transition-colors">Sobre Nosotros</a></li>
-          <li><a href="/services" class="text-gray-300 hover:text-[#CD1C18] transition-colors">Servicios</a></li>
-          <li><a href="/projects" class="text-gray-300 hover:text-[#CD1C18] transition-colors">Proyectos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Contacto</h4>
-        <ul class="space-y-2 text-gray-300">
-          <li>Calle Principal 123</li>
-          <li>Ciudad, País</li>
-          <li>info@tuempresa.com</li>
-          <li>+123 456 7890</li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="text-lg font-semibold mb-4">Síguenos</h4>
-        <div class="flex space-x-4">
-          {['Facebook', 'Instagram', 'Twitter', 'LinkedIn'].map((name, i) => (
-            <a href="#" class="text-gray-300 hover:text-[#CD1C18] transition-colors" aria-label={name}>
-              <span class="sr-only">{name}</span>
-              <!-- Iconos se insertan como en tu versión original -->
-              <!-- Aquí irían tus <svg> según el nombre si lo gestionas por condición -->
+        
+        <!-- Redes sociales -->
+        <div class="flex space-x-4 pt-0">
+          {socialLinks.map(social => (
+            <a 
+              href={social.url} 
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
+              aria-label="Social link"
+            >
+              <Fragment set:html={social.icon} />
             </a>
           ))}
         </div>
       </div>
+
+      <!-- Columna 2: Enlaces rápidos -->
+      <div class="md:col-span-4 space-y-6">
+        <h4 class="text-lg font-orbitron text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Enlaces</h4>
+        <ul class="space-y-3">
+          {navLinks.map(link => (
+            <li>
+              <a 
+                href={link.url} 
+                class="text-gray-400 hover:text-white transition-colors duration-300 font-light flex items-center gap-2 group"
+              >
+                <span class="w-0 h-[1px] bg-white group-hover:w-4 transition-all duration-300"></span>
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Columna 3: Contacto -->
+      <div class="md:col-span-4 space-y-6">
+        <h4 class="text-lg font-orbitron text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Contacto</h4>
+        <ul class="space-y-5 text-gray-400 font-light">
+          {contactInfo.map(item => (
+            <li class="flex items-start gap-3 group">
+              <div class="mt-0.5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300">
+                <Fragment set:html={item.icon} />
+              </div>
+              <span>{item.text}</span>
+            </li>
+          ))}
+        </ul>
+        
+        <!-- Botón de contacto -->
+        <a href="/contact" class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105">
+          <span>Contáctanos</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
     </div>
 
-    <div class="mt-12 pt-8 border-t border-[#1a1a1a] text-center text-gray-500">
-      <p>&copy; {currentYear} TuEmpresa. Todos los derechos reservados.</p>
+    <!-- Línea divisoria y copyright -->
+    <div class="mt-16 pt-8 border-t border-gray-800 text-center">
+      <div class="flex flex-col md:flex-row justify-center md:justify-between items-center gap-4">
+        <p class="text-gray-500 font-light">
+          &copy; {currentYear} OSIX. Todos los derechos reservados.
+        </p>
+        <div class="flex gap-6 text-xs text-gray-500">
+          <a href="/privacy" class="hover:text-white transition-colors duration-300">Política de privacidad</a>
+          <a href="/terms" class="hover:text-white transition-colors duration-300">Términos de uso</a>
+        </div>
+      </div>
     </div>
   </div>
 </footer>
+
+<style>
+  /* Eliminada la clase clip-diagonal-footer que ya no se usa */
+
+  @font-face {
+    font-family: 'Orbitron';
+    src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+    font-display: swap;
+  }
+
+  .font-orbitron {
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  /* Animaciones para elementos del footer */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  footer a, footer li {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  footer a:hover {
+    transform: translateX(5px);
+  }
+</style>

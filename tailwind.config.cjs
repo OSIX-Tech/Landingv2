@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        orbitron: ['Orbitron', 'sans-serif'],
       },
     },
   },
