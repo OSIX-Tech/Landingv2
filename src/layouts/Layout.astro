@@ -3,21 +3,47 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
-
-const { title = 'Portfolio Empresarial' } = Astro.props;	
+const { 
+  title = 'Business Portfolio',
+  description = 'Professional portfolio for your company',
+  image = '/og-image.jpg',
+  canonical = Astro.url.href
+} = Astro.props;	
 ---
 
 <!DOCTYPE html>
 
-<html lang="es" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio profesional para tu empresa" />
+    <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Your Name or Company" />
+    <meta name="keywords" content="portfolio, company, professional, services" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonical} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
   </head>
-  <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+  <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col snap-y snap-mandatory scroll-smooth">
     <Header />
     <main class="flex-grow">
       <slot />

@@ -14,15 +14,10 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
 
   return (
     <section className="h-screen min-h-screen flex items-start justify-center pt-4 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 md:px-10 max-w-6xl w-full relative z-10">
-        <div className="max-w-4xl mx-auto text-center mb-6 md:mb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-orbitron tracking-tight mb-4">
-            Nuestros <span className="font-bold">proyectos</span>
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-black/60 font-light leading-relaxed">
-            Descubre cómo hemos ayudado a empresas a transformar su presencia digital y alcanzar sus objetivos de negocio.
-          </p>
-        </div>
+      <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-6 text-left">
+          Our <span className="font-bold">Projects</span>
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {visibleProjects.map((project, idx) => (
             <div key={idx} className="group relative overflow-hidden rounded-2xl bg-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
@@ -37,11 +32,11 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
                   <span className="inline-block mb-2 text-xs sm:text-sm font-medium text-white/80 bg-black/30 px-3 sm:px-4 py-1 rounded-full">
                     {project.category}
                   </span>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-orbitron text-white mb-1">
+                  <h3 className="text-lg sm:text-xl md:text-2xl text-white mb-1">
                     {project.title}
                   </h3>
                   <p className="text-white/70 text-xs sm:text-sm">
-                    Cliente: {project.client}
+                    Client: {project.client}
                   </p>
                 </div>
               </a>
@@ -59,16 +54,6 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
           </div>
         )}
       </div>
-      <style>{`
-        @font-face {
-          font-family: 'Orbitron';
-          src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-          font-display: swap;
-        }
-        .font-orbitron {
-          font-family: 'Orbitron', sans-serif;
-        }
-      `}</style>
     </section>
   );
 };

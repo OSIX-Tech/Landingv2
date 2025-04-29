@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -164,10 +163,4 @@ img, video {
   .responsive-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-}
-
-/* Estilos para textos futuristas */
-.font-orbitron {
-  font-family: 'Orbitron', sans-serif;
-  letter-spacing: 0.05em;
 }

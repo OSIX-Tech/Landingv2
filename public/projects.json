@@ -1,21 +1,21 @@
 [
   {
     "title": "Web Opills",
-    "category": "Desarrollo Web",
+    "category": "Web Design",
     "image": "/opills.png",
     "client": "Opills",
     "url": "https://opills.app/"
   },
   {
     "title": "Paso de Informatica",
-    "category": "Desarrollo Web",
+    "category": "Web Design",
     "image": "/pasoinfo.jpg",
     "client": "Paso",
     "url": "https://pasoinfousc.com/"
   },
   {
     "title": "Web Shearn",
-    "category": "Diseño Web",
+    "category": "Web Design",
     "image": "/shearn.jpg",
     "client": "Shearn",
     "url": "https://shearn-agent-local.vercel.app/"

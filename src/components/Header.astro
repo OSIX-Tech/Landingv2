@@ -1,9 +1,15 @@
 ---
 // Header.astro - Con funcionalidad de scroll a secciones mejorada
 
+// (Eliminada la importación de Services)
+
 const navItems = [
-  { label: 'About Us', href: '#about' },
-  { label: 'Projects', href: '#projects' },
+  { label: 'Services', href: '#services', scrollAdjust: -30 },
+  { label: 'Values', href: '#values', scrollAdjust: -50 },
+  { label: 'Projects', href: '#projects', scrollAdjust: 30 },
+  { label: 'About Us', href: '#about', scrollAdjust: -60 },
+  { label: 'Awards', href: '#awards', scrollAdjust: -20 },
+  
 ];
 
 // Añadir clase activa para la página actual
@@ -31,6 +37,7 @@ const currentPath = Astro.url.pathname;
                 href={item.href}
                 class="relative px-5 py-3 text-base font-normal transition-colors duration-200 rounded-full hover:bg-white/10 nav-item"
                 data-index={index}
+                data-scroll-adjust={item.scrollAdjust}
               >
                 {item.label}
               </a>
@@ -42,9 +49,9 @@ const currentPath = Astro.url.pathname;
       </nav>
       
       <!-- CTA button -->
-      <div class="hidden md:block">
-        <a href="#" onclick="window.toggleContactDropdown && window.toggleContactDropdown(true); return false;" class="inline-flex items-center justify-center h-10 px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105">
-          <span>Contacto</span>
+      <div class="block">
+        <a href="#contact" class="inline-flex items-center justify-center h-10 px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105" data-scroll-adjust="-80">
+          <span>Contact</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -69,6 +76,7 @@ const currentPath = Astro.url.pathname;
           <a
             href={item.href}
             class="text-2xl font-light transition-colors duration-200 py-2 mobile-nav-item text-gray-500 hover:text-black"
+            data-scroll-adjust={item.scrollAdjust}
           >
             {item.label}
           </a>
@@ -76,8 +84,8 @@ const currentPath = Astro.url.pathname;
       })}
       
       <div class="pt-8 w-full">
-        <a href="/demo" class="flex items-center justify-center w-full px-6 py-4 text-base font-medium bg-black text-white transition-all duration-300 rounded-full mt-2 hover:opacity-90">
-          Demo gratuita
+        <a href="#contact" class="flex items-center justify-center w-full px-6 py-4 text-base font-medium bg-black text-white transition-all duration-300 rounded-full mt-2 hover:opacity-90">
+          Contact
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -108,6 +116,8 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
   </div>
+
+  <!-- (Eliminado Services) -->
 </header>
 
 <script>
@@ -124,7 +134,7 @@ const currentPath = Astro.url.pathname;
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const burgerIcon = document.querySelector('.burger-icon');
-    const allNavLinks = document.querySelectorAll('a[href^="#"]');
+    const allNavLinks = document.querySelectorAll('nav .nav-item');
     const logoLink = document.querySelector('.logo-link');
     let isMenuOpen = false;
     let activeNavItem = null;
@@ -146,7 +156,7 @@ const currentPath = Astro.url.pathname;
       }
       
       // Añadir clase activa al elemento correspondiente
-      const targetNavItem = document.querySelector(`a[href="#${sectionId}"]`);
+      const targetNavItem = document.querySelector(`nav .nav-item[href="#${sectionId}"]`);
       if (targetNavItem) {
         targetNavItem.classList.add('nav-active');
         activeNavItem = targetNavItem;
@@ -230,9 +240,11 @@ const currentPath = Astro.url.pathname;
           // Scroll a la sección específica
           const targetSection = document.querySelector(targetId);
           if (targetSection) {
-            // Cálculo del offset para tener en cuenta el header fijo
-            const headerHeight = header.offsetHeight;
-            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            const adjustAttr = link.getAttribute('data-scroll-adjust');
+            const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
+            const headerHeight = header?.offsetHeight || 0;
+
+            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
             
             window.scrollTo({
               top: targetPosition,
@@ -308,10 +320,37 @@ const currentPath = Astro.url.pathname;
     }
     
     // Cerrar menú al hacer clic en un enlace
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
+    const mobileLinks = mobileMenu?.querySelectorAll('a');
+    mobileLinks?.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
         if (isMenuOpen) toggleMobileMenu();
+        
+        const targetId = link.getAttribute('href');
+        if (!targetId) return;
+        
+        const targetIdClean = targetId.substring(1);
+        const adjustAttr = link.getAttribute('data-scroll-adjust');
+        const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
+        
+        if (targetIdClean === 'home') {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        } else {
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            const headerHeight = header?.offsetHeight || 0;
+            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
       });
     });
     
@@ -326,6 +365,36 @@ const currentPath = Astro.url.pathname;
     
     // Scroll inicial
     handleScroll();
+
+    if (logoLink) {
+      logoLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Scroll suave para el botón Contact
+    const contactBtn = document.querySelector('a[href="#contact"]');
+    if (contactBtn) {
+      contactBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSection = document.querySelector('#contact');
+        const adjustAttr = contactBtn.getAttribute('data-scroll-adjust');
+        const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
+        const header = document.getElementById('main-header');
+        const headerHeight = header?.offsetHeight || 0;
+        if (targetSection) {
+          const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
   });
 </script>
 
@@ -395,7 +464,7 @@ const currentPath = Astro.url.pathname;
     width: 100%;
     background-color: #000;
     border-radius: 4px;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
   }
   
@@ -433,7 +502,20 @@ const currentPath = Astro.url.pathname;
   .mobile-nav-item {
     position: relative;
     transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
   }
+  
+  #mobile-menu.opacity-100 .mobile-nav-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .mobile-nav-item:nth-child(1) { transition-delay: 0.1s; }
+  .mobile-nav-item:nth-child(2) { transition-delay: 0.15s; }
+  .mobile-nav-item:nth-child(3) { transition-delay: 0.2s; }
+  .mobile-nav-item:nth-child(4) { transition-delay: 0.25s; }
+  .mobile-nav-item:nth-child(5) { transition-delay: 0.3s; }
   
   .mobile-nav-item::after {
     content: '';
@@ -449,5 +531,15 @@ const currentPath = Astro.url.pathname;
   
   .mobile-nav-item:hover::after {
     width: 30px;
+  }
+  
+  /* Mejoras en el menú móvil */
+  #mobile-menu {
+    transform: translateY(-20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  #mobile-menu.opacity-100 {
+    transform: translateY(0);
   }
 </style>

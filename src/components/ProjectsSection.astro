@@ -4,20 +4,12 @@
 import ProjectsGrid from './ProjectsGrid.jsx';
 ---
 
-<section id="projects" class="pt-8 pb-20 bg-white relative overflow-hidden">
+<section id="projects" class="pb-8 bg-white relative overflow-hidden">
   <div class="container mx-auto px-6 md:px-10 relative z-10">
     <ProjectsGrid jsonPath="/projects.json" client:load />
   </div>
 </section>
 
 <style>
-  @font-face {
-    font-family: 'Orbitron';
-    src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-    font-display: swap;
-  }
-
-  .font-orbitron {
-    font-family: 'Orbitron', sans-serif;
-  }
+  /* Removed Orbitron font-face and .font-orbitron class */
 </style>

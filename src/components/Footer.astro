@@ -1,34 +1,31 @@
 ---
 const currentYear = new Date().getFullYear();
 
-// Enlaces de navegación
+// Navigation links
 const navLinks = [
-  { name: 'Inicio', url: '#home' },
-  { name: 'About Us', url: '#about' },
-  { name: 'Proyectos', url: '#projects' }
+  { name: 'Services', url: '#services', scrollAdjust: -30 },
+  { name: 'Values', url: '#values', scrollAdjust: -50 },
+  { name: 'Projects', url: '#projects', scrollAdjust: 30 },
+  { name: 'About Us', url: '#about', scrollAdjust: -60 },
+  { name: 'Awards', url: '#awards', scrollAdjust: -20 },
 ];
 
-// Información de contacto
+// Contact info
 const contactInfo = [
-  { 
+  {
     icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-          </svg>`, 
-    text: 'Calle Principal 123, Ciudad' 
+          </svg>`,
+    text: 'Santiago de Compostela, Spain'
   },
-  { 
+  {
     icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-          </svg>`, 
-    text: 'info@osix.com' 
+          </svg>`,
+    text: 'osixtechteam@gmail.com'
   },
-  { 
-    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-          </svg>`, 
-    text: '+123 456 7890' 
-  }
+
 ];
 
 // Redes sociales
@@ -57,12 +54,7 @@ const socialLinks = [
 <footer class="relative bg-black text-white py-20 overflow-hidden">
   <!-- Eliminado el elemento diagonal decorativo superior -->
   
-  <!-- Patrón hexagonal (decorativo) -->
-  <div class="absolute bottom-0 right-0 w-64 h-64 opacity-5 z-0 hidden md:block">
-    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 0L93.3 25V75L50 100L6.7 75V25L50 0Z" fill="white"/>
-    </svg>
-  </div>
+
   
   <div class="container mx-auto px-6 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-6xl mx-auto">
@@ -72,10 +64,10 @@ const socialLinks = [
           <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-2">
             <img src="/logo.svg" alt="OSIX" class="w-full h-full" />
           </div>
-          <h3 class="text-2xl font-orbitron text-white">OSIX</h3>
+          <h3 class="text-2xl text-white">OSIX</h3>
         </div>
         <p class="text-gray-400 font-light leading-relaxed">
-          Creamos soluciones innovadoras para tu negocio. Nos especializamos en desarrollo móvil, web y desktop con tecnologías de vanguardia.
+          We create innovative solutions for your business. We specialize in mobile, web, and desktop development with cutting-edge technologies.
         </p>
         
         <!-- Redes sociales -->
@@ -94,7 +86,7 @@ const socialLinks = [
 
       <!-- Columna 2: Enlaces rápidos -->
       <div class="md:col-span-4 space-y-6">
-        <h4 class="text-lg font-orbitron text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Enlaces</h4>
+        <h4 class="text-lg text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Links</h4>
         <ul class="space-y-3">
           {navLinks.map(link => (
             <li>
@@ -112,7 +104,7 @@ const socialLinks = [
 
       <!-- Columna 3: Contacto -->
       <div class="md:col-span-4 space-y-6">
-        <h4 class="text-lg font-orbitron text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Contacto</h4>
+        <h4 class="text-lg text-white relative inline-block pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-12 after:bg-white">Contact</h4>
         <ul class="space-y-5 text-gray-400 font-light">
           {contactInfo.map(item => (
             <li class="flex items-start gap-3 group">
@@ -125,8 +117,8 @@ const socialLinks = [
         </ul>
         
         <!-- Botón de contacto -->
-        <a href="/contact" class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105">
-          <span>Contáctanos</span>
+        <a href="mailto:osixtechteam@gmail.com" class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105">
+          <span>Contact us</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
@@ -138,11 +130,11 @@ const socialLinks = [
     <div class="mt-16 pt-8 border-t border-gray-800 text-center">
       <div class="flex flex-col md:flex-row justify-center md:justify-between items-center gap-4">
         <p class="text-gray-500 font-light">
-          &copy; {currentYear} OSIX. Todos los derechos reservados.
+          &copy; {currentYear} OSIX. All rights reserved.
         </p>
         <div class="flex gap-6 text-xs text-gray-500">
-          <a href="/privacy" class="hover:text-white transition-colors duration-300">Política de privacidad</a>
-          <a href="/terms" class="hover:text-white transition-colors duration-300">Términos de uso</a>
+          <a href="/privacy" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
+          <a href="/terms" class="hover:text-white transition-colors duration-300">Terms of Use</a>
         </div>
       </div>
     </div>
@@ -150,18 +142,6 @@ const socialLinks = [
 </footer>
 
 <style>
-  /* Eliminada la clase clip-diagonal-footer que ya no se usa */
-
-  @font-face {
-    font-family: 'Orbitron';
-    src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-    font-display: swap;
-  }
-
-  .font-orbitron {
-    font-family: 'Orbitron', sans-serif;
-  }
-  
   /* Animaciones para elementos del footer */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }

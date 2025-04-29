@@ -1,23 +1,66 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import ValuesSection from '../components/ValuesSection.astro';
 import AboutSection from '../components/AboutSection.astro';
-import ServicesSection from '../components/ServicesSection.astro';
 import ProjectsSection from '../components/ProjectsSection.astro';
-import ContactDropdown from '../components/ContactDropdown.astro';
+import AwardsSection from '../components/AwardsSection.astro';
 
 const title = "YourCompany - Diseño e Innovación";
 ---
 
 <Layout title={title}>
-  <!-- Hero Section -->
-  <Hero />
-  
-  <!-- About Us Section -->
-  <AboutSection />
-  
-  <!-- Projects Section -->
-  <ProjectsSection />
-
-  <ContactDropdown />
+  <main>
+    <section id="hero"><Hero /></section>
+    <section id="services"><Services /></section>
+    <section id="values"><ValuesSection /></section>
+    <section id="projects"><ProjectsSection /></section>
+    <section id="about"><AboutSection /></section>
+    <section id="awards"><AwardsSection /></section>
+    <section id="contact" class="w-full flex justify-center items-center min-h-screen py-24 bg-white">
+      <div class="w-full max-w-5xl">
+        <h2 class="text-4xl md:text-5xl font-light mb-10 text-left text-black">Our <span class="font-bold">Contact</span></h2>
+        <div class="bg-black rounded-md p-8 md:p-12 flex flex-col md:flex-row gap-8">
+          <form class="flex-1 flex flex-col gap-6">
+            <input
+              type="email"
+              placeholder="Email..."
+              class="bg-white text-black px-4 py-3 rounded-sm outline-none"
+              required
+            />
+            <textarea
+              placeholder="Leave your message..."
+              class="bg-white text-black px-4 py-3 rounded-sm outline-none min-h-[180px]"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              class="border border-white text-white py-2 mt-2 hover:bg-white hover:text-black transition"
+            >
+              Send message
+            </button>
+          </form>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="bg-neutral-900 text-white rounded-md p-6 w-full flex flex-col items-center border border-neutral-700">
+              <div class="mb-4 font-semibold text-lg">Book a meeting</div>
+              <div class="w-full h-64 flex items-center justify-center border border-neutral-700 rounded bg-black/40 mb-4">
+                <span class="text-neutral-400">[Calendar Widget]</span>
+              </div>
+              <div class="flex gap-2 w-full">
+                <select class="flex-1 bg-black text-white border border-white px-2 py-1 rounded">
+                  <option>10:00</option>
+                  <option>10:30</option>
+                  <option>11:00</option>
+                </select>
+                <button class="border border-white text-white px-4 py-1 rounded hover:bg-white hover:text-black transition">
+                  Book meeting
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>

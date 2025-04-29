@@ -1,0 +1,134 @@
+---
+// AwardsSection.astro - Sección de premios tipo timeline con hexágonos
+
+const awards = [
+  {
+    date: 'April 2025',
+    title: '2.º Price EIJE 2025',
+    description: 'oPills ~ First ever intelligent medical tracker app completely focused on accesibility',
+  },
+  {
+    date: 'April 2025',
+    title: '3.º IMPACTHON USC 2025',
+    description: 'oNote ~ Realtime university lectures transcriptor',
+  },
+  {
+    date: 'March 2025',
+    title: '2.º OdiselA 2025',
+    description: 'oPills ~ First ever intelligent medical tracker app completely focused on accesibility',
+  },
+  {
+    date: 'March 2025',
+    title: '2.º HackUDC 2025',
+    description: 'Wearendar ~ Calendar app with outfit recommendations depending on scheduled events',
+  }
+];
+---
+<section id="awards" class="w-full min-h-screen flex flex-col justify-center bg-white py-6 lg:py-0 relative">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6 text-center sm:text-left">
+      Our <span class="font-bold">Awards</span>
+    </h2>
+    <div class="space-y-6 md:space-y-0 relative">
+      {/* Línea vertical central (desktop) */}
+      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-black transform -translate-x-1/2 z-0"></div>
+      
+      {awards.map((award, idx) => (
+        <div class="grid grid-cols-1 md:grid-cols-3 items-center relative">
+          {/* Móvil: hexágono arriba */}
+          <div class="flex justify-center md:hidden mb-2">
+            <div class="bg-white p-1 rounded-full">
+              <img src="/logo_pre.svg" alt="Logo" class="w-6 h-6 z-10" />
+            </div>
+          </div>
+          {/* Columna izquierda */}
+          <div class={`hidden md:block ${idx % 2 === 0 ? 'text-right pr-4 lg:pr-8' : ''}`.trim()}>
+            {idx % 2 === 0 && (
+              <div class="max-w-lg ml-auto">
+                <div class="text-sm text-gray-700 mb-1">{award.date}</div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
+                <p class="text-sm sm:text-base">{award.description}</p>
+              </div>
+            )}
+          </div>
+          {/* Columna central: hexágono */}
+          <div class="hidden md:flex flex-col items-center">
+            <div class="bg-white p-1 rounded-full">
+              <img src="/logo_pre.svg" alt="Logo" class="w-8 h-8 z-10" />
+            </div>
+          </div>
+          {/* Columna derecha */}
+          <div class={`hidden md:block ${idx % 2 === 1 ? 'text-left pl-4 lg:pl-8' : ''}`.trim()}>
+            {idx % 2 === 1 && (
+              <div class="max-w-lg mr-auto">
+                <div class="text-sm text-gray-700 mb-1">{award.date}</div>
+                <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
+                <p class="text-sm sm:text-base">{award.description}</p>
+              </div>
+            )}
+          </div>
+          {/* Móvil: texto debajo del hexágono */}
+          <div class="md:hidden text-center">
+            <div class="text-sm text-gray-700 mb-1">{award.date}</div>
+            <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
+            <p class="text-sm sm:text-base">{award.description}</p>
+          </div>
+          {/* Móvil: línea vertical entre hexágonos */}
+          {idx < awards.length - 1 && (
+            <div class="md:hidden flex justify-center">
+              <div class="w-1 bg-black h-8"></div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Estilos específicos para móviles */
+  @media (max-width: 767px) {
+    #awards .relative {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    #awards .md\:flex {
+      position: relative;
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    /* Línea vertical continua para móviles */
+    #awards .relative::before {
+      content: '';
+      position: absolute;
+      top: -1rem;
+      bottom: -1rem;
+      left: 50%;
+      width: 4px;
+      background-color: black;
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+  }
+  
+  /* Transiciones suaves */
+  #awards .md\:flex {
+    transition: all 0.3s ease;
+  }
+  
+  /* Efecto hover en los logos */
+  #awards img {
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 10;
+  }
+  
+  #awards img:hover {
+    transform: scale(1.1);
+  }
+</style>
