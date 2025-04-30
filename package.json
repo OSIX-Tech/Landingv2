@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@astrojs/react": "^4.2.5",
+    "@types/fullpage.js": "^2.9.6",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "astro": "^5.7.4",
     "framer-motion": "^12.8.0",
+    "fullpage.js": "^4.0.35",
+    "pagepiling.js": "^1.5.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

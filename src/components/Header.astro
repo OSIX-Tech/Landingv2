@@ -4,11 +4,11 @@
 // (Eliminada la importación de Services)
 
 const navItems = [
-  { label: 'Services', href: '#services', scrollAdjust: -30 },
-  { label: 'Values', href: '#values', scrollAdjust: -50 },
-  { label: 'Projects', href: '#projects', scrollAdjust: 30 },
-  { label: 'About Us', href: '#about', scrollAdjust: -60 },
-  { label: 'Awards', href: '#awards', scrollAdjust: -20 },
+  { label: 'Services', href: '#services', scrollAdjust: -80 },
+  { label: 'Values', href: '#values', scrollAdjust: -80 },
+  { label: 'Projects', href: '#projects', scrollAdjust: -130 },
+  { label: 'About Us', href: '#about', scrollAdjust: -80 },
+  { label: 'Awards', href: '#awards', scrollAdjust: -80 },
   
 ];
 
@@ -16,26 +16,26 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed w-full z-50 transition-all duration-300" id="main-header">
-  <div class="mx-auto px-6 md:px-10 py-5">
+<header class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md" id="main-header">
+  <div class="mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-5">
     <div class="flex items-center justify-between">
       <a href="#home" class="flex items-center z-10 logo-link">
         <img
           src="/full_logo.png"
           alt="OSIX Logo"
-          class="h-9 md:h-10 w-auto ml-3 transition-transform duration-200"
+          class="h-6 sm:h-7 md:h-8 w-auto transition-transform duration-200"
           id="logo-img"
         />
       </a>
       
       <!-- Navegación principal - Versión desktop -->
       <nav class="hidden md:flex items-center justify-center flex-1">
-        <div class="relative flex items-center">
+        <div class="relative flex items-center space-x-1">
           {navItems.map((item, index) => {
             return (
               <a
                 href={item.href}
-                class="relative px-5 py-3 text-base font-normal transition-colors duration-200 rounded-full hover:bg-white/10 nav-item"
+                class="relative px-4 sm:px-5 py-2 sm:py-3 text-sm sm:text-base font-medium transition-all duration-300 rounded-full hover:bg-black/5 nav-item"
                 data-index={index}
                 data-scroll-adjust={item.scrollAdjust}
               >
@@ -43,14 +43,13 @@ const currentPath = Astro.url.pathname;
               </a>
             );
           })}
-          <!-- Indicador activo -->
-          <div id="nav-indicator" class="absolute bottom-0 h-1 bg-black rounded-full transition-all duration-300 pointer-events-none opacity-0"></div>
+          <div id="nav-indicator" class="absolute bottom-0 h-0.5 bg-black rounded-full transition-all duration-300 pointer-events-none opacity-0"></div>
         </div>
       </nav>
       
       <!-- CTA button -->
-      <div class="block">
-        <a href="#contact" class="inline-flex items-center justify-center h-10 px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-full hover:shadow-lg hover:shadow-black/20 hover:scale-105" data-scroll-adjust="-80">
+      <div class="hidden md:block">
+        <a href="#contact" class="inline-flex items-center justify-center h-9 sm:h-10 px-4 sm:px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-md hover:shadow-lg hover:shadow-black/20 hover:scale-105" data-scroll-adjust="-80">
           <span>Contact</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -59,7 +58,7 @@ const currentPath = Astro.url.pathname;
       </div>
 
       <!-- Menú móvil -->
-      <button id="mobile-toggle" class="md:hidden flex items-center justify-center w-10 h-10 focus:outline-none z-10" aria-label="Menú">
+      <button id="mobile-toggle" class="md:hidden flex items-center justify-center w-10 h-10 focus:outline-none z-10" aria-label="Menú" aria-expanded="false">
         <div class="burger-icon">
           <span class="burger-line"></span>
           <span class="burger-line"></span>
@@ -69,22 +68,23 @@ const currentPath = Astro.url.pathname;
   </div>
   
   <!-- Menú móvil overlay -->
-  <div id="mobile-menu" class="fixed inset-0 bg-white flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500 z-40">
-    <nav class="flex flex-col items-center space-y-6 px-6 w-full">
-      {navItems.map(item => {
+  <div id="mobile-menu" class="fixed inset-0 bg-white flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500 z-40" aria-hidden="true">
+    <nav class="flex flex-col items-center space-y-4 sm:space-y-6 px-4 sm:px-6 w-full">
+      {navItems.map((item, index) => {
         return (
           <a
             href={item.href}
-            class="text-2xl font-light transition-colors duration-200 py-2 mobile-nav-item text-gray-500 hover:text-black"
+            class="text-xl sm:text-2xl font-medium transition-all duration-300 py-2 mobile-nav-item text-gray-600 hover:text-black"
             data-scroll-adjust={item.scrollAdjust}
+            style={`--index: ${index}`}
           >
             {item.label}
           </a>
         );
       })}
       
-      <div class="pt-8 w-full">
-        <a href="#contact" class="flex items-center justify-center w-full px-6 py-4 text-base font-medium bg-black text-white transition-all duration-300 rounded-full mt-2 hover:opacity-90">
+      <div class="pt-6 sm:pt-8 w-full max-w-xs">
+        <a href="#contact" class="flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-base font-medium bg-black text-white transition-all duration-300 rounded-full mt-2 hover:opacity-90">
           Contact
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -93,8 +93,8 @@ const currentPath = Astro.url.pathname;
       </div>
     </nav>
     
-    <div class="absolute bottom-10 left-0 w-full px-6">
-      <div class="flex flex-col items-center justify-center space-y-4">
+    <div class="absolute bottom-6 sm:bottom-10 left-0 w-full px-4 sm:px-6">
+      <div class="flex flex-col items-center justify-center space-y-3 sm:space-y-4">
         <div class="flex space-x-4">
           <a href="#" class="text-gray-500 hover:text-black transition-colors duration-200">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ const currentPath = Astro.url.pathname;
             </svg>
           </a>
         </div>
-        <div class="text-gray-400 text-sm">© 2025 YourCompany</div>
+        <div class="text-gray-400 text-xs sm:text-sm">© 2025 YourCompany</div>
       </div>
     </div>
   </div>
@@ -121,14 +121,9 @@ const currentPath = Astro.url.pathname;
 </header>
 
 <script>
-  let isScrollingToSection = false;
-
   // Script para manejar la navegación interactiva
   document.addEventListener('DOMContentLoaded', () => {
-    // Variable para controlar si debemos actualizar el indicador durante el scroll
-    let disableIndicatorUpdate = false;
     const header = document.getElementById('main-header');
-    const logoText = document.getElementById('logo-text');
     const navItems = document.querySelectorAll('.nav-item');
     const navIndicator = document.getElementById('nav-indicator');
     const mobileToggle = document.getElementById('mobile-toggle');
@@ -137,16 +132,15 @@ const currentPath = Astro.url.pathname;
     const allNavLinks = document.querySelectorAll('nav .nav-item');
     const logoLink = document.querySelector('.logo-link');
     let isMenuOpen = false;
-    let activeNavItem = null;
+    let activeNavItem: HTMLElement | null = null;
+    let disableIndicatorUpdate = false;
     
-    // Función para actualizar el indicador de navegación basado en la sección actual
-    function updateIndicatorBySection(sectionId) {
-      // Eliminar clase activa de todos los elementos
+    // Función para actualizar el indicador de navegación
+    function updateIndicatorBySection(sectionId: string) {
       navItems.forEach(item => {
         item.classList.remove('nav-active');
       });
       
-      // Si estamos en el hero, no activamos ningún elemento de navegación
       if (sectionId === 'home') {
         if (navIndicator) {
           navIndicator.style.opacity = '0';
@@ -155,13 +149,11 @@ const currentPath = Astro.url.pathname;
         return;
       }
       
-      // Añadir clase activa al elemento correspondiente
-      const targetNavItem = document.querySelector(`nav .nav-item[href="#${sectionId}"]`);
+      const targetNavItem = document.querySelector(`nav .nav-item[href="#${sectionId}"]`) as HTMLElement;
       if (targetNavItem) {
         targetNavItem.classList.add('nav-active');
         activeNavItem = targetNavItem;
         
-        // Actualizar el indicador
         if (navIndicator) {
           navIndicator.style.width = `${targetNavItem.offsetWidth - 20}px`;
           navIndicator.style.left = `${targetNavItem.offsetLeft + 10}px`;
@@ -170,80 +162,69 @@ const currentPath = Astro.url.pathname;
       }
     }
     
-    // Hover en elementos del menú - versión mejorada
+    // Hover en elementos del menú
     navItems.forEach(item => {
       item.addEventListener('mouseenter', () => {
         if (!isMenuOpen && navIndicator) {
-          // Mantener el ancho y posición del indicador
-          navIndicator.style.width = `${item.offsetWidth - 20}px`;
-          navIndicator.style.left = `${item.offsetLeft + 10}px`;
+          navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 20}px`;
+          navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 10}px`;
           navIndicator.style.opacity = '1';
-          
-          // Añadir la clase hover al elemento actual
           item.classList.add('nav-hover');
         }
       });
       
       item.addEventListener('mouseleave', () => {
         if (!isMenuOpen && navIndicator) {
-          // Eliminar la clase hover
           item.classList.remove('nav-hover');
           
           if (activeNavItem) {
-            // Si hay un elemento activo, volver a él
             navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
             navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
             navIndicator.style.opacity = '1';
           } else {
-            // Si no hay elemento activo, ocultar el indicador
             navIndicator.style.opacity = '0';
           }
         }
       });
     });
     
-    // Scroll suave a secciones mejorado
+    // Scroll suave a secciones
     allNavLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         
-        // Cerrar el menú móvil si está abierto
         if (isMenuOpen) toggleMobileMenu();
         
         const targetId = link.getAttribute('href');
-        const targetIdClean = targetId.substring(1); // Eliminar el #
+        if (!targetId) return;
         
-        // Deshabilitar la actualización del indicador durante el scroll
+        const targetIdClean = targetId.substring(1);
         disableIndicatorUpdate = true;
         
-        // Preseleccionar el ítem del menú en el que se hizo clic
         navItems.forEach(item => {
           item.classList.remove('nav-active');
           if (item.getAttribute('href') === targetId) {
             item.classList.add('nav-active');
             if (navIndicator) {
-              navIndicator.style.width = `${item.offsetWidth - 20}px`;
-              navIndicator.style.left = `${item.offsetLeft + 10}px`;
+              navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 20}px`;
+              navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 10}px`;
               navIndicator.style.opacity = '1';
-              activeNavItem = item;
+              activeNavItem = item as HTMLElement;
             }
           }
         });
         
         if (targetIdClean === 'home') {
-          // Scroll al inicio de la página
           window.scrollTo({
             top: 0,
             behavior: 'smooth'
           });
         } else {
-          // Scroll a la sección específica
           const targetSection = document.querySelector(targetId);
-          if (targetSection) {
+          if (targetSection && header) {
             const adjustAttr = link.getAttribute('data-scroll-adjust');
             const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
-            const headerHeight = header?.offsetHeight || 0;
-
+            const headerHeight = header.offsetHeight;
             const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
             
             window.scrollTo({
@@ -253,32 +234,29 @@ const currentPath = Astro.url.pathname;
           }
         }
         
-        // Reactivar la actualización del indicador después de 700ms
         setTimeout(() => {
           disableIndicatorUpdate = false;
         }, 700);
       });
     });
     
-    // Activar enlaces de navegación según la sección visible - versión mejorada
+    // Activar enlaces según la sección visible
     function setActiveNavItem() {
-      // Si estamos deshabilitando temporalmente la actualización, no hacemos nada
-      if (disableIndicatorUpdate) return;
+      if (disableIndicatorUpdate || !header) return;
 
       const sections = document.querySelectorAll('section[id]');
-      let scrollPosition = window.scrollY + header.offsetHeight + 100; // Añadir un pequeño offset
+      let scrollPosition = window.scrollY + header.offsetHeight + 100;
       
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
+        const sectionTop = (section as HTMLElement).offsetTop;
+        const sectionHeight = (section as HTMLElement).offsetHeight;
         const sectionId = section.getAttribute('id');
         
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
           updateIndicatorBySection(sectionId);
         }
       });
       
-      // Si estamos al inicio de la página, desactivar todos los elementos de navegación
       if (scrollPosition < 100 + header.offsetHeight) {
         updateIndicatorBySection('home');
       }
@@ -286,33 +264,34 @@ const currentPath = Astro.url.pathname;
     
     // Efectos de scroll
     function handleScroll() {
-      // Estilo del header al hacer scroll
+      if (!header) return;
+      
       if (window.scrollY > 20) {
         header.classList.add('scrolled');
-        if (logoText) logoText.classList.add('text-black');
       } else {
         header.classList.remove('scrolled');
-        if (logoText) logoText.classList.remove('text-black');
       }
       
-      // Actualizar la navegación activa
       setActiveNavItem();
     }
     
     // Toggle del menú móvil
     function toggleMobileMenu() {
+      if (!mobileMenu || !mobileToggle || !burgerIcon) return;
+      
+      isMenuOpen = !isMenuOpen;
+      mobileMenu.setAttribute('aria-hidden', String(!isMenuOpen));
+      mobileToggle.setAttribute('aria-expanded', String(isMenuOpen));
+      
       if (isMenuOpen) {
-        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        burgerIcon.classList.remove('open');
-        document.body.classList.remove('overflow-hidden');
-      } else {
         mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
         mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-        burgerIcon.classList.add('open');
         document.body.classList.add('overflow-hidden');
+      } else {
+        mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+        mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+        document.body.classList.remove('overflow-hidden');
       }
-      isMenuOpen = !isMenuOpen;
     }
     
     if (mobileToggle) {
@@ -328,7 +307,7 @@ const currentPath = Astro.url.pathname;
         if (isMenuOpen) toggleMobileMenu();
         
         const targetId = link.getAttribute('href');
-        if (!targetId) return;
+        if (!targetId || !header) return;
         
         const targetIdClean = targetId.substring(1);
         const adjustAttr = link.getAttribute('data-scroll-adjust');
@@ -342,7 +321,7 @@ const currentPath = Astro.url.pathname;
         } else {
           const targetSection = document.querySelector(targetId);
           if (targetSection) {
-            const headerHeight = header?.offsetHeight || 0;
+            const headerHeight = header.offsetHeight;
             const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
             
             window.scrollTo({
@@ -354,18 +333,18 @@ const currentPath = Astro.url.pathname;
       });
     });
     
-    // Inicializar efectos de scroll
+    // Event listeners
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', () => {
-      if (activeNavItem) {
+      if (activeNavItem && navIndicator) {
         navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
         navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
       }
     });
     
-    // Scroll inicial
+    // Inicialización
     handleScroll();
-
+    
     if (logoLink) {
       logoLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -373,26 +352,6 @@ const currentPath = Astro.url.pathname;
           top: 0,
           behavior: 'smooth'
         });
-      });
-    }
-
-    // Scroll suave para el botón Contact
-    const contactBtn = document.querySelector('a[href="#contact"]');
-    if (contactBtn) {
-      contactBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetSection = document.querySelector('#contact');
-        const adjustAttr = contactBtn.getAttribute('data-scroll-adjust');
-        const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
-        const header = document.getElementById('main-header');
-        const headerHeight = header?.offsetHeight || 0;
-        if (targetSection) {
-          const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
       });
     }
   });
@@ -449,31 +408,33 @@ const currentPath = Astro.url.pathname;
   
   /* Estilos para el botón hamburguesa */
   .burger-icon {
+    position: relative;
     width: 24px;
     height: 18px;
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer;
   }
   
   .burger-line {
-    display: block;
-    height: 2px;
     width: 100%;
-    background-color: #000;
-    border-radius: 4px;
+    height: 2px;
+    background-color: black;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: center;
   }
   
-  .burger-icon.open .burger-line:nth-child(1) {
+  #mobile-toggle[aria-expanded="true"] .burger-line:first-child {
     transform: translateY(8px) rotate(45deg);
   }
   
-  .burger-icon.open .burger-line:nth-child(2) {
+  #mobile-toggle[aria-expanded="true"] .burger-line:last-child {
     transform: translateY(-8px) rotate(-45deg);
+  }
+  
+  #mobile-menu[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
   }
   
   /* Animación de entrada para el menú móvil */
@@ -501,7 +462,8 @@ const currentPath = Astro.url.pathname;
   /* Mejora en animaciones de elementos del menu móvil */
   .mobile-nav-item {
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(0.1s * var(--index, 0));
     opacity: 0;
     transform: translateY(10px);
   }
@@ -510,12 +472,6 @@ const currentPath = Astro.url.pathname;
     opacity: 1;
     transform: translateY(0);
   }
-  
-  .mobile-nav-item:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-nav-item:nth-child(2) { transition-delay: 0.15s; }
-  .mobile-nav-item:nth-child(3) { transition-delay: 0.2s; }
-  .mobile-nav-item:nth-child(4) { transition-delay: 0.25s; }
-  .mobile-nav-item:nth-child(5) { transition-delay: 0.3s; }
   
   .mobile-nav-item::after {
     content: '';
@@ -541,5 +497,21 @@ const currentPath = Astro.url.pathname;
   
   #mobile-menu.opacity-100 {
     transform: translateY(0);
+  }
+
+  /* Mejoras de accesibilidad */
+  @media (max-width: 768px) {
+    .nav-item {
+      padding: 0.75rem 1rem;
+    }
+    
+    #mobile-menu {
+      transform: translateY(-20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    #mobile-menu[aria-hidden="false"] {
+      transform: translateY(0);
+    }
   }
 </style>

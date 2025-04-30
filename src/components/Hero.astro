@@ -9,24 +9,40 @@ const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
 
 <section class="w-full min-h-screen flex items-center justify-center bg-white p-0 m-0">
   <!-- Bloque negro ocupa todo el ancho -->
-  <div class="w-full flex flex-col md:flex-row items-center justify-between bg-black px-8 md:px-20 py-16 md:py-24">
+  <div class="w-full flex flex-col md:flex-row items-center justify-between bg-black px-4 sm:px-6 md:px-10 lg:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
     <!-- Texto principal alineado a la izquierda -->
     <div class="text-white w-full max-w-2xl text-left">
-      <h1 class="text-3xl md:text-5xl lg:text-6xl font-light leading-tight">
-        Start working with us<br />
-        <span class="font-bold">today</span><br />
-        Fulfill your dreams<br />
-        <span class="font-bold">tomorrow</span>
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-relaxed space-y-4">
+        <div>Start working with us</div>
+        <div class="font-bold">today</div>
+        <div>Fulfill your dreams</div>
+        <div class="font-bold">tomorrow</div>
       </h1>
     </div>
     <!-- Logo grande a la derecha, centrado verticalmente -->
-    <div class="mt-12 md:mt-0 md:ml-16 flex-shrink-0 flex justify-center items-center w-full md:w-auto">
-      <img src="/logo_w.svg" alt="OSIX Logo" class="w-56 h-36 md:w-96 md:h-56 object-contain" />
+    <div class="mt-8 sm:mt-10 md:mt-0 md:ml-8 lg:ml-16 flex-shrink-0 flex justify-center items-center w-full md:w-auto">
+      <img 
+        src="/logo_w.svg" 
+        alt="OSIX Logo" 
+        class="w-40 sm:w-48 md:w-64 lg:w-80 xl:w-96 h-auto object-contain" 
+      />
     </div>
   </div>
   <!-- Flecha hacia abajo -->
-  <div class="flex justify-center py-6 w-full absolute left-0 right-0 bottom-0">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  <div class="flex justify-center py-4 sm:py-6 w-full absolute left-0 right-0 bottom-0">
+    <svg 
+      width="32" 
+      height="32" 
+      class="w-8 h-8 sm:w-10 sm:h-10" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="black" 
+      stroke-width="2" 
+      stroke-linecap="round" 
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
   </div>
 </section>
 
@@ -42,5 +58,12 @@ const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
   a:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Mejoras de accesibilidad */
+  @media (max-width: 640px) {
+    h1 {
+      line-height: 1.2;
+    }
   }
 </style>

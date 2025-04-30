@@ -1,4 +1,6 @@
 ---
+import ContactSection from './ContactSection.astro';
+
 const currentYear = new Date().getFullYear();
 
 // Navigation links
@@ -24,8 +26,7 @@ const contactInfo = [
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
           </svg>`,
     text: 'osixtechteam@gmail.com'
-  },
-
+  }
 ];
 
 // Redes sociales
@@ -52,10 +53,6 @@ const socialLinks = [
 ---
 
 <footer class="relative bg-black text-white py-20 overflow-hidden">
-  <!-- Eliminado el elemento diagonal decorativo superior -->
-  
-
-  
   <div class="container mx-auto px-6 relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-6xl mx-auto">
       <!-- Columna 1: Logo y descripción -->
@@ -117,12 +114,15 @@ const socialLinks = [
         </ul>
         
         <!-- Botón de contacto -->
-        <a href="mailto:osixtechteam@gmail.com" class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105">
+        <button 
+          data-contact-toggle
+          class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105"
+        >
           <span>Contact us</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -139,6 +139,8 @@ const socialLinks = [
       </div>
     </div>
   </div>
+  
+  <ContactSection />
 </footer>
 
 <style>
