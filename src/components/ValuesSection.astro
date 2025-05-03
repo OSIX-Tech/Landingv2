@@ -10,21 +10,74 @@ const values: string[] = [
 ];
 ---
 
-<section id="values" class="w-full min-h-screen flex flex-col justify-center bg-white py-16">
-  <div class="w-full max-w-7xl mx-auto px-6 md:px-12">
+<section id="values" class="w-full min-h-[90vh] sm:min-h-screen flex flex-col justify-center bg-white py-12 sm:py-16">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
     <h2 class="section-title">
       Our <span class="font-bold">Core Values</span>
     </h2>
     
-    <div class="mt-8">
-      <ol class="space-y-8">
+    <div class="mt-8 sm:mt-12">
+      <ol class="space-y-6 sm:space-y-8">
         {values.map((value: string, idx: number) => (
-          <li class="flex items-baseline gap-8">
-            <span class="text-4xl md:text-5xl font-bold text-black min-w-[60px] text-left">{String(idx+1).padStart(2, '0')}</span>
-            <span class="text-2xl md:text-3xl font-normal text-black">{value}</span>
+          <li class="flex items-baseline gap-4 sm:gap-8 value-item" style={`--delay: ${idx * 0.1}s`}>
+            <span class="text-3xl sm:text-4xl md:text-5xl font-bold text-black min-w-[50px] sm:min-w-[60px] text-left value-number">{String(idx+1).padStart(2, '0')}</span>
+            <div class="flex flex-col">
+              <span class="text-xl sm:text-2xl md:text-3xl font-normal text-black">{value}</span>
+              <div class="h-1 bg-black mt-2 w-0 value-line"></div>
+            </div>
           </li>
         ))}
       </ol>
     </div>
   </div>
-</section> 
+</section>
+
+<style>
+  /* Animación para los números */
+  .value-number {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+  
+  .value-item:hover .value-number {
+    transform: scale(1.1);
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Animación para la línea */
+  .value-line {
+    transition: width 0.5s ease;
+  }
+  
+  .value-item:hover .value-line {
+    width: 100%;
+  }
+  
+  /* Animación de entrada */
+  .value-item {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideIn 0.5s ease forwards;
+    animation-delay: var(--delay, 0s);
+  }
+  
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Mejoras para dispositivos táctiles */
+  @media (hover: none) {
+    .value-item:active .value-line {
+      width: 100%;
+    }
+    
+    .value-item:active .value-number {
+      transform: scale(1.1);
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+</style> 

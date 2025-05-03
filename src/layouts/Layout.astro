@@ -16,7 +16,9 @@ const {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
@@ -108,6 +110,18 @@ const {
     min-height: 100vh;
     width: 100%;
     position: relative;
-    padding: 2rem;
+    padding: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    section {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    section {
+      padding: 2rem;
+    }
   }
 </style>

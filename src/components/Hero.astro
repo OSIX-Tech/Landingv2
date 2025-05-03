@@ -7,12 +7,12 @@ export interface Props {
 const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
 ---
 
-<section class="w-full min-h-screen flex items-center justify-center bg-white p-0 m-0">
+<section class="w-full min-h-[90vh] sm:min-h-screen flex items-center justify-center bg-white p-0 m-0">
   <!-- Bloque negro ocupa todo el ancho -->
-  <div class="w-full flex flex-col md:flex-row items-center justify-between bg-black px-4 sm:px-6 md:px-10 lg:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
+  <div class="w-full flex flex-col md:flex-row items-center justify-center bg-black px-4 sm:px-6 md:px-10 lg:px-20 py-12 sm:py-16 md:py-20 lg:py-24">
     <!-- Texto principal alineado a la izquierda -->
-    <div class="text-white w-full max-w-2xl text-left">
-      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-relaxed space-y-4">
+    <div class="text-white w-full md:w-1/2 text-center md:text-left">
+      <h1 class="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight sm:leading-relaxed space-y-3 sm:space-y-4 hero-text">
         <div>Start working with us</div>
         <div class="font-bold">today</div>
         <div>Fulfill your dreams</div>
@@ -20,16 +20,16 @@ const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
       </h1>
     </div>
     <!-- Logo grande a la derecha, centrado verticalmente -->
-    <div class="mt-8 sm:mt-10 md:mt-0 md:ml-8 lg:ml-16 flex-shrink-0 flex justify-center items-center w-full md:w-auto">
+    <div class="mt-8 sm:mt-10 md:mt-0 md:ml-8 lg:ml-16 flex-shrink-0 flex justify-center items-center w-full md:w-1/2">
       <img 
         src="/logo_w.svg" 
         alt="OSIX Logo" 
-        class="w-40 sm:w-48 md:w-64 lg:w-80 xl:w-96 h-auto object-contain" 
+        class="w-36 sm:w-48 md:w-64 lg:w-80 xl:w-96 h-auto object-contain" 
       />
     </div>
   </div>
   <!-- Flecha hacia abajo -->
-  <div class="flex justify-center py-4 sm:py-6 w-full absolute left-0 right-0 bottom-0">
+  <div class="flex justify-center py-3 sm:py-6 w-full absolute left-0 right-0 bottom-4 sm:bottom-6 animate-bounce">
     <svg 
       width="32" 
       height="32" 
@@ -47,8 +47,6 @@ const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
 </section>
 
 <style>
-  /* Removed Orbitron font-face and .font-orbitron class */
-
   /* Animaciones y efectos hover */
   a {
     position: relative;
@@ -65,5 +63,25 @@ const { title = "We are OSIX, either perfect or nothing" } = Astro.props;
     h1 {
       line-height: 1.2;
     }
+    
+    .w-full {
+      min-height: auto;
+    }
   }
+  
+  /* Animación de rebote para la flecha */
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+  
+
 </style>

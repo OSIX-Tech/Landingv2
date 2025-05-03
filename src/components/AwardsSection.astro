@@ -24,26 +24,21 @@ const awards = [
   }
 ];
 ---
-<section id="awards" class="w-full min-h-screen flex flex-col justify-center bg-white py-6 lg:py-0 relative">
-  <div class="w-full max-w-7xl mx-auto px-6 md:px-12">
+<section id="awards" class="w-full min-h-[90vh] sm:min-h-screen flex flex-col justify-center bg-white py-10 sm:py-6 lg:py-0 relative">
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
     <h2 class="section-title">
       Our <span class="font-bold">Awards</span>
     </h2>
     
-    <div class="space-y-6 md:space-y-0 relative mt-8">
-      {/* Línea vertical central (desktop) */}
-      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-black transform -translate-x-1/2 z-0"></div>
+    <!-- Versión para escritorio - Timeline horizontal con hexágonos -->  
+    <div class="hidden md:block space-y-0 relative mt-8">
+      <!-- Línea vertical central (desktop) -->
+      <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-black transform -translate-x-1/2 z-0"></div>
       
       {awards.map((award, idx) => (
-        <div class="grid grid-cols-1 md:grid-cols-3 items-center relative">
-          {/* Móvil: hexágono arriba */}
-          <div class="flex justify-center md:hidden mb-2">
-            <div class="bg-white p-1 rounded-full">
-              <img src="/logo_pre.svg" alt="Logo" class="w-6 h-6 z-10" />
-            </div>
-          </div>
-          {/* Columna izquierda */}
-          <div class={`hidden md:block ${idx % 2 === 0 ? 'text-right pr-4 lg:pr-8' : ''}`.trim()}>
+        <div class="grid grid-cols-3 items-center relative">
+          <!-- Columna izquierda -->
+          <div class={`${idx % 2 === 0 ? 'text-right pr-4 lg:pr-8' : ''}`.trim()}>
             {idx % 2 === 0 && (
               <div class="max-w-lg ml-auto">
                 <div class="text-sm text-gray-700 mb-1">{award.date}</div>
@@ -52,14 +47,14 @@ const awards = [
               </div>
             )}
           </div>
-          {/* Columna central: hexágono */}
-          <div class="hidden md:flex flex-col items-center">
+          <!-- Columna central: hexágono -->
+          <div class="flex flex-col items-center">
             <div class="bg-white p-1 rounded-full">
               <img src="/logo_pre.svg" alt="Logo" class="w-8 h-8 z-10" />
             </div>
           </div>
-          {/* Columna derecha */}
-          <div class={`hidden md:block ${idx % 2 === 1 ? 'text-left pl-4 lg:pl-8' : ''}`.trim()}>
+          <!-- Columna derecha -->
+          <div class={`${idx % 2 === 1 ? 'text-left pl-4 lg:pl-8' : ''}`.trim()}>
             {idx % 2 === 1 && (
               <div class="max-w-lg mr-auto">
                 <div class="text-sm text-gray-700 mb-1">{award.date}</div>
@@ -68,58 +63,48 @@ const awards = [
               </div>
             )}
           </div>
-          {/* Móvil: texto debajo del hexágono */}
-          <div class="md:hidden text-center">
-            <div class="text-sm text-gray-700 mb-1">{award.date}</div>
-            <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
-            <p class="text-sm sm:text-base">{award.description}</p>
-          </div>
-          {/* Móvil: línea vertical entre hexágonos */}
-          {idx < awards.length - 1 && (
-            <div class="md:hidden flex justify-center">
-              <div class="w-1 bg-black h-8"></div>
-            </div>
-          )}
         </div>
       ))}
+    </div>
+    
+    <!-- Versión para móviles - Tarjetas apiladas -->
+    <div class="md:hidden mt-8">
+      <div class="flex flex-col space-y-4">
+        {awards.map((award, index) => (
+          <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100" style={`--index: ${index}`}>
+            <div class="bg-black p-3 flex items-center">
+              <div class="bg-white p-1 rounded-full mr-3">
+                <img src="/logo_pre.svg" alt="Logo" class="w-6 h-6" />
+              </div>
+              <h3 class="text-white text-lg font-bold">{award.title}</h3>
+            </div>
+            <div class="p-4">
+              <div class="text-xs text-gray-500 mb-2">{award.date}</div>
+              <p class="text-sm">{award.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Estilos específicos para móviles */
-  @media (max-width: 767px) {
-    #awards .relative {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    #awards .md\:flex {
-      position: relative;
-      width: 100%;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      margin-bottom: 2rem;
-    }
-    
-    /* Línea vertical continua para móviles */
-    #awards .relative::before {
-      content: '';
-      position: absolute;
-      top: -1rem;
-      bottom: -1rem;
-      left: 50%;
-      width: 4px;
-      background-color: black;
-      transform: translateX(-50%);
-      z-index: 0;
-    }
+  /* Estilos para la versión de escritorio */
+  #awards .grid {
+    margin-bottom: 2rem;
   }
   
-  /* Transiciones suaves */
-  #awards .md\:flex {
-    transition: all 0.3s ease;
+  /* Efectos para las tarjetas en móvil */
+  @media (max-width: 767px) {
+    #awards .rounded-lg {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    #awards .rounded-lg:active {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
   }
   
   /* Efecto hover en los logos */
@@ -131,5 +116,22 @@ const awards = [
   
   #awards img:hover {
     transform: scale(1.1);
+  }
+  
+  /* Animación de entrada para las tarjetas */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #awards .md\:hidden .rounded-lg {
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: calc(var(--index, 0) * 0.1s);
   }
 </style>

@@ -16,14 +16,14 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md" id="main-header">
-  <div class="mx-auto px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-5">
+<header class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm" id="main-header">
+  <div class="mx-auto px-3 sm:px-6 md:px-10 py-2 sm:py-3 md:py-5">
     <div class="flex items-center justify-between">
       <a href="#home" class="flex items-center z-10 logo-link">
         <img
           src="/full_logo.png"
           alt="OSIX Logo"
-          class="h-6 sm:h-7 md:h-8 w-auto transition-transform duration-200"
+          class="h-7 sm:h-7 md:h-8 w-auto transition-transform duration-200"
           id="logo-img"
         />
       </a>
@@ -68,53 +68,38 @@ const currentPath = Astro.url.pathname;
   </div>
   
   <!-- Menú móvil overlay -->
-  <div id="mobile-menu" class="fixed inset-0 bg-white flex flex-col justify-center items-center opacity-0 pointer-events-none transition-all duration-500 z-40" aria-hidden="true">
-    <nav class="flex flex-col items-center space-y-4 sm:space-y-6 px-4 sm:px-6 w-full">
+  <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-md flex flex-col items-center justify-start pt-20 opacity-0 pointer-events-none transition-all duration-300 z-40 overflow-hidden" aria-hidden="true">
+    <!-- Botón de cierre -->
+    <button id="mobile-close" class="absolute top-4 right-4 p-2 text-gray-600 hover:text-black transition-colors duration-200" aria-label="Cerrar menú">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <nav class="flex flex-col items-center space-y-6 w-full max-w-md px-4">
       {navItems.map((item, index) => {
         return (
           <a
             href={item.href}
-            class="text-xl sm:text-2xl font-medium transition-all duration-300 py-2 mobile-nav-item text-gray-600 hover:text-black"
+            class="text-2xl font-medium text-gray-800 transition-all duration-300 py-3 mobile-nav-item w-full text-center relative group"
             data-scroll-adjust={item.scrollAdjust}
             style={`--index: ${index}`}
           >
             {item.label}
+            <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-black transition-all duration-300 transform -translate-x-1/2 group-hover:w-1/2"></span>
           </a>
         );
       })}
       
-      <div class="pt-6 sm:pt-8 w-full max-w-xs">
-        <a href="#contact" class="flex items-center justify-center w-full px-4 sm:px-6 py-3 sm:py-4 text-base font-medium bg-black text-white transition-all duration-300 rounded-full mt-2 hover:opacity-90">
+      <div class="w-full max-w-xs pt-6">
+        <a href="#contact" class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium bg-black text-white transition-all duration-300 rounded-full hover:opacity-90 hover:scale-105">
           Contact
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </a>
       </div>
     </nav>
-    
-    <div class="absolute bottom-6 sm:bottom-10 left-0 w-full px-4 sm:px-6">
-      <div class="flex flex-col items-center justify-center space-y-3 sm:space-y-4">
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-500 hover:text-black transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
-            </svg>
-          </a>
-          <a href="#" class="text-gray-500 hover:text-black transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
-            </svg>
-          </a>
-          <a href="#" class="text-gray-500 hover:text-black transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-4.5 16.5v-9.375h-1.875v9.375h1.875zm-.938-10.688c.604 0 1.13-.393 1.13-.984s-.526-.985-1.13-.985c-.63 0-1.162.393-1.162.985 0 .591.532.984 1.162.984zm8.663 10.688v-5.325c0-1.771-.931-2.625-2.18-2.625-1.037 0-1.704.615-1.987 1.205v-1.005h-1.993v7.75h1.976v-4.492c0-.719.543-1.289 1.259-1.289.699 0 1.025.521 1.025 1.289v4.492h1.9z"/>
-            </svg>
-          </a>
-        </div>
-        <div class="text-gray-400 text-xs sm:text-sm">© 2025 YourCompany</div>
-      </div>
-    </div>
   </div>
 
   <!-- (Eliminado Services) -->
@@ -122,12 +107,20 @@ const currentPath = Astro.url.pathname;
 
 <script>
   // Script para manejar la navegación interactiva
-  document.addEventListener('DOMContentLoaded', () => {
+  // Prevenir errores de TypeScript
+declare global {
+  interface Window {
+    ontouchstart?: any;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     const navItems = document.querySelectorAll('.nav-item');
     const navIndicator = document.getElementById('nav-indicator');
     const mobileToggle = document.getElementById('mobile-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
+    const mobileClose = document.getElementById('mobile-close');
     const burgerIcon = document.querySelector('.burger-icon');
     const allNavLinks = document.querySelectorAll('nav .nav-item');
     const logoLink = document.querySelector('.logo-link');
@@ -246,6 +239,7 @@ const currentPath = Astro.url.pathname;
 
       const sections = document.querySelectorAll('section[id]');
       let scrollPosition = window.scrollY + header.offsetHeight + 100;
+      let foundActiveSection = false;
       
       sections.forEach(section => {
         const sectionTop = (section as HTMLElement).offsetTop;
@@ -254,10 +248,11 @@ const currentPath = Astro.url.pathname;
         
         if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
           updateIndicatorBySection(sectionId);
+          foundActiveSection = true;
         }
       });
       
-      if (scrollPosition < 100 + header.offsetHeight) {
+      if (!foundActiveSection && scrollPosition < 100 + header.offsetHeight) {
         updateIndicatorBySection('home');
       }
     }
@@ -286,16 +281,29 @@ const currentPath = Astro.url.pathname;
       if (isMenuOpen) {
         mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
         mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-        document.body.classList.add('overflow-hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Reiniciar las animaciones de los elementos del menú
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        mobileNavItems.forEach((item, index) => {
+          item.classList.remove('animated');
+          void (item as HTMLElement).offsetWidth; // Forzar reflow
+          (item as HTMLElement).style.animationDelay = `${index * 0.1}s`;
+          item.classList.add('animated');
+        });
       } else {
         mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
         mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-        document.body.classList.remove('overflow-hidden');
+        document.body.style.overflow = '';
       }
     }
     
     if (mobileToggle) {
       mobileToggle.addEventListener('click', toggleMobileMenu);
+    }
+
+    if (mobileClose) {
+      mobileClose.addEventListener('click', toggleMobileMenu);
     }
     
     // Cerrar menú al hacer clic en un enlace
@@ -304,8 +312,7 @@ const currentPath = Astro.url.pathname;
       link.addEventListener('click', (e) => {
         e.preventDefault();
         
-        if (isMenuOpen) toggleMobileMenu();
-        
+        // Guardar referencias antes de cerrar el menú
         const targetId = link.getAttribute('href');
         if (!targetId || !header) return;
         
@@ -313,21 +320,54 @@ const currentPath = Astro.url.pathname;
         const adjustAttr = link.getAttribute('data-scroll-adjust');
         const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
         
-        if (targetIdClean === 'home') {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        } else {
-          const targetSection = document.querySelector(targetId);
-          if (targetSection) {
-            const headerHeight = header.offsetHeight;
-            const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+        // Cerrar el menú con un pequeño retraso para que se vea la animación
+        if (isMenuOpen) {
+          // Añadir clase de animación de salida
+          link.classList.add('clicked');
+          
+          // Retrasar el cierre del menú para permitir que se vea la animación
+          setTimeout(() => {
+            toggleMobileMenu();
             
+            // Navegar después de cerrar el menú
+            setTimeout(() => {
+              if (targetIdClean === 'home') {
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              } else {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                  const headerHeight = header.offsetHeight;
+                  const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+                  
+                  window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }
+            }, 300); // Retraso para la navegación después de cerrar el menú
+          }, 200); // Retraso para cerrar el menú
+        } else {
+          // Si el menú ya está cerrado, navegar directamente
+          if (targetIdClean === 'home') {
             window.scrollTo({
-              top: targetPosition,
+              top: 0,
               behavior: 'smooth'
             });
+          } else {
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+              const headerHeight = header.offsetHeight;
+              const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+              
+              window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+              });
+            }
           }
         }
       });
@@ -345,6 +385,24 @@ const currentPath = Astro.url.pathname;
     // Inicialización
     handleScroll();
     
+    // Manejar el evento de redimensionamiento de ventana para actualizar el indicador
+    window.addEventListener('resize', () => {
+      if (activeNavItem && navIndicator) {
+        navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
+        navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+      }
+    });
+    
+    // Manejar el evento de orientación para dispositivos móviles
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        if (activeNavItem && navIndicator) {
+          navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
+          navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+        }
+      }, 200);
+    });
+    
     if (logoLink) {
       logoLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -353,6 +411,16 @@ const currentPath = Astro.url.pathname;
           behavior: 'smooth'
         });
       });
+    }
+    
+    // Detectar si es un dispositivo táctil
+    const isTouchDevice = () => {
+      return 'ontouchstart' in window || ('maxTouchPoints' in navigator && (navigator as any).maxTouchPoints > 0);
+    };
+    
+    // Si es un dispositivo táctil, ajustar el comportamiento del menú
+    if (isTouchDevice()) {
+      document.documentElement.classList.add('touch-device');
     }
   });
 </script>
@@ -449,6 +517,17 @@ const currentPath = Astro.url.pathname;
     }
   }
   
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
   #mobile-menu nav a {
     animation: fadeUpIn 0.5s ease forwards;
     animation-delay: calc(0.1s * var(--index, 0));
@@ -462,15 +541,38 @@ const currentPath = Astro.url.pathname;
   /* Mejora en animaciones de elementos del menu móvil */
   .mobile-nav-item {
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: calc(0.1s * var(--index, 0));
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
+  }
+  
+  .mobile-nav-item.animated {
+    animation: fadeInUp 0.5s forwards;
+    animation-delay: var(--delay, 0s);
   }
   
   #mobile-menu.opacity-100 .mobile-nav-item {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  /* Animación al hacer clic en un elemento del menú */
+  .mobile-nav-item.clicked {
+    animation: pulseOut 0.3s forwards;
+  }
+  
+  @keyframes pulseOut {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
   }
   
   .mobile-nav-item::after {
@@ -491,27 +593,93 @@ const currentPath = Astro.url.pathname;
   
   /* Mejoras en el menú móvil */
   #mobile-menu {
-    transform: translateY(-20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-100%);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    height: 100vh;
   }
   
   #mobile-menu.opacity-100 {
     transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  /* Mejoras de accesibilidad */
-  @media (max-width: 768px) {
-    .nav-item {
-      padding: 0.75rem 1rem;
+  /* Animaciones mejoradas para el menú móvil */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-    
-    #mobile-menu {
-      transform: translateY(-20px);
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    #mobile-menu[aria-hidden="false"] {
+    to {
+      opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .mobile-nav-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+  }
+
+  #mobile-menu.opacity-100 .mobile-nav-item {
+    animation: slideIn 0.5s forwards;
+    animation-delay: calc(0.1s * var(--index, 0));
+  }
+
+  .mobile-nav-item:hover {
+    color: #000;
+    transform: translateY(-2px);
+  }
+
+  /* Mejoras para dispositivos táctiles */
+  @media (max-width: 768px) {
+    .mobile-nav-item {
+      padding: 1rem 0;
+      font-size: 1.5rem;
+      width: 100%;
+      text-align: center;
+      touch-action: manipulation;
+    }
+
+    .burger-icon {
+      width: 24px;
+      height: 18px;
+      position: relative;
+      z-index: 50;
+    }
+
+    .burger-line {
+      background-color: #000;
+      height: 2px;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+
+    #mobile-toggle[aria-expanded="true"] .burger-line:first-child {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    #mobile-toggle[aria-expanded="true"] .burger-line:last-child {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    #main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+    }
+  }
+
+  /* Estilos para el botón de cierre */
+  #mobile-close {
+    transition: transform 0.3s ease;
+  }
+
+  #mobile-close:hover {
+    transform: rotate(90deg);
   }
 </style>
