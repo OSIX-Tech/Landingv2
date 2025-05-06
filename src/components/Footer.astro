@@ -28,28 +28,6 @@ const contactInfo = [
     text: 'osixtechteam@gmail.com'
   }
 ];
-
-// Redes sociales
-const socialLinks = [
-  { 
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
-          </svg>`, 
-    url: '#' 
-  },
-  { 
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
-          </svg>`, 
-    url: '#' 
-  },
-  { 
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-4.5 16.5v-9.375h-1.875v9.375h1.875zm-.938-10.688c.604 0 1.13-.393 1.13-.984s-.526-.985-1.13-.985c-.63 0-1.162.393-1.162.985 0 .591.532.984 1.162.984zm8.663 10.688v-5.325c0-1.771-.931-2.625-2.18-2.625-1.037 0-1.704.615-1.987 1.205v-1.005h-1.993v7.75h1.976v-4.492c0-.719.543-1.289 1.259-1.289.699 0 1.025.521 1.025 1.289v4.492h1.9z"/>
-          </svg>`, 
-    url: '#' 
-  }
-];
 ---
 
 <footer class="relative bg-black text-white py-20 overflow-hidden">
@@ -66,19 +44,6 @@ const socialLinks = [
         <p class="text-gray-400 font-light leading-relaxed">
           We create innovative solutions for your business. We specialize in mobile, web, and desktop development with cutting-edge technologies.
         </p>
-        
-        <!-- Redes sociales -->
-        <div class="flex space-x-4 pt-0">
-          {socialLinks.map(social => (
-            <a 
-              href={social.url} 
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all duration-300"
-              aria-label="Social link"
-            >
-              <Fragment set:html={social.icon} />
-            </a>
-          ))}
-        </div>
       </div>
 
       <!-- Columna 2: Enlaces rápidos -->
@@ -112,17 +77,6 @@ const socialLinks = [
             </li>
           ))}
         </ul>
-        
-        <!-- Botón de contacto -->
-        <button 
-          data-contact-toggle
-          class="inline-flex items-center justify-center h-10 px-6 py-0 mt-4 text-sm font-medium bg-white text-black transition-all duration-300 rounded-full hover:bg-gray-200 hover:scale-105"
-        >
-          <span>Contact us</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </button>
       </div>
     </div>
 
