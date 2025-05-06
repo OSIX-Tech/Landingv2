@@ -9,20 +9,18 @@ const values: string[] = [
   "Client-Centered Solutions"
 ];
 ---
-
-<section id="values" class="w-full min-h-[90vh] sm:min-h-screen flex flex-col justify-center bg-white py-12 sm:py-16">
-  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+ <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 value-section-container">
     <h2 class="section-title">
       Our <span class="font-bold">Core Values</span>
     </h2>
     
-    <div class="mt-8 sm:mt-12">
+    <div class="mt-8 flex justify-center" >
       <ol class="space-y-6 sm:space-y-8">
         {values.map((value: string, idx: number) => (
-          <li class="flex items-baseline gap-4 sm:gap-8 value-item" style={`--delay: ${idx * 0.1}s`}>
+          <li class="flex items-baseline gap-4 sm:gap-8 value-item" style={`--delay: ${idx * 0.15}s`}>
             <span class="text-3xl sm:text-4xl md:text-5xl font-bold text-black min-w-[50px] sm:min-w-[60px] text-left value-number">{String(idx+1).padStart(2, '0')}</span>
             <div class="flex flex-col">
-              <span class="text-xl sm:text-2xl md:text-3xl font-normal text-black">{value}</span>
+              <span class="text-2xl sm:text-3xl md:text-5xl font-normal text-black">{value}</span>
               <div class="h-1 bg-black mt-2 w-0 value-line"></div>
             </div>
           </li>
@@ -30,54 +28,79 @@ const values: string[] = [
       </ol>
     </div>
   </div>
-</section>
 
 <style>
-  /* Animación para los números */
-  .value-number {
-    position: relative;
-    display: inline-block;
-    transition: transform 0.3s ease;
-  }
-  
-  .value-item:hover .value-number {
-    transform: scale(1.1);
-    color: rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Animación para la línea */
-  .value-line {
-    transition: width 0.5s ease;
-  }
-  
-  .value-item:hover .value-line {
-    width: 100%;
-  }
-  
-  /* Animación de entrada */
   .value-item {
     opacity: 0;
-    transform: translateX(-20px);
-    animation: slideIn 0.5s ease forwards;
+    transform: translateX(50px); /* Initial position: off-screen to the right */
+    animation: slideInFromRight 2s cubic-bezier(0.22, 1, 0.36, 1) forwards; /* Slower: 2s duration */
     animation-delay: var(--delay, 0s);
   }
-  
-  @keyframes slideIn {
+
+  @keyframes slideInFromRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px); /* Start from off-screen to the right */
+    }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0); /* End at original position */
     }
   }
-  
-  /* Mejoras para dispositivos táctiles */
-  @media (hover: none) {
-    .value-item:active .value-line {
-      width: 100%;
-    }
-    
-    .value-item:active .value-number {
-      transform: scale(1.1);
-      color: rgba(0, 0, 0, 0.7);
-    }
-  }
-</style> 
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sectionContainer = document.querySelector('.value-section-container'); 
+    if (!sectionContainer) return;
+
+    const items = sectionContainer.querySelectorAll('.value-item');
+    if (!items || items.length === 0) return;
+
+    let animationTimeoutId: number | null = null; // Use 'number' for browser setTimeout ID
+
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.target === sectionContainer) {
+          if (entry.isIntersecting) {
+            // Clear any existing timeout to prevent multiple queued animations
+            if (animationTimeoutId !== null) { // Check against null for clarity
+              clearTimeout(animationTimeoutId);
+            }
+            // Set a timeout before starting animations
+            animationTimeoutId = setTimeout(() => {
+              items.forEach((item, idx) => {
+                const el = item as HTMLElement;
+                // 1. Explicitly set to pre-animation state and clear old animation
+                el.style.opacity = '0';
+                el.style.transform = 'translateX(50px)';
+                el.style.animation = ''; // Clear any inline animation styles
+
+                // 2. Force browser to apply the reset styles (reflow)
+                el.offsetHeight; 
+
+                // 3. Apply the new animation instance
+                el.style.animation = `slideInFromRight 2s cubic-bezier(0.22, 1, 0.36, 1) forwards ${idx * 0.15}s`;
+              });
+            }, 500); // 1-second delay
+          } else {
+            // If a timeout is pending when scrolling out, clear it
+            if (animationTimeoutId !== null) { // Check against null for clarity
+              clearTimeout(animationTimeoutId);
+              animationTimeoutId = null;
+            }
+            // Reset items immediately when they go out of view
+            items.forEach(item => {
+              const el = item as HTMLElement;
+              el.style.animation = 'none'; 
+              el.style.opacity = '0';
+              el.style.transform = 'translateX(50px)';
+            });
+          }
+        }
+      });
+    }, { threshold: 0.2 }); 
+
+    observer.observe(sectionContainer);
+  });
+</script>

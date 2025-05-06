@@ -13,7 +13,6 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
   const visibleProjects = showAll ? projects : projects.slice(0, 6);
 
   return (
-    <section className="min-h-[80vh] sm:min-h-screen flex items-start justify-center pt-4 sm:pt-8 bg-white relative overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
         <h2 className="section-title">
           Our <span className="font-bold">Projects</span>
@@ -55,7 +54,6 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
           </div>
         )}
       </div>
-    </section>
   );
 };
 

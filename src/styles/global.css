@@ -35,10 +35,11 @@ body {
 
 /* ---------- Section Titles ---------- */
 .section-title {
-  @apply text-4xl md:text-5xl lg:text-6xl font-light mb-6 md:mb-8 lg:mb-10;
+  @apply text-3xl md:text-4xl lg:text-5xl font-light;
   position: relative;
   padding-top: 2rem;
   padding-left: 2rem;
+  padding-bottom: 2rem;
   text-align: left !important;
   margin-left: 0 !important;
   width: 100%;
@@ -53,7 +54,7 @@ body {
   width: calc(100% - 2rem);
   height: 1px;
   background-color: var(--black);
-  opacity: 0.1;
+  opacity: 1;
 }
 
 /* ---------- OSIX Utility Classes ---------- */
@@ -88,12 +89,12 @@ body {
 }
 
 .section {
-  padding: 5rem 0;
+  /* No padding */
 }
 
 @media (max-width: 640px) {
   .section {
-    padding: 3rem 1rem;
+    /* No padding */
   }
 
   .section-title {
@@ -202,8 +203,7 @@ body {
 
 /* Estilos para cada sección */
 section {
-  position: relative;
-  min-height: 100vh; /* Altura mínima */
+  position: relative;/* Altura mínima */
   width: 100%;
   display: flex;
   flex-direction: column;

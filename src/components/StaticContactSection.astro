@@ -2,15 +2,14 @@
 // StaticContactSection.astro - Sección de contacto estática
 ---
 
-<section id="contact" class="w-full min-h-[90vh] sm:min-h-screen flex items-center justify-center bg-white py-10 sm:py-12 md:py-16">
-  <div class="w-full max-w-7xl mx-auto px-6 md:px-12">
+  <div id="contact-div" class="w-full max-w-7xl mx-auto px-6 md:px-12 min-h-[90vh] static-contact-container">
     <h2 class="section-title">
-      Get in <span class="font-bold">Touch</span>
+      Our <span class="font-bold">Contact</span>
     </h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 mt-8 sm:mt-10 md:mt-12">
       <!-- Columna izquierda: Información de contacto -->
-      <div class="space-y-8">
+      <div class="space-y-8 contact-info-col animate-on-scroll">
         <div class="space-y-4">
           <h3 class="text-xl sm:text-2xl font-bold">Contact Information</h3>
           <p class="text-gray-600">Fill out the form and our team will get back to you within 24 hours.</p>
@@ -45,7 +44,7 @@
       </div>
       
       <!-- Columna derecha: Formulario -->
-      <div class="bg-black rounded-lg p-6 sm:p-8">
+      <div class="bg-black rounded-lg p-6 sm:p-8 contact-form-col animate-on-scroll">
         <form id="static-contact-form" class="space-y-4">
           <div>
             <label for="name" class="block text-white mb-2">Name</label>
@@ -96,13 +95,38 @@
       </div>
     </div>
   </div>
-</section>
+
+<style>
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* Keyframes for the animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    #contact-div {
+      margin-bottom: 1rem;
+    }
+  }
+
+</style>
 
 <script>
   import { initEmailJS, sendEmail } from '../utils/emailjs.js';
 
   document.addEventListener('DOMContentLoaded', () => {
-    // Initialize EmailJS
+    // EmailJS Initialization
     initEmailJS();
     
     const staticContactForm = document.getElementById('static-contact-form') as HTMLFormElement | null;
@@ -118,7 +142,6 @@
         submitButton.textContent = 'Sending...';
         submitButton.disabled = true;
         
-        // Get form data
         const formData = new FormData(staticContactForm);
         const templateParams = {
           user_name: formData.get('user_name'),
@@ -126,16 +149,11 @@
           message: formData.get('message')
         };
         
-        // Send email using EmailJS
         sendEmail(templateParams)
           .then(function(response) {
             console.log('SUCCESS!', response.status, response.text);
             submitButton.textContent = 'Message sent!';
-            
-            // Reset form
             staticContactForm.reset();
-            
-            // Reset button after 3 seconds
             setTimeout(() => {
               submitButton.textContent = originalButtonText;
               submitButton.disabled = false;
@@ -144,8 +162,6 @@
           .catch(function(error) {
             console.log('FAILED...', error);
             submitButton.textContent = 'Error sending message';
-            
-            // Reset button after 3 seconds
             setTimeout(() => {
               submitButton.textContent = originalButtonText;
               submitButton.disabled = false;
@@ -153,5 +169,56 @@
           });
       });
     }
+
+    // Intersection Observer for animations
+    const sectionContainer = document.querySelector('.static-contact-container');
+    if (!sectionContainer) return;
+
+    const animatedElements = [
+      sectionContainer.querySelector('.contact-info-col'),
+      sectionContainer.querySelector('.contact-form-col')
+    ].filter(el => el !== null) as HTMLElement[];
+
+    if (animatedElements.length === 0) return;
+
+    let animationTimeoutId: number | null = null;
+
+    // Initially hide elements that will be animated
+    animatedElements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.animation = 'none'; // Ensure no CSS animation plays on load
+    });
+
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.target === sectionContainer) {
+          if (entry.isIntersecting) {
+            if (animationTimeoutId !== null) {
+              clearTimeout(animationTimeoutId);
+            }
+            animationTimeoutId = setTimeout(() => {
+              animatedElements.forEach((el, idx) => {
+                el.offsetHeight; // Force reflow
+                el.style.animation = `fadeInUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards ${idx * 0.2}s`; 
+              });
+            }, 500); // Current timeout value from user
+          } else {
+            if (animationTimeoutId !== null) {
+              clearTimeout(animationTimeoutId);
+              animationTimeoutId = null;
+            }
+            // Reset elements to their pre-animation state when out of view
+            animatedElements.forEach(el => {
+              el.style.animation = 'none';
+              el.style.opacity = '0';
+              el.style.transform = 'translateY(30px)';
+            });
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(sectionContainer);
   });
 </script> 

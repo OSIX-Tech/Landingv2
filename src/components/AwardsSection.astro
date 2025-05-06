@@ -24,26 +24,25 @@ const awards = [
   }
 ];
 ---
-<section id="awards" class="w-full min-h-[90vh] sm:min-h-screen flex flex-col justify-center bg-white py-10 sm:py-6 lg:py-0 relative">
-  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 awards-section-container">
     <h2 class="section-title">
       Our <span class="font-bold">Awards</span>
     </h2>
     
     <!-- Versión para escritorio - Timeline horizontal con hexágonos -->  
-    <div class="hidden md:block space-y-0 relative mt-8">
+    <div class="desktop-awards hidden md:block space-y-0 relative mt-8">
       <!-- Línea vertical central (desktop) -->
       <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-black transform -translate-x-1/2 z-0"></div>
       
       {awards.map((award, idx) => (
-        <div class="grid grid-cols-3 items-center relative">
+        <div class="desktop-award-entry grid grid-cols-[1fr_auto_1fr] items-center relative gap-x-8" data-side={idx % 2 === 0 ? 'left' : 'right'}>
           <!-- Columna izquierda -->
-          <div class={`${idx % 2 === 0 ? 'text-right pr-4 lg:pr-8' : ''}`.trim()}>
+          <div class={`${idx % 2 === 0 ? 'text-right' : ''}`.trim()}>
             {idx % 2 === 0 && (
-              <div class="max-w-lg ml-auto">
+              <div class="w-full max-w-xs ml-auto">
                 <div class="text-sm text-gray-700 mb-1">{award.date}</div>
                 <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
-                <p class="text-sm sm:text-base">{award.description}</p>
+                <p class="text-sm sm:text-base mb-1">{award.description}</p>
               </div>
             )}
           </div>
@@ -54,12 +53,12 @@ const awards = [
             </div>
           </div>
           <!-- Columna derecha -->
-          <div class={`${idx % 2 === 1 ? 'text-left pl-4 lg:pl-8' : ''}`.trim()}>
+          <div class={`${idx % 2 === 1 ? 'text-left' : ''}`.trim()}>
             {idx % 2 === 1 && (
-              <div class="max-w-lg mr-auto">
+              <div class="w-full max-w-xs mr-auto">
                 <div class="text-sm text-gray-700 mb-1">{award.date}</div>
                 <h3 class="text-xl sm:text-2xl font-bold mb-1">{award.title}</h3>
-                <p class="text-sm sm:text-base">{award.description}</p>
+                <p class="text-sm sm:text-base max-w-lg">{award.description}</p>
               </div>
             )}
           </div>
@@ -68,10 +67,10 @@ const awards = [
     </div>
     
     <!-- Versión para móviles - Tarjetas apiladas -->
-    <div class="md:hidden mt-8">
+    <div class="mobile-awards md:hidden mt-8">
       <div class="flex flex-col space-y-4">
         {awards.map((award, index) => (
-          <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100" style={`--index: ${index}`}>
+          <div class="mobile-award-card bg-white rounded-lg shadow-md overflow-hidden border border-gray-100" style={`--index: ${index}`}>
             <div class="bg-black p-3 flex items-center">
               <div class="bg-white p-1 rounded-full mr-3">
                 <img src="/logo_pre.svg" alt="Logo" class="w-6 h-6" />
@@ -87,9 +86,25 @@ const awards = [
       </div>
     </div>
   </div>
-</section>
 
-<style>
+<style is:global>
+  .desktop-award-entry, .mobile-award-card {
+    opacity: 0;
+  }
+  .desktop-award-entry.animate-from-left { transform: translateX(-50px); }
+  .desktop-award-entry.animate-from-right { transform: translateX(50px); }
+  .mobile-award-card.animate-up { transform: translateY(30px); }
+
+  @keyframes slideInFromLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInFromRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* Estilos para la versión de escritorio */
   #awards .grid {
     margin-bottom: 2rem;
@@ -117,21 +132,78 @@ const awards = [
   #awards img:hover {
     transform: scale(1.1);
   }
-  
-  /* Animación de entrada para las tarjetas */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  #awards .md\:hidden .rounded-lg {
-    animation: fadeInUp 0.5s ease forwards;
-    animation-delay: calc(var(--index, 0) * 0.1s);
-  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sectionContainer = document.querySelector('.awards-section-container');
+    if (!sectionContainer) return;
+
+    const desktopAwardsContainer = sectionContainer.querySelector('.desktop-awards') as HTMLElement | null;
+    const mobileAwardsContainer = sectionContainer.querySelector('.mobile-awards') as HTMLElement | null;
+
+    let animationTimeoutId: number | null = null;
+
+    const resetElements = (elements: HTMLElement[], initialClass?: string) => {
+      elements.forEach(el => {
+        el.style.animation = 'none';
+        el.style.opacity = '0';
+        el.classList.remove('animate-from-left', 'animate-from-right', 'animate-up');
+        if(initialClass) el.classList.add(initialClass);
+        if (el.dataset.side === 'left') el.style.transform = 'translateX(-50px)';
+        else if (el.dataset.side === 'right') el.style.transform = 'translateX(50px)';
+        else el.style.transform = 'translateY(30px)';
+      });
+    };
+
+    const animateElements = (elements: HTMLElement[], isDesktop: boolean) => {
+      elements.forEach((el, idx) => {
+        el.offsetHeight; // Reflow
+        let animName = 'fadeInUp';
+        if (isDesktop) {
+          animName = el.dataset.side === 'left' ? 'slideInFromLeft' : 'slideInFromRight';
+        }
+        el.style.animation = `${animName} 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards ${idx * 0.15}s`;
+      });
+    };
+    
+    const allDesktopEntries = Array.from(desktopAwardsContainer?.querySelectorAll('.desktop-award-entry') || []) as HTMLElement[];
+    const allMobileCards = Array.from(mobileAwardsContainer?.querySelectorAll('.mobile-award-card') || []) as HTMLElement[];
+    resetElements(allDesktopEntries); // Call with one arg, initialClass will be undefined
+    resetElements(allMobileCards);   // Call with one arg, initialClass will be undefined
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.target === sectionContainer) {
+          if (entry.isIntersecting) {
+            if (animationTimeoutId !== null) clearTimeout(animationTimeoutId);
+            
+            const currentDesktopEntries = Array.from(desktopAwardsContainer?.querySelectorAll('.desktop-award-entry') || []) as HTMLElement[];
+            const currentMobileCards = Array.from(mobileAwardsContainer?.querySelectorAll('.mobile-award-card') || []) as HTMLElement[];
+            resetElements(currentDesktopEntries);
+            resetElements(currentMobileCards);
+
+            animationTimeoutId = setTimeout(() => {
+              if (desktopAwardsContainer && mobileAwardsContainer) { // Ensure containers exist
+                const isDesktopView = window.getComputedStyle(desktopAwardsContainer).display !== 'none';
+                if (isDesktopView) {
+                  animateElements(currentDesktopEntries, true);
+                } else {
+                  animateElements(currentMobileCards, false);
+                }
+              }
+            }, 500);
+          } else {
+            if (animationTimeoutId !== null) clearTimeout(animationTimeoutId);
+            const currentDesktopEntries = Array.from(desktopAwardsContainer?.querySelectorAll('.desktop-award-entry') || []) as HTMLElement[];
+            const currentMobileCards = Array.from(mobileAwardsContainer?.querySelectorAll('.mobile-award-card') || []) as HTMLElement[];
+            resetElements(currentDesktopEntries);
+            resetElements(currentMobileCards);
+          }
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(sectionContainer);
+  });
+</script>

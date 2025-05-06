@@ -57,7 +57,6 @@ const {
     <main>
       <slot />
     </main>
-    <Footer />
   </body>
 </html>
 
@@ -114,21 +113,14 @@ const {
 
   /* Estilos para secciones */
   section {
-    min-height: 100vh;
+    margin-bottom: 20vh;
     width: 100%;
     position: relative;
-    padding: 1rem;
+    padding: 0rem;
+  }
+
+  section:last-child {
+    margin-bottom: 0;
   }
   
-  @media (min-width: 640px) {
-    section {
-      padding: 1.5rem;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    section {
-      padding: 2rem;
-    }
-  }
 </style>

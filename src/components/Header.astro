@@ -4,12 +4,12 @@
 // (Eliminada la importación de Services)
 
 const navItems = [
-  { label: 'Services', href: '#services', scrollAdjust: -80 },
-  { label: 'Values', href: '#values', scrollAdjust: -80 },
-  { label: 'Projects', href: '#projects', scrollAdjust: -130 },
-  { label: 'About Us', href: '#about', scrollAdjust: -80 },
-  { label: 'Awards', href: '#awards', scrollAdjust: -80 },
-  
+  { label: 'Home', href: '#home',         scrollAdjust: 0 },
+  { label: 'Services', href: '#services', scrollAdjust: 0 },
+  { label: 'Values', href: '#values',     scrollAdjust: 0 },
+  { label: 'Projects', href: '#projects', scrollAdjust: 0 },
+  { label: 'About Us', href: '#about',    scrollAdjust: 0 },
+  { label: 'Awards', href: '#awards',     scrollAdjust: 0 },
 ];
 
 // Añadir clase activa para la página actual
@@ -19,7 +19,7 @@ const currentPath = Astro.url.pathname;
 <header class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm" id="main-header">
   <div class="mx-auto px-3 sm:px-6 md:px-10 py-2 sm:py-3 md:py-5">
     <div class="flex items-center justify-between">
-      <a href="#home" class="flex items-center z-10 logo-link">
+      <a href="/" class="flex items-center z-10 logo-link">
         <img
           src="/full_logo.png"
           alt="OSIX Logo"
@@ -49,7 +49,7 @@ const currentPath = Astro.url.pathname;
       
       <!-- CTA button -->
       <div class="hidden md:block">
-        <a href="#contact" class="inline-flex items-center justify-center h-9 sm:h-10 px-4 sm:px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-md hover:shadow-lg hover:shadow-black/20 hover:scale-105" data-scroll-adjust="-80">
+        <a href="#contact" class="inline-flex items-center justify-center h-9 sm:h-10 px-4 sm:px-5 py-0 text-sm font-medium bg-black text-white transition-all duration-300 rounded-md hover:shadow-lg hover:shadow-black/20 hover:scale-105" data-scroll-adjust="-60">
           <span>Contact</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 -mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -92,7 +92,7 @@ const currentPath = Astro.url.pathname;
       })}
       
       <div class="w-full max-w-xs pt-6">
-        <a href="#contact" class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium bg-black text-white transition-all duration-300 rounded-full hover:opacity-90 hover:scale-105">
+        <a href="#contact" class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium bg-black text-white transition-all duration-300 rounded-full hover:opacity-90 hover:scale-105" data-scroll-adjust="-60">
           Contact
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -135,10 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       if (sectionId === 'home') {
-        if (navIndicator) {
-          navIndicator.style.opacity = '0';
+        // Make home active but keep indicator visible for home
+        const homeNavItem = document.querySelector(`nav .nav-item[href="#home"]`) as HTMLElement;
+        if (homeNavItem) {
+          homeNavItem.classList.add('nav-active');
+          activeNavItem = homeNavItem;
+          
+          if (navIndicator) {
+            navIndicator.style.width = `${homeNavItem.offsetWidth - 32}px`;
+            navIndicator.style.left = `${homeNavItem.offsetLeft + 12}px`;
+            navIndicator.style.opacity = '1';
+          }
         }
-        activeNavItem = null;
         return;
       }
       
@@ -148,8 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
         activeNavItem = targetNavItem;
         
         if (navIndicator) {
-          navIndicator.style.width = `${targetNavItem.offsetWidth - 20}px`;
-          navIndicator.style.left = `${targetNavItem.offsetLeft + 10}px`;
+          navIndicator.style.width = `${targetNavItem.offsetWidth - 32}px`;
+          navIndicator.style.left = `${targetNavItem.offsetLeft + 12}px`;
           navIndicator.style.opacity = '1';
         }
       }
@@ -159,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     navItems.forEach(item => {
       item.addEventListener('mouseenter', () => {
         if (!isMenuOpen && navIndicator) {
-          navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 20}px`;
-          navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 10}px`;
+          navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 32}px`;
+          navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 12}px`;
           navIndicator.style.opacity = '1';
           item.classList.add('nav-hover');
         }
@@ -171,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
           item.classList.remove('nav-hover');
           
           if (activeNavItem) {
-            navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
-            navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+            navIndicator.style.width = `${activeNavItem.offsetWidth - 32}px`;
+            navIndicator.style.left = `${activeNavItem.offsetLeft + 12}px`;
             navIndicator.style.opacity = '1';
           } else {
             navIndicator.style.opacity = '0';
@@ -199,8 +207,8 @@ document.addEventListener('DOMContentLoaded', () => {
           if (item.getAttribute('href') === targetId) {
             item.classList.add('nav-active');
             if (navIndicator) {
-              navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 20}px`;
-              navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 10}px`;
+              navIndicator.style.width = `${(item as HTMLElement).offsetWidth - 32}px`;
+              navIndicator.style.left = `${(item as HTMLElement).offsetLeft + 12}px`;
               navIndicator.style.opacity = '1';
               activeNavItem = item as HTMLElement;
             }
@@ -208,10 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         if (targetIdClean === 'home') {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
+          // Use smooth scrolling for a consistent experience
+          smoothScrollTo(0, 2000);
         } else {
           const targetSection = document.querySelector(targetId);
           if (targetSection && header) {
@@ -220,39 +226,80 @@ document.addEventListener('DOMContentLoaded', () => {
             const headerHeight = header.offsetHeight;
             const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
             
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
+            // Improved smooth scrolling
+            smoothScrollTo(targetPosition, 2000);
           }
         }
         
         setTimeout(() => {
           disableIndicatorUpdate = false;
-        }, 700);
+        }, 2000);
       });
     });
+    
+    // Helper function for smoother scrolling
+    function smoothScrollTo(targetPosition: number, duration: number) {
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      let startTime: number | null = null;
+      
+      function animation(currentTime: number) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+        
+        window.scrollTo(0, startPosition + distance * ease);
+        
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      }
+      
+      // Easing function for smoother acceleration and deceleration
+      function easeInOutCubic(t: number) {
+        return t < 0.5 
+          ? 4 * t * t * t 
+          : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+      
+      requestAnimationFrame(animation);
+    }
     
     // Activar enlaces según la sección visible
     function setActiveNavItem() {
       if (disableIndicatorUpdate || !header) return;
 
+      // Get all sections that have IDs
       const sections = document.querySelectorAll('section[id]');
-      let scrollPosition = window.scrollY + header.offsetHeight + 100;
+      // Adjust scroll position to account for header height and provide some buffer
+      let scrollPosition = window.scrollY + header.offsetHeight;
       let foundActiveSection = false;
       
+      // First section (home) special handling - make it active for the first viewport height
+      const firstSection = document.querySelector('section#home') || document.querySelector('section:first-of-type');
+      if (firstSection && scrollPosition < (firstSection as HTMLElement).offsetHeight) {
+        updateIndicatorBySection('home');
+        return;
+      }
+      
+      // Check each section
       sections.forEach(section => {
-        const sectionTop = (section as HTMLElement).offsetTop;
+        const sectionTop = (section as HTMLElement).offsetTop - header.offsetHeight; // Account for fixed header
         const sectionHeight = (section as HTMLElement).offsetHeight;
         const sectionId = section.getAttribute('id');
         
-        if (sectionId && scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        // Check if current scroll position is within this section
+        if (sectionId && 
+            scrollPosition >= sectionTop && 
+            scrollPosition < sectionTop + sectionHeight) {
           updateIndicatorBySection(sectionId);
           foundActiveSection = true;
         }
       });
       
-      if (!foundActiveSection && scrollPosition < 100 + header.offsetHeight) {
+      // Default to home if no section is found active
+      if (!foundActiveSection) {
         updateIndicatorBySection('home');
       }
     }
@@ -332,20 +379,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Navegar después de cerrar el menú
             setTimeout(() => {
               if (targetIdClean === 'home') {
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth'
-                });
+                // Use smooth scrolling for a consistent experience
+                smoothScrollTo(0, 800);
               } else {
                 const targetSection = document.querySelector(targetId);
                 if (targetSection) {
                   const headerHeight = header.offsetHeight;
                   const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
                   
-                  window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                  });
+                  // Use smooth scrolling for direct navigation too
+                  smoothScrollTo(targetPosition, 1000);
                 }
               }
             }, 300); // Retraso para la navegación después de cerrar el menú
@@ -353,43 +396,57 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           // Si el menú ya está cerrado, navegar directamente
           if (targetIdClean === 'home') {
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth'
-            });
+            // Use smooth scrolling for a consistent experience
+            smoothScrollTo(0, 800);
           } else {
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
               const headerHeight = header.offsetHeight;
               const targetPosition = targetSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
               
-              window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-              });
+              // Use smooth scrolling for direct navigation too
+              smoothScrollTo(targetPosition, 1000);
             }
           }
         }
       });
     });
     
-    // Event listeners
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', () => {
-      if (activeNavItem && navIndicator) {
-        navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
-        navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
-      }
+    // Add event listener for contact buttons (desktop and mobile)
+    const contactButtons = document.querySelectorAll('a[href="#contact"]');
+    contactButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        if (isMenuOpen) toggleMobileMenu();
+        
+        const contactSection = document.querySelector('#contact');
+        if (contactSection && header) {
+          const adjustAttr = button.getAttribute('data-scroll-adjust');
+          const customAdjust = adjustAttr ? parseInt(adjustAttr) : 0;
+          const headerHeight = header.offsetHeight;
+          const targetPosition = contactSection.getBoundingClientRect().top + window.pageYOffset - headerHeight - customAdjust;
+            
+          // Use the same smooth scrolling function
+          smoothScrollTo(targetPosition, 2000);
+        }
+      });
     });
     
     // Inicialización
     handleScroll();
     
+    // Force Home to be active on initial page load
+    updateIndicatorBySection('home');
+    
+    // Event listeners
+    window.addEventListener('scroll', handleScroll);
+    
     // Manejar el evento de redimensionamiento de ventana para actualizar el indicador
     window.addEventListener('resize', () => {
       if (activeNavItem && navIndicator) {
-        navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
-        navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+        navIndicator.style.width = `${activeNavItem.offsetWidth - 40}px`;
+        navIndicator.style.left = `${activeNavItem.offsetLeft + 20}px`;
       }
     });
     
@@ -397,8 +454,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('orientationchange', () => {
       setTimeout(() => {
         if (activeNavItem && navIndicator) {
-          navIndicator.style.width = `${activeNavItem.offsetWidth - 20}px`;
-          navIndicator.style.left = `${activeNavItem.offsetLeft + 10}px`;
+          navIndicator.style.width = `${activeNavItem.offsetWidth - 40}px`;
+          navIndicator.style.left = `${activeNavItem.offsetLeft + 20}px`;
         }
       }, 200);
     });
@@ -406,10 +463,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoLink) {
       logoLink.addEventListener('click', (e) => {
         e.preventDefault();
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        // Use the smooth scroll function for the logo as well
+        smoothScrollTo(0, 800);
       });
     }
     
