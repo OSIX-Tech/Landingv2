@@ -192,7 +192,7 @@ const awards = [
                   animateElements(currentMobileCards, false);
                 }
               }
-            }, 500);
+            }, 200);
           } else {
             if (animationTimeoutId !== null) clearTimeout(animationTimeoutId);
             const currentDesktopEntries = Array.from(desktopAwardsContainer?.querySelectorAll('.desktop-award-entry') || []) as HTMLElement[];
@@ -202,7 +202,7 @@ const awards = [
           }
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.1 });
 
     observer.observe(sectionContainer);
   });

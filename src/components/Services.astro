@@ -78,10 +78,10 @@
     let animationTimeoutId: number | null = null;
 
     const elementsToAnimate = [
-      { el: imageContainer, animName: 'fadeInUp', duration: '0.8s', delay: '0s', initialTransform: 'translateY(30px)' },
-      { el: textContainer, animName: 'fadeInRight', duration: '1s', delay: '0.3s', initialTransform: 'translateX(30px)' },
-      { el: text1, animName: 'fadeInUp', duration: '0.8s', delay: '0.6s', initialTransform: 'translateY(20px)' },
-      { el: text2, animName: 'fadeInUp', duration: '0.8s', delay: '0.9s', initialTransform: 'translateY(20px)' }
+      { el: imageContainer, animName: 'fadeInUp', duration: '0.6s', delay: '0s', initialTransform: 'translateY(30px)' },
+      { el: textContainer, animName: 'fadeInRight', duration: '0.8s', delay: '0.2s', initialTransform: 'translateX(30px)' },
+      { el: text1, animName: 'fadeInUp', duration: '0.6s', delay: '0.4s', initialTransform: 'translateY(20px)' },
+      { el: text2, animName: 'fadeInUp', duration: '0.6s', delay: '0.6s', initialTransform: 'translateY(20px)' }
     ];
 
     // Function to set elements to their pre-animation (hidden) state
@@ -112,7 +112,7 @@
                 item.el.style.animation = `${item.animName} ${item.duration} ease forwards ${item.delay}`;
                 // Opacity will be handled by the 'forwards' fill mode of the animation
               });
-            }, 500); // 500ms delay
+            }, 100); // 500ms delay
           } else {
             if (animationTimeoutId !== null) {
               clearTimeout(animationTimeoutId);

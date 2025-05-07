@@ -82,7 +82,7 @@ const values: string[] = [
                 // 3. Apply the new animation instance
                 el.style.animation = `slideInFromRight 2s cubic-bezier(0.22, 1, 0.36, 1) forwards ${idx * 0.15}s`;
               });
-            }, 500); // 1-second delay
+            }, 300); // 1-second delay
           } else {
             // If a timeout is pending when scrolling out, clear it
             if (animationTimeoutId !== null) { // Check against null for clarity
