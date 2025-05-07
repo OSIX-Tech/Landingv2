@@ -21,7 +21,7 @@ const ProjectsGrid = ({ jsonPath = '/src/data/projects.json' }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8 mt-6 sm:mt-8">
           {visibleProjects.map((project, idx) => (
             <div key={idx} className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl bg-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-              <a href={project.url} className="block aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden">
+              <a href={project.url} className="block aspect-[16/9] sm:aspect-[4/5] md:aspect-[3/4] w-full overflow-hidden">
                 <img 
                   src={project.image} 
                   alt={project.title} 
