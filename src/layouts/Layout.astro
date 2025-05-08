@@ -7,7 +7,7 @@ const {
   title = 'OSIX - Innovation & Development',
   description = 'We create innovative solutions for your business. We specialize in mobile, web, and desktop development with cutting-edge technologies.',
   image = '/favicon.png',
-  canonical = Astro.url.href
+  canonical = 'https://osix.tech'
 } = Astro.props;	
 ---
 
@@ -24,12 +24,11 @@ const {
     <meta name="description" content={description} />
 
     <!-- Favicon base -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="shortcut icon" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <!-- SEO Meta Tags -->
     <meta name="robots" content="index, follow" />
