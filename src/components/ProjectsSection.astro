@@ -1,7 +1,59 @@
 ---
 // ProjectsSection.astro - Sección de Proyectos
 
-import ProjectsGrid from './ProjectsGrid.jsx';
+import { promise } from 'astro:schema';
+import ProjectsGrid from './ProjectsSlider.jsx';
+
+interface Project {
+    title: string;
+    category: string;
+    image: string;
+    video?: string;
+    client: string,
+    url: string;
+  }
+  
+  const projects: Project[] = [
+  {
+    title: "Web oPills",
+    category: "Web Design",
+    image: "/opills.png",
+    client: "oPills",
+    url: "https://opills.app/"
+  },
+  {
+    title: "Paso de Informatica",
+    category: "Web Design",
+    image: "/pasoinfo.jpg",
+    client: "Paso Info",
+    url: "https://pasoinfousc.com/"
+  },
+  {
+    title: "Web Shearn",
+    category: "Web Design",
+    image: "/shearn.jpg",
+    client: "Shearn",
+    url: "https://shearn-agent-local.vercel.app/"
+  },
+  {
+    title: "oNote",
+    category: "Mobile App",
+    image: "/onote.jpg",
+    video: "/onote.mp4",
+    client: "oNote",
+    url: "https://github.com/ppazosp/oNote/"
+  },
+  {
+    title: "Wearendar",
+    category: "Mobile App",
+    image: "/wearendar.jpeg",
+    video: "/wearendar.mp4",
+    client: "Wearendar",
+    url: "https://github.com/SrFreiRe/wearendar/"
+  }
+
+] 
+
 ---
 
- <ProjectsGrid jsonPath="/projects.json" client:load />
+ <ProjectsGrid projects={projects} client:load />

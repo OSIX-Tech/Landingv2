@@ -1,5 +1,10 @@
 ---
 import { Image } from 'astro:assets';
+
+import AboutSlider from './AboutSlider.jsx';
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css';
+import '../styles/global.css';
 // Services.astro - Sección de servicios con iconos de animales
 
 interface TeamMember {
@@ -65,7 +70,7 @@ const teamMembers: TeamMember[] = [
     imageScale: 1
   },
   {
-    name: "Nel Raposeiras",
+    name: "David Raposeiras",
     role: "Cibersecurity expert",
     bio: "Security and infrastructure.",
     image: "/team/nelfoto.jpeg",
@@ -82,7 +87,7 @@ const teamMembers: TeamMember[] = [
       Our <span class="font-bold">Team</span>
     </h2>
     
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-3 mt-6 sm:mt-8">
+    <div class="hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-3 mt-6 sm:mt-8">
       {teamMembers.map(member => (
         <div 
           class="relative group bg-black rounded-lg shadow-lg flex flex-col items-center justify-center p-3 sm:p-4 transition-all duration-300 hover:-translate-y-2 cursor-pointer h-64 sm:h-64 overflow-hidden" 
@@ -132,6 +137,10 @@ const teamMembers: TeamMember[] = [
           </div>
         </div>
       ))}
+    </div>
+
+    <div class="block sm:hidden mt-8">
+      <AboutSlider client:only="react" members={teamMembers} />
     </div>
   </div>
 

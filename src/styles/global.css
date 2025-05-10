@@ -265,6 +265,11 @@ section {
 
 /* Mejoras para móvil */
 @media (max-width: 768px) {
+
+  section {
+    margin-bottom: 10vh !important;
+  }
+
   .section-dots {
     right: 0.5rem;
   }
@@ -343,4 +348,27 @@ section {
     transform: translateY(1rem);
     opacity: 0;
   }
+}
+
+.slick-prev, .slick-next {
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slick-prev:before, .slick-next:before {
+  color: black !important;
+  font-size: 28px !important;
+}
+
+/* Explicit symmetrical arrow positioning for slick arrows */
+.slick-prev {
+  left: -32px !important;
+  right: auto !important;
+}
+
+.slick-next {
+  right: -24px !important;
+  left: auto !important;
 }
