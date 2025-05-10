@@ -56,7 +56,7 @@ const ProjectsGrid = ({ projects }) => {
   // Slider settings
   const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -73,8 +73,6 @@ const ProjectsGrid = ({ projects }) => {
           slidesToShow: 2,
           slidesToScroll: 1,
           arrows: false,
-          autoplaySpeed: 3000,
-          autoplay: true,
         },
       },
       {
@@ -83,8 +81,6 @@ const ProjectsGrid = ({ projects }) => {
           slidesToShow: 1,
           slidesToScroll: 1,
           arrows: false,
-          autoplaySpeed: 3000,
-          autoplay: true,
         },
       },
     ],
