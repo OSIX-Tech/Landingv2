@@ -1,17 +1,12 @@
-// EmailJS configuration utility
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with your user ID
+const SERVICE_ID   = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID  = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY   = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+
 export const initEmailJS = () => {
-  // Replace 'YOUR_USER_ID' with your actual EmailJS User ID
-  emailjs.init('vhZy2LlRMx7BHGfwF');
+  emailjs.init(PUBLIC_KEY);
 };
 
-// Send an email using EmailJS
-export const sendEmail = (templateParams) => {
-  // Replace these with your actual EmailJS Service ID and Template ID
-  const serviceId = 'service_x9314cb';
-  const templateId = 'template_qjx00y9';
-  
-  return emailjs.send(serviceId, templateId, templateParams);
-};
+export const sendEmail = (templateParams) =>
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);

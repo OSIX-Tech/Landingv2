@@ -7,7 +7,7 @@
       Our <span class="font-bold">Contact</span>
     </h2>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 mt-8 sm:mt-10 md:mt-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 mt-8 sm:mt-10 md:mt-12 mb-28">
       <!-- Columna izquierda: Información de contacto -->
       <div class="space-y-8 contact-info-col animate-on-scroll">
         <div class="space-y-4">
@@ -55,8 +55,8 @@
               class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
               required
               minlength="2"
-              pattern="[A-Za-z\s]+"
-              title="Please enter a valid name (letters and spaces only)"
+              pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$"
+              title="Please enter a valid name (letters, spaces, apostrophes or hyphens only)"
             />
           </div>
           
@@ -79,7 +79,7 @@
               id="message"
               name="message"
               rows="4"
-              class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
+              class="no-resize w-full px-3 sm:px-4 py-2 sm:py-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
               required
               minlength="10"
             ></textarea>
@@ -87,7 +87,7 @@
           
           <button
             type="submit"
-            class="w-full bg-white text-black py-2 sm:py-3 px-4 sm:px-6 rounded font-medium hover:bg-gray-100 transition-colors duration-300 text-sm sm:text-base"
+            class="w-full bg-white text-black py-4 sm:py-3 px-4 sm:px-6 rounded font-medium hover:bg-gray-100 transition-colors duration-300 text-sm sm:text-base mt-4"
           >
             Send Message
           </button>
@@ -143,10 +143,21 @@
         submitButton.disabled = true;
         
         const formData = new FormData(staticContactForm);
+        
+        const date = new Date().toLocaleString('en-US', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        });
+
         const templateParams = {
-          user_name: formData.get('user_name'),
+          user_name:  formData.get('user_name'),
           user_email: formData.get('user_email'),
-          message: formData.get('message')
+          message:    formData.get('message'),
+          date,              
         };
         
         sendEmail(templateParams)
