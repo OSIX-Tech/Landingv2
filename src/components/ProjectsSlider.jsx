@@ -12,24 +12,25 @@ const ProjectsGrid = ({ projects }) => {
   const [isMobile, setIsMobile] = useState(false);
   const videoRefs = useRef([]);
 
-  const handleMouseEnter = useCallback((index) => {
+
+  const handleMouseEnter = (e) => {
     if (!isMobile) {
-      const vid = videoRefs.current[index];
+      const vid = e.currentTarget.querySelector('video');
       if (vid) {
         vid.currentTime = 0;
-        vid.play().catch(() => {});
+        vid.play().catch((err) => console.warn('play() failed', err));
       }
     }
-  }, [isMobile]);
-
-  const handleMouseLeave = useCallback((index) => {
+  };
+  
+  const handleMouseLeave = (e) => {
     if (!isMobile) {
-      const vid = videoRefs.current[index];
+      const vid = e.currentTarget.querySelector('video');
       if (vid) {
         vid.pause();
       }
     }
-  }, [isMobile]);
+  };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -40,7 +41,15 @@ const ProjectsGrid = ({ projects }) => {
   useEffect(() => {
     if (isMobile) {
       videoRefs.current.forEach(video => {
-        if (video) video.play().catch(() => {});
+        if (video) {
+          video.currentTime = 0;
+          video.play().catch(() => {});
+        }
+      });
+    } else {
+      // Pause all videos when not mobile
+      videoRefs.current.forEach(video => {
+        if (video) video.pause();
       });
     }
   }, [isMobile, projects]);
@@ -97,8 +106,8 @@ const ProjectsGrid = ({ projects }) => {
             <div key={idx} className="px-2"> {/* Padding between slides */}
               <div
                 className="group relative overflow-hidden rounded-lg sm:rounded-xl md:rounded-2xl bg-gray-100 transition-all duration-300 hover:shadow-xl"
-                onMouseEnter={() => handleMouseEnter(idx)}
-                onMouseLeave={() => handleMouseLeave(idx)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <a href={project.url} target="_blank" rel="noopener noreferrer" className="block aspect-[5/7] sm:aspect-[3/5] md:aspect-[3/5] w-full overflow-hidden">
                   <div className="relative w-full h-full">
@@ -116,7 +125,6 @@ const ProjectsGrid = ({ projects }) => {
                         src={project.video}
                         autoPlay={isMobile}
                         muted
-                        defaultMuted
                         loop
                         playsInline
                         className={`absolute inset-0 w-full h-full object-contain bg-black transition-opacity duration-[1000ms] ${
