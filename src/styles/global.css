@@ -270,6 +270,14 @@ section {
     margin-bottom: 10vh !important;
   }
 
+  section:first-child {
+    margin-bottom: 0vh !important;
+  }
+
+  section:first-child {
+    margin-bottom: 0vh !important;
+  }
+
   .section-dots {
     right: 0.5rem;
   }
