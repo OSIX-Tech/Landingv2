@@ -274,7 +274,7 @@ section {
     margin-bottom: 0vh !important;
   }
 
-  section:first-child {
+  section:last-child {
     margin-bottom: 0vh !important;
   }
 
