@@ -116,6 +116,19 @@ declare global {
 
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
+    const heroSection = document.querySelector('section#home') as HTMLElement | null;
+
+    // Show header only after the hero section scrolls out of view
+    function toggleHeaderVisibility() {
+      if (!header || !heroSection) return;
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      if (heroBottom <= header.offsetHeight) {
+        header.classList.add('visible');
+      } else {
+        header.classList.remove('visible');
+      }
+    }
     const navItems = document.querySelectorAll('.nav-item');
     const navIndicator = document.getElementById('nav-indicator');
     const mobileToggle = document.getElementById('mobile-toggle');
@@ -315,6 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       setActiveNavItem();
+      // Show or hide the header based on hero visibility
+      toggleHeaderVisibility();
     }
     
     // Toggle del menú móvil
@@ -435,6 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicialización
     handleScroll();
+    // Ensure correct visibility state on initial load
+    toggleHeaderVisibility();
     
     // Force Home to be active on initial page load
     updateIndicatorBySection('home');
@@ -484,6 +501,14 @@ document.addEventListener('DOMContentLoaded', () => {
   #main-header {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 500;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  #main-header.visible {
+    transform: translateY(0);
+    opacity: 1;
   }
   
   /* Estilos para la navegación limpia */
