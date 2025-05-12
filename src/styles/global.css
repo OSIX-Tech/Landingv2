@@ -299,11 +299,6 @@ section {
     width: calc(100% - 1rem);
   }
   
-  /* Ajustes de tamaño de texto para móviles */
-  h1 {
-    font-size: 2rem !important;
-  }
-  
   h2 {
     font-size: 1.75rem !important;
   }
