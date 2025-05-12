@@ -4,7 +4,6 @@
 // (Eliminada la importación de Services)
 
 const navItems = [
-  { label: 'Home', href: '#home',         scrollAdjust: 0 },
   { label: 'Services', href: '#services', scrollAdjust: 0 },
   { label: 'Values', href: '#values',     scrollAdjust: 0 },
   { label: 'Projects', href: '#projects', scrollAdjust: 0 },
@@ -481,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
       logoLink.addEventListener('click', (e) => {
         e.preventDefault();
         // Use the smooth scroll function for the logo as well
-        smoothScrollTo(0, 800);
+        smoothScrollTo(0, 2000);
       });
     }
     
