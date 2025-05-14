@@ -128,6 +128,7 @@ const ProjectsGrid = ({ projects }) => {
                         loop
                         playsInline
                         preload="auto"
+                        poster={project.image}
                         className={`absolute inset-0 w-full h-full object-contain bg-black transition-opacity duration-[1000ms] ${
                           isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                         }`}
