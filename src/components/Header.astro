@@ -147,36 +147,36 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeNavItem: HTMLElement | null = null;
     let disableIndicatorUpdate = false;
     
-    // Función para actualizar el indicador de navegación
+    // Función para actualizar el indicador de navegación y mostrar/ocultar el header según la sección
     function updateIndicatorBySection(sectionId: string) {
       navItems.forEach(item => {
         item.classList.remove('nav-active');
       });
-      
-      if (sectionId === 'home') {
-        // Make home active but keep indicator visible for home
-        const homeNavItem = document.querySelector(`nav .nav-item[href="#home"]`) as HTMLElement;
-        if (homeNavItem) {
-          homeNavItem.classList.add('nav-active');
-          activeNavItem = homeNavItem;
-          
-          if (navIndicator) {
-            navIndicator.style.width = `${homeNavItem.offsetWidth - 32}px`;
-            navIndicator.style.left = `${homeNavItem.offsetLeft + 12}px`;
-            navIndicator.style.opacity = '1';
-          }
-        }
-        return;
-      }
-      
+
       const targetNavItem = document.querySelector(`nav .nav-item[href="#${sectionId}"]`) as HTMLElement;
       if (targetNavItem) {
         targetNavItem.classList.add('nav-active');
         activeNavItem = targetNavItem;
-        
+
         if (navIndicator) {
           navIndicator.style.width = `${targetNavItem.offsetWidth - 32}px`;
           navIndicator.style.left = `${targetNavItem.offsetLeft + 12}px`;
+          navIndicator.style.opacity = '1';
+        }
+
+        header?.classList.add('visible');
+      } else if (sectionId === 'contact') {
+        // Ocultar el indicador y el header solo en la sección de contacto
+        activeNavItem = null;
+        if (navIndicator) {
+          navIndicator.style.opacity = '0';
+        }
+        header?.classList.remove('visible');
+      } else {
+        // Si no se detecta sección activa (por scroll intermedio), mantener el último estado
+        if (activeNavItem && navIndicator) {
+          navIndicator.style.width = `${activeNavItem.offsetWidth - 32}px`;
+          navIndicator.style.left = `${activeNavItem.offsetLeft + 12}px`;
           navIndicator.style.opacity = '1';
         }
       }
