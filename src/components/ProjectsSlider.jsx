@@ -123,10 +123,11 @@ const ProjectsGrid = ({ projects }) => {
                       <video
                         ref={el => videoRefs.current[idx] = el}
                         src={project.video}
-                        autoPlay={isMobile}
+                        autoPlay
                         muted
                         loop
                         playsInline
+                        preload="auto"
                         className={`absolute inset-0 w-full h-full object-contain bg-black transition-opacity duration-[1000ms] ${
                           isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                         }`}

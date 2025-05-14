@@ -106,6 +106,9 @@ const currentPath = Astro.url.pathname;
 
 <script>
   // Script para manejar la navegación interactiva
+
+import { px } from "framer-motion";
+
   // Prevenir errores de TypeScript
 declare global {
   interface Window {
@@ -122,10 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!header || !heroSection) return;
 
       const heroBottom = heroSection.getBoundingClientRect().bottom;
-      if (heroBottom <= header.offsetHeight) {
+      const logoContainer = document.getElementById('hero-logo-container');
+
+      if (heroBottom <= header.offsetHeight + 200) {
         header.classList.add('visible');
+        if (logoContainer) logoContainer.style.opacity = '0';
       } else {
         header.classList.remove('visible');
+        if (logoContainer) logoContainer.style.opacity = '1';
       }
     }
     const navItems = document.querySelectorAll('.nav-item');
@@ -502,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
     font-weight: 500;
     transform: translateY(-100%);
     opacity: 0;
-    transition: transform 0.4s ease, opacity 0.4s ease;
+    transition: transform 0.5s ease, opacity 0.5s ease;
   }
 
   #main-header.visible {

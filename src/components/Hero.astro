@@ -16,14 +16,17 @@ export interface Props {
     muted
     loop
     playsinline
+    preload="auto"
+    poster="/hero.jpg" 
     class="absolute inset-0 w-full h-full object-cover z-0"
   >
+    <source src="/hero_video_60fps.webm" type="video/webm" />
     <source src="/hero_video_60fps.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
   <!-- Center headline & logo -->
-  <div class="absolute bottom-32 md:bottom-28 left-1/2 transform -translate-x-1/2 z-10">
+  <div id="hero-logo-container" class="absolute bottom-32 md:bottom-28 left-1/2 transform -translate-x-1/2 z-10 transition-opacity duration-500">
     <img
       src="/full_logo.png"
       alt="OSIX logo"
