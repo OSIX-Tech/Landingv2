@@ -204,7 +204,10 @@
     }
 
     // Privacy‑Policy modal logic
-    const privacyPolicyBtn = document.getElementById('privacy-policy-btn') as HTMLButtonElement | null;
+    const privacyPolicyBtns = [
+      document.getElementById('privacy-policy-btn'),
+      document.getElementById('privacy-policy-btn-mobile')
+    ].filter(Boolean) as HTMLButtonElement[];
     const privacyPolicyModal = document.getElementById('privacy-policy-modal') as HTMLDivElement | null;
     const closePrivacyPolicyBtn = document.getElementById('close-privacy-policy') as HTMLButtonElement | null;
 
@@ -220,8 +223,8 @@
       }
     }
 
-    if (privacyPolicyBtn && privacyPolicyModal && closePrivacyPolicyBtn) {
-      privacyPolicyBtn.addEventListener('click', openPrivacyModal);
+    if (privacyPolicyBtns.length && privacyPolicyModal && closePrivacyPolicyBtn) {
+      privacyPolicyBtns.forEach(btn => btn.addEventListener('click', openPrivacyModal));
       closePrivacyPolicyBtn.addEventListener('click', closePrivacyModal);
 
       // Close when clicking outside the dialog content
@@ -373,7 +376,7 @@
     <div class="block md:hidden mb-8 px-6 flex justify-start">
       <div class="flex items-start gap-4">
         <button
-          id="privacy-policy-btn"
+          id="privacy-policy-btn-mobile"
           type="button"
           class="group flex items-center gap-4 py-8 rounded-lg border border-transparent
                  hover:border-black focus:outline-none transition"
