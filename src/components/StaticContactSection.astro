@@ -210,6 +210,7 @@
     ].filter(Boolean) as HTMLButtonElement[];
     const privacyPolicyModal = document.getElementById('privacy-policy-modal') as HTMLDivElement | null;
     const closePrivacyPolicyBtn = document.getElementById('close-privacy-policy') as HTMLButtonElement | null;
+    const closePrivacyPolicyFloatingBtn = document.getElementById('close-privacy-policy-floating') as HTMLButtonElement | null;
 
     function openPrivacyModal() {
       if (privacyPolicyModal) {
@@ -225,7 +226,9 @@
 
     if (privacyPolicyBtns.length && privacyPolicyModal && closePrivacyPolicyBtn) {
       privacyPolicyBtns.forEach(btn => btn.addEventListener('click', openPrivacyModal));
-      closePrivacyPolicyBtn.addEventListener('click', closePrivacyModal);
+      [closePrivacyPolicyBtn, closePrivacyPolicyFloatingBtn].forEach(btn => {
+        if (btn) btn.addEventListener('click', closePrivacyModal);
+      });
 
       // Close when clicking outside the dialog content
       privacyPolicyModal.addEventListener('click', (event) => {
@@ -247,6 +250,8 @@
     const tabTermsBtn   = document.getElementById('tab-terms')   as HTMLButtonElement | null;
     const privacyPanel  = document.getElementById('tab-privacy-content') as HTMLDivElement | null;
     const termsPanel    = document.getElementById('tab-terms-content')   as HTMLDivElement | null;
+    const textContainer    = document.getElementById('text-container')   as HTMLDivElement | null;
+
 
     function activateTab(isPrivacy: boolean) {
       if (!tabPrivacyBtn || !tabTermsBtn || !privacyPanel || !termsPanel) return;
@@ -261,6 +266,10 @@
 
         privacyPanel.classList.remove('hidden');
         termsPanel.classList.add('hidden');
+
+        if (textContainer) {
+          textContainer.scrollTop = 0;
+        }
       } else {
         // Activate Terms tab
         tabTermsBtn.classList.add('border-black', 'font-semibold', 'text-black');
@@ -271,6 +280,10 @@
 
         termsPanel.classList.remove('hidden');
         privacyPanel.classList.add('hidden');
+
+        if (textContainer) {
+          textContainer.scrollTop = 0;
+        }
       }
     }
 
@@ -338,7 +351,7 @@
   class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex  items-start justify-center p-4 md:p-8 lg:py-16 z-50"
 >
   
-  <div class="relative bg-white rounded-lg p-8 w-full max-w-4xl max-h-full overflow-y-auto flex flex-col">
+  <div class="relative bg-white rounded-lg p-8 w-full max-w-4xl max-h-full flex flex-col">
     <!-- Tabs -->
     <div class="flex border-b mb-4">
       <button id="tab-privacy" type="button"
@@ -353,12 +366,14 @@
       </button>
     </div>
 
-    <!-- Tab panels -->
-    <div id="tab-terms-content" class="markdown-body text-black hidden">
-      <ISP />
-    </div>
-    <div id="tab-privacy-content" class="markdown-body text-black">
-      <PP />
+    <div id="text-container" class="overflow-y-auto">
+      <!-- Tab panels -->
+      <div id="tab-terms-content" class="markdown-body text-black hidden">
+        <ISP />
+      </div>
+      <div id="tab-privacy-content" class="markdown-body text-black">
+        <PP />
+      </div>
     </div>
     <!-- Close button at bottom‑right of panel -->
     <button
