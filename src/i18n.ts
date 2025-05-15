@@ -6,7 +6,7 @@ export async function initI18n(lang: string) {
     lng: lang,
     fallbackLng: 'en',
     backend: {
-      loadPath: 'locales/{{lng}}.json'
+      loadPath: '/locales/{{lng}}.json'
     }
   });
   return i18next;
