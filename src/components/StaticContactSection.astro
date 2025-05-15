@@ -1,5 +1,7 @@
 ---
-// StaticContactSection.astro - Sección de contacto estática
+  // StaticContactSection.astro - Sección de contacto estática
+  import ISP from '../content/information-security-policy_esp.md';
+  import PP from '../content/privacy-policy.md';
 ---
 
   <div id="contact-div" class="w-full max-w-7xl mx-auto px-6 md:px-12 min-h-[90vh] static-contact-container">
@@ -12,7 +14,7 @@
       <div class="space-y-8 contact-info-col animate-on-scroll">
         <div class="space-y-4">
           <h3 class="text-xl sm:text-2xl font-bold">Contact Information</h3>
-          <p class="text-gray-600">Fill out the form and our team will get back to you within 24 hours.</p>
+          <p class="font-normal">Fill out the form and our team will get back to you within 24 hours.</p>
         </div>
         
         <div class="space-y-6">
@@ -25,7 +27,7 @@
             </div>
             <div>
               <h4 class="font-semibold">Location</h4>
-              <p class="text-gray-600">Santiago de Compostela, Spain</p>
+              <p class="font-normal">Santiago de Compostela, Spain</p>
             </div>
           </div>
           
@@ -37,7 +39,25 @@
             </div>
             <div>
               <h4 class="font-semibold">Email</h4>
-              <p class="text-gray-600">osixtechteam@gmail.com</p>
+              <p class="font-normal">info@osix.tech</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <button
+              id="privacy-policy-btn"
+              type="button"
+              class="w-10 h-10 rounded-full bg-black flex items-center justify-center flex-shrink-0
+                     transition-transform duration-200 ease-out hover:scale-110
+                    focus:outline-none active:scale-95"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4z"/>
+              </svg>
+            </button>
+            <div>
+              <h4 class="font-semibold">Privacy Policy</h4>
+              <p class="font-normal">Read our policy on data protection.</p>
             </div>
           </div>
         </div>
@@ -175,6 +195,79 @@
       });
     }
 
+    // Privacy‑Policy modal logic
+    const privacyPolicyBtn = document.getElementById('privacy-policy-btn') as HTMLButtonElement | null;
+    const privacyPolicyModal = document.getElementById('privacy-policy-modal') as HTMLDivElement | null;
+    const closePrivacyPolicyBtn = document.getElementById('close-privacy-policy') as HTMLButtonElement | null;
+
+    function openPrivacyModal() {
+      if (privacyPolicyModal) {
+        privacyPolicyModal.classList.remove('hidden');
+      }
+    }
+
+    function closePrivacyModal() {
+      if (privacyPolicyModal) {
+        privacyPolicyModal.classList.add('hidden');
+      }
+    }
+
+    if (privacyPolicyBtn && privacyPolicyModal && closePrivacyPolicyBtn) {
+      privacyPolicyBtn.addEventListener('click', openPrivacyModal);
+      closePrivacyPolicyBtn.addEventListener('click', closePrivacyModal);
+
+      // Close when clicking outside the dialog content
+      privacyPolicyModal.addEventListener('click', (event) => {
+        if (event.target === privacyPolicyModal) {
+          closePrivacyModal();
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !privacyPolicyModal.classList.contains('hidden')) {
+          closePrivacyModal();
+        }
+      });
+    }
+
+    // Tab logic within modal
+    const tabPrivacyBtn = document.getElementById('tab-privacy') as HTMLButtonElement | null;
+    const tabTermsBtn   = document.getElementById('tab-terms')   as HTMLButtonElement | null;
+    const privacyPanel  = document.getElementById('tab-privacy-content') as HTMLDivElement | null;
+    const termsPanel    = document.getElementById('tab-terms-content')   as HTMLDivElement | null;
+
+    function activateTab(isPrivacy: boolean) {
+      if (!tabPrivacyBtn || !tabTermsBtn || !privacyPanel || !termsPanel) return;
+
+      if (isPrivacy) {
+        // Activate Privacy tab
+        tabPrivacyBtn.classList.add('border-black', 'font-semibold', 'text-black');
+        tabPrivacyBtn.classList.remove('border-transparent', 'text-gray-600');
+
+        tabTermsBtn.classList.add('border-transparent', 'text-gray-600');
+        tabTermsBtn.classList.remove('border-black', 'font-semibold', 'text-black');
+
+        privacyPanel.classList.remove('hidden');
+        termsPanel.classList.add('hidden');
+      } else {
+        // Activate Terms tab
+        tabTermsBtn.classList.add('border-black', 'font-semibold', 'text-black');
+        tabTermsBtn.classList.remove('border-transparent', 'text-gray-600');
+
+        tabPrivacyBtn.classList.add('border-transparent', 'text-gray-600');
+        tabPrivacyBtn.classList.remove('border-black', 'font-semibold', 'text-black');
+
+        termsPanel.classList.remove('hidden');
+        privacyPanel.classList.add('hidden');
+      }
+    }
+
+    if (tabPrivacyBtn && tabTermsBtn) {
+      tabPrivacyBtn.addEventListener('click', () => activateTab(true));
+      tabTermsBtn.addEventListener('click', () => activateTab(false));
+    }
+
     // Intersection Observer for animations
     const sectionContainer = document.querySelector('.static-contact-container');
     if (!sectionContainer) return;
@@ -226,4 +319,45 @@
 
     observer.observe(sectionContainer);
   });
-</script> 
+</script>
+
+<!-- Privacy Policy Modal -->
+<div
+  id="privacy-policy-modal"
+  class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex  items-start justify-center p-4 md:p-8 lg:py-16 z-50"
+>
+  
+  <div class="relative bg-white rounded-lg p-8 w-full max-w-4xl max-h-full overflow-y-auto flex flex-col">
+    <!-- Tabs -->
+    <div class="flex border-b mb-4">
+      <button id="tab-privacy" type="button"
+        class="tab-btn px-4 pb-2 font-semibold border-b-2 border-black text-black hover:text-black transition-colors"
+      >
+        Privacy policy
+      </button>
+      <button id="tab-terms" type="button"
+        class="tab-btn px-4 pb-2 border-b-2 border-transparent text-gray-600 hover:text-black transition-colors"
+      >
+        Information Security Policy
+      </button>
+    </div>
+
+    <!-- Tab panels -->
+    <div id="tab-terms-content" class="markdown-body text-black hidden">
+      <ISP />
+    </div>
+    <div id="tab-privacy-content" class="markdown-body text-black">
+      <PP />
+    </div>
+    <!-- Close button at bottom‑right of panel -->
+    <button
+      id="close-privacy-policy"
+      type="button"
+      aria-label="Close modal"
+      class="self-end mt-6 bg-black text-white px-4 py-2 rounded
+             hover:bg-gray-900 transition focus:outline-none"
+    >
+      Close
+    </button>
+  </div>
+</div>
