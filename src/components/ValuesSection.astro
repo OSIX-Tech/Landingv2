@@ -1,19 +1,20 @@
 ---
-// ValuesSection.astro - Sección de valores tipo mockup
+import { initI18n } from '../i18n';
+
+const { lang } = Astro.params;
+const i18n = await initI18n(lang || 'en');
+const t = i18n.t.bind(i18n);
 
 const values: string[] = [
-  "High-Quality Software",
-  "Fast and Efficient Development",
-  "Cutting-Edge Technology Stack",
-  "Flexibility and Adaptability",
-  "Client-Centered Solutions"
+  t('values.1'),
+  t('values.2'),
+  t('values.3'),
+  t('values.4'),
+  t('values.5')
 ];
 ---
  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 value-section-container">
-    <h2 class="section-title">
-      Our <span class="font-bold">Core Values</span>
-    </h2>
-    
+  <h2 class="section-title" set:html={t('values.title')}></h2>
     <div class="mt-8 flex justify-center" >
       <ol class="space-y-6 sm:space-y-8">
         {values.map((value: string, idx: number) => (

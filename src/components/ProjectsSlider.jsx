@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import sliderPkg from 'react-slick';
 const Slider = sliderPkg.default || sliderPkg;
@@ -7,7 +7,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../styles/global.css';
 
-const ProjectsGrid = ({ projects }) => {
+const ProjectsGrid = ({ projects, texts }) => {
   const [loaded, setLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const videoRefs = useRef([]);
@@ -97,10 +97,7 @@ const ProjectsGrid = ({ projects }) => {
 
   return (
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative overflow-visible">
-        <h2 className="section-title">
-          Our <span className="font-bold">Projects</span>
-        </h2>
-        
+       <h2 className="section-title" dangerouslySetInnerHTML={{ __html: texts.title }} />
         <Slider {...settings}> {/* Wrap the project cards in the Slider component */}
           {visibleProjects.map((project, idx) => (
             <div key={idx} className="px-2"> {/* Padding between slides */}
@@ -145,7 +142,7 @@ const ProjectsGrid = ({ projects }) => {
                     {project.title}
                   </h3>
                   <p className="text-white/70 text-[10px] sm:text-xs md:text-sm">
-                    Client: {project.client}
+                    {texts.client}: {project.client}
                   </p>
                 </div>
               </div>

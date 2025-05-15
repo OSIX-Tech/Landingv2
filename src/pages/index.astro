@@ -1,50 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import ValuesSection from '../components/ValuesSection.astro';
-import AboutSection from '../components/AboutSection.astro';
-import ProjectsSection from '../components/ProjectsSection.astro';
-import AwardsSection from '../components/AwardsSection.astro';
-import StaticContactSection from '../components/StaticContactSection.astro';
 
 ---
-
-<Layout>
-  <section id="hero"><Hero /></section>
-  <section id="services"><Services /></section>
-  <section id="values"><ValuesSection /></section>
-  <section id="projects"><ProjectsSection /></section>
-  <section id="about"><AboutSection /></section>
-  <section id="awards"><AwardsSection /></section>
-  <section id="contact"><StaticContactSection /></section>
-</Layout>
-
-<style>
-  .contact-section {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-
-  .contact-section.visible {
-    transform: translateY(0);
-    opacity: 1;
-  }
-</style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const contactSection = document.querySelector('.contact-section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    if (contactSection) {
-      observer.observe(contactSection);
-    }
-  });
-</script>
+<html>
+  <head>
+    <script>
+      const supported = ['en', 'es'];
+      const browserLang = (navigator.language || 'en').split('-')[0];
+      const lang = supported.includes(browserLang) ? browserLang : 'en';
+      window.location.replace(`/${lang}/`);
+    </script>
+  </head>
+  <body></body>
+</html>

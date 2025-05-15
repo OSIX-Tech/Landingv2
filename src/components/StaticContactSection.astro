@@ -1,20 +1,28 @@
 ---
-  // StaticContactSection.astro - Sección de contacto estática
-  import ISP from '../content/information-security-policy_esp.md';
-  import PP from '../content/privacy-policy.md';
+import { initI18n } from '../i18n';
+
+const { lang } = Astro.params;
+const i18n = await initI18n(lang || 'en');
+const t = i18n.t.bind(i18n);
+
+let PP, ISP;
+try {
+  PP = (await import(`../content/${lang}/privacy-policy_${lang}.md`)).default;
+  ISP = (await import(`../content/${lang}/information-security-policy_${lang}.md`)).default;
+} catch {
+  PP = (await import(`../content/en/privacy-policy_en.md`)).default;
+  ISP = (await import(`../content/en/information-security-policy_en.md`)).default;
+}
 ---
 
   <div id="contact-div" class="w-full max-w-7xl mx-auto px-6 md:px-12 min-h-[90vh] static-contact-container">
-    <h2 class="section-title">
-      Our <span class="font-bold">Contact</span>
-    </h2>
-    
+    <h2 class="section-title" set:html={t('contact.title')}></h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 mt-8 sm:mt-10 md:mt-12 mb-4 lg:mb-28">
       <!-- Columna izquierda: Información de contacto -->
       <div class="space-y-8 contact-info-col animate-on-scroll flex flex-col h-full">
         <div class="space-y-4">
-          <h3 class="text-xl sm:text-2xl font-bold">Contact Information</h3>
-          <p class="font-normal">Fill out the form and our team will get back to you within 24 hours.</p>
+          <h3 class="text-xl sm:text-2xl font-bold">{t('contact.info.title')}</h3>
+          <p class="font-normal">{t('contact.info.text')}</p>
         </div>
         
         <div class="space-y-6 flex-1">
@@ -26,8 +34,8 @@
               </svg>
             </div>
             <div>
-              <h4 class="font-semibold">Location</h4>
-              <p class="font-normal">Santiago de Compostela, Spain</p>
+              <h4 class="font-semibold">{t('contact.location.title')}</h4>
+              <p class="font-normal">{t('contact.location.value')}</p>
             </div>
           </div>
           
@@ -38,8 +46,8 @@
               </svg>
             </div>
             <div>
-              <h4 class="font-semibold">Email</h4>
-              <p class="font-normal">info@osix.tech</p>
+              <h4 class="font-semibold">{t('contact.email.title')}</h4>
+              <p class="font-normal">{t('contact.email.value')}</p>
             </div>
           </div>
         </div>
@@ -64,7 +72,8 @@
             </div>
             <h4 class="relative font-semibold text-lg group-hover:text-black transition duration-300
             after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px]
-            after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">Privacy Policy</h4>
+            after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
+            {t('privacyPolicy.title')}</h4>
           </button>
         </div>
       </div>
@@ -73,7 +82,7 @@
       <div class="bg-black rounded-lg p-6 sm:p-8 contact-form-col animate-on-scroll">
         <form id="static-contact-form" class="space-y-4">
           <div>
-            <label for="name" class="block text-white mb-2">Name</label>
+            <label for="name" class="block text-white mb-2">{t('contact.form.name')}</label>
             <input
               type="text"
               id="name"
@@ -82,12 +91,12 @@
               required
               minlength="2"
               pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$"
-              title="Please enter a valid name (letters, spaces, apostrophes or hyphens only)"
+              title={t('contact.form.email.title')}
             />
           </div>
           
           <div>
-            <label for="email" class="block text-white mb-2">Email</label>
+            <label for="email" class="block text-white mb-2">{t('contact.form.email')}</label><label for="email" class="block text-white mb-2"></label>
             <input
               type="email"
               id="email"
@@ -95,12 +104,12 @@
               class="w-full px-3 sm:px-4 py-2 sm:py-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-white text-sm sm:text-base"
               required
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-              title="Please enter a valid email address"
+              title={t('contact.form.email.title')}
             />
           </div>
           
           <div>
-            <label for="message" class="block text-white mb-2">Message</label>
+            <label for="message" class="block text-white mb-2">{t('contact.form.message')}</label>
             <textarea
               id="message"
               name="message"
@@ -115,7 +124,7 @@
             type="submit"
             class="w-full bg-white text-black py-4 sm:py-3 px-4 sm:px-6 rounded font-medium hover:bg-gray-100 transition-colors duration-300 text-sm sm:text-base mt-4"
           >
-            Send Message
+          {t('contact.form.button')}
           </button>
         </form>
 
@@ -210,6 +219,7 @@
     ].filter(Boolean) as HTMLButtonElement[];
     const privacyPolicyModal = document.getElementById('privacy-policy-modal') as HTMLDivElement | null;
     const closePrivacyPolicyBtn = document.getElementById('close-privacy-policy') as HTMLButtonElement | null;
+    const closePrivacyPolicyFloatingBtn = document.getElementById('close-privacy-policy-floating') as HTMLButtonElement | null;
 
     function openPrivacyModal() {
       if (privacyPolicyModal) {
@@ -225,7 +235,9 @@
 
     if (privacyPolicyBtns.length && privacyPolicyModal && closePrivacyPolicyBtn) {
       privacyPolicyBtns.forEach(btn => btn.addEventListener('click', openPrivacyModal));
-      closePrivacyPolicyBtn.addEventListener('click', closePrivacyModal);
+      [closePrivacyPolicyBtn, closePrivacyPolicyFloatingBtn].forEach(btn => {
+        if (btn) btn.addEventListener('click', closePrivacyModal);
+      });
 
       // Close when clicking outside the dialog content
       privacyPolicyModal.addEventListener('click', (event) => {
@@ -247,6 +259,8 @@
     const tabTermsBtn   = document.getElementById('tab-terms')   as HTMLButtonElement | null;
     const privacyPanel  = document.getElementById('tab-privacy-content') as HTMLDivElement | null;
     const termsPanel    = document.getElementById('tab-terms-content')   as HTMLDivElement | null;
+    const textContainer    = document.getElementById('text-container')   as HTMLDivElement | null;
+
 
     function activateTab(isPrivacy: boolean) {
       if (!tabPrivacyBtn || !tabTermsBtn || !privacyPanel || !termsPanel) return;
@@ -261,6 +275,10 @@
 
         privacyPanel.classList.remove('hidden');
         termsPanel.classList.add('hidden');
+
+        if (textContainer) {
+          textContainer.scrollTop = 0;
+        }
       } else {
         // Activate Terms tab
         tabTermsBtn.classList.add('border-black', 'font-semibold', 'text-black');
@@ -271,6 +289,10 @@
 
         termsPanel.classList.remove('hidden');
         privacyPanel.classList.add('hidden');
+
+        if (textContainer) {
+          textContainer.scrollTop = 0;
+        }
       }
     }
 
@@ -338,27 +360,29 @@
   class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex  items-start justify-center p-4 md:p-8 lg:py-16 z-50"
 >
   
-  <div class="relative bg-white rounded-lg p-8 w-full max-w-4xl max-h-full overflow-y-auto flex flex-col">
+  <div class="relative bg-white rounded-lg p-8 w-full max-w-4xl max-h-full flex flex-col">
     <!-- Tabs -->
     <div class="flex border-b mb-4">
       <button id="tab-privacy" type="button"
         class="tab-btn px-4 pb-2 font-semibold border-b-2 border-black text-black hover:text-black transition-colors"
       >
-        Privacy policy
+      {t('privacyPolicy.tabs.privacy')}
       </button>
       <button id="tab-terms" type="button"
         class="tab-btn px-4 pb-2 border-b-2 border-transparent text-gray-600 hover:text-black transition-colors"
       >
-        Information Security Policy
-      </button>
+      {t('privacyPolicy.tabs.terms')}
+    </button>
     </div>
 
-    <!-- Tab panels -->
-    <div id="tab-terms-content" class="markdown-body text-black hidden">
-      <ISP />
-    </div>
-    <div id="tab-privacy-content" class="markdown-body text-black">
-      <PP />
+    <div id="text-container" class="overflow-y-auto">
+      <!-- Tab panels -->
+      <div id="tab-terms-content" class="markdown-body text-black hidden">
+        <ISP />
+      </div>
+      <div id="tab-privacy-content" class="markdown-body text-black">
+        <PP />
+      </div>
     </div>
     <!-- Close button at bottom‑right of panel -->
     <button
@@ -368,8 +392,8 @@
       class="self-end mt-6 bg-black text-white px-4 py-2 rounded
              hover:bg-gray-900 transition focus:outline-none"
     >
-      Close
-    </button>
+    {t('privacyPolicy.close')}
+  </button>
   </div>
     </div>
     <!-- Mobile Privacy Policy button, moved outside the black card -->
@@ -393,7 +417,7 @@
           <h4 class="relative font-semibold text-lg group-hover:text-black transition duration-300
           after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px]
           after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
-          Privacy Policy
+          {t('privacyPolicy.title')}
           </h4>
         </button>
       </div>
