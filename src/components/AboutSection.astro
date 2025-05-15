@@ -1,5 +1,9 @@
 ---
-import { Image } from 'astro:assets';
+import { initI18n } from '../i18n';
+
+const { lang } = Astro.params;
+const i18n = await initI18n(lang || 'en');
+const t = i18n.t.bind(i18n);
 
 import AboutSlider from './AboutSlider.jsx';
 import 'slick-carousel/slick/slick.css'; 
@@ -21,8 +25,8 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
   {
     name: "Mateo Bodenlle",
-    role: "CFO",
-    bio: "Finance and business strategy expert.",
+    role: t("about.role.cfo"),
+    bio: t("about.bio.cfo"),
     image: "/team/Mateo.jpg",
     linkedin: "https://www.linkedin.com/in/mateo-bodenlle-villarino/",
     github: "https://github.com/mateobodenlle",
@@ -31,8 +35,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Pablo Pazos",
-    role: "CTO",
-    bio: "Specialist in scalable architectures.",
+    role: t("about.role.cto"),
+    bio: t("about.bio.cto"),
     image: "/team/Pazos.jpg",
     linkedin: "https://www.linkedin.com/in/pablo-pazos-parada/",
     github: "https://github.com/ppazosp",
@@ -41,8 +45,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Diego Cristobal",
-    role: "Fullstack developer",
-    bio: "Building robust web and mobile apps.",
+    role: t("about.role.fullstack"),
+    bio: t("about.bio.fullstack"),
     image: "/team/Diego.jpeg",
     linkedin: "https://www.linkedin.com/in/diego-cristobal-andaluz-3a5580304/",
     github: "https://github.com/2cristo7",
@@ -51,8 +55,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Nicolás Corbal",
-    role: "Frontend Developer",
-    bio: "UI/UX and frontend technologies.",
+    role: t("about.role.frontend"),
+    bio: t("about.bio.frontend"),
     image: "/team/nico.jpg",
     linkedin: "#",
     github: "https://github.com/nicoCorbal",
@@ -61,8 +65,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Juan Freire",
-    role: "Backend Developer",
-    bio: "API and database specialist.",
+    role: t("about.role.backend"),
+    bio: t("about.bio.backend"),
     image: "/team/aura.jpg",
     linkedin: "#",
     github: "https://github.com/SrFreiRe",
@@ -71,8 +75,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "David Raposeiras",
-    role: "Cibersecurity expert",
-    bio: "Security and infrastructure.",
+    role: t("about.role.cyber"),
+    bio: t("about.bio.cyber"),
     image: "/team/nelfoto.jpeg",
     linkedin: "https://www.linkedin.com/in/david-manuel-raposeiras-canabal-a95028210/",
     github: "https://github.com/davrapcan",
@@ -83,10 +87,7 @@ const teamMembers: TeamMember[] = [
 ---
 
  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex flex-col justify-center">
-    <h2 class="section-title">
-      Our <span class="font-bold">Team</span>
-    </h2>
-    
+  <h2 class="section-title" set:html={t('about.title')}></h2>
     <div class="hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-3 mt-6 sm:mt-8">
       {teamMembers.map(member => (
         <div 

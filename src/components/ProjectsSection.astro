@@ -1,8 +1,18 @@
 ---
 // ProjectsSection.astro - Sección de Proyectos
 
-import { promise } from 'astro:schema';
 import ProjectsGrid from './ProjectsSlider.jsx';
+import { initI18n } from '../i18n';
+
+const { lang } = Astro.params;
+const i18n = await initI18n(lang || 'en');
+const t = i18n.t.bind(i18n);
+
+const texts = {
+  title: t('projects.title'),
+  client: t('projects.client'),
+};
+
 
 interface Project {
     title: string;
@@ -56,4 +66,4 @@ interface Project {
 
 ---
 
- <ProjectsGrid projects={projects} client:load />
+ <ProjectsGrid projects={projects} texts={texts} client:load />
