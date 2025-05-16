@@ -75,6 +75,11 @@ body {
 }
 
 /* ---------- Buttons ---------- */
+
+button, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .btn-primary {
   @apply bg-[#CD1C18] text-white hover:bg-[#A51713] transition-colors font-medium shadow-md px-6 py-2 rounded-md;
 }
