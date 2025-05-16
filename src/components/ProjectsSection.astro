@@ -2,11 +2,10 @@
 // ProjectsSection.astro - Sección de Proyectos
 
 import ProjectsGrid from './ProjectsSlider.jsx';
-import { initI18n } from '../i18n';
 
 const { lang } = Astro.params;
-const i18n = await initI18n(lang || 'en');
-const t = i18n.t.bind(i18n);
+const translations = await import(`../../public/locales/${lang}.json`);
+const t = (k: string) => translations.default[k] || k;
 
 const texts = {
   title: t('projects.title'),

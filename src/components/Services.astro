@@ -1,10 +1,7 @@
 ---
-import { initI18n } from '../i18n';
-
 const { lang } = Astro.params;
-console.log('LANG:', lang);
-const i18n = await initI18n(lang || 'en');
-const t = i18n.t.bind(i18n);
+const translations = await import(`../../public/locales/${lang}.json`);
+const t = (k: string) => translations.default[k] || k;
 ---
 
  <div class="w-full max-w-7xl mx-auto px-6 md:px-12 services-section-container">

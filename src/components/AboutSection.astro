@@ -1,14 +1,12 @@
 ---
-import { initI18n } from '../i18n';
-
-const { lang } = Astro.params;
-const i18n = await initI18n(lang || 'en');
-const t = i18n.t.bind(i18n);
-
 import AboutSlider from './AboutSlider.jsx';
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
 import '../styles/global.css';
+
+const { lang } = Astro.params;
+const translations = await import(`../../public/locales/${lang}.json`);
+const t = (k: string) => translations.default[k] || k;
 // Services.astro - Sección de servicios con iconos de animales
 
 interface TeamMember {
