@@ -248,6 +248,18 @@ const teamMembers = [
     });
   }
 
+  function debounce<T extends (...args: any[]) => any>(func: T, wait: number) {
+    let timeout: ReturnType<typeof setTimeout>;
+    return function executedFunction(...args: Parameters<T>) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
   function runScripts() {
     setupExpandingCards();
     setupMobileAccordion();
@@ -255,5 +267,5 @@ const teamMembers = [
 
   document.addEventListener('astro:page-load', runScripts);
   document.addEventListener('DOMContentLoaded', runScripts);
-  window.addEventListener('resize', gsap.debounce(runScripts, 200));
+  window.addEventListener('resize', debounce(runScripts, 200));
 </script>
