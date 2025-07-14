@@ -1,0 +1,259 @@
+---
+const teamMembers = [
+  { 
+    name: "Mateo", 
+    role: "CFO", 
+    image: "/team/mateo.jpeg", 
+    linkedin: "https://www.linkedin.com/in/mateo-bodenlle-villarino/", 
+    github: "https://github.com/mateobodenlle",
+    description: "Managing the company's finances and seeking new business opportunities, ensuring sustainable growth and strategic investments."
+  },
+  { 
+    name: "Juan", 
+    role: "Backend Developer", 
+    image: "/team/juan.jpeg", 
+    linkedin: "https://www.linkedin.com/in/juan-freire-alvarez/", 
+    github: "https://github.com/SrFreiRe",
+    description: "Specialist in database architecture and API development, ensuring our applications are powerful and scalable from the inside out."
+  },
+  { 
+    name: "Guti", 
+    role: "Street Developer", 
+    image: "/team/guti.jpg", 
+    linkedin: "#", 
+    github: "#",
+    description: "A pragmatic problem-solver who thrives on real-world challenges. Expert in rapid prototyping and finding unconventional solutions on the fly."
+  },
+  { 
+    name: "Pazos", 
+    role: "CTO", 
+    image: "/team/pazos.jpeg", 
+    linkedin: "https://www.linkedin.com/in/pablo-pazos-parada/", 
+    github: "https://github.com/ppazosp",
+    description: "Leading our technology strategy and architecture, guiding the development team to build robust and future-proof solutions."
+  },
+  { 
+    name: "Nico", 
+    role: "Frontend Developer", 
+    image: "/team/nico.jpeg", 
+    linkedin: "https://www.linkedin.com/in/nicol%C3%A1s-corbal-912929318/", 
+    github: "https://github.com/nicoCorbal",
+    description: "Passionate about creating fluid and dynamic user interfaces. Expert in modern JavaScript frameworks and turning complex designs into reality."
+  },
+  { 
+    name: "Nel", 
+    role: "Cybersecurity Expert", 
+    image: "/team/nel.jpeg", 
+    linkedin: "https://www.linkedin.com/in/david-manuel-raposeiras-canabal-a95028210/", 
+    github: "https://github.com/davrapcan",
+    description: "Dedicated to protecting our systems and user data. Specializes in identifying vulnerabilities and implementing robust security protocols."
+  },
+  { 
+    name: "Diego", 
+    role: "Mobile and Full Stack Developer", 
+    image: "/team/diego.jpeg", 
+    linkedin: "https://www.linkedin.com/in/diego-cristobal-andaluz-3a5580304/", 
+    github: "https://github.com/2cristo7",
+    description: "A versatile developer building seamless experiences across both mobile and web platforms, mastering the entire technology stack from end to end."
+  },
+];
+---
+<section class="section bg-white text-black py-20">
+  <div class="w-full max-w-7xl mx-auto px-6 md:px-12">
+    <h2 class="section-title">Our <span class="font-bold">Team</span></h2>
+
+    <!-- Desktop: Expanding Cards -->
+    <div class="hidden md:flex w-full h-[75vh] max-h-[700px] mt-16 gap-4 team-expanding-cards-container">
+      {teamMembers.map((member) => (
+        <div class="team-card flex-1 relative rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-gray-200/50">
+          <img src={member.image} alt={member.name} class="w-full h-full object-cover" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+          <div class="card-content absolute bottom-0 left-0 p-6 text-white w-full">
+            <h3 class="text-2xl font-bold translate-y-5 opacity-0">{member.name}</h3>
+            <div class="details w-full mt-4 translate-y-5 opacity-0">
+              <p class="text-md font-semibold text-white/90">{member.role}</p>
+              <p class="text-sm text-white/80 mt-2 max-w-md">{member.description}</p>
+              <div class="flex gap-4 mt-4">
+                <a href={member.linkedin} target="_blank" class="text-white/70 hover:text-white transition">
+                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-2.13-1.58-2.13-1.07 0-1.92.8-1.92 2.13V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.42c2.4 0 3.4 1.58 3.4 4.63z"/></svg>
+                </a>
+                <a href={member.github} target="_blank" class="text-white/70 hover:text-white transition">
+                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Mobile: Accordion -->
+    <div class="block md:hidden mt-8 space-y-4 team-accordion-container">
+      {teamMembers.map((member) => (
+        <div class="mobile-team-card bg-gray-50 rounded-lg overflow-hidden border border-gray-200/60">
+          <div class="mobile-card-trigger flex items-center p-4 cursor-pointer">
+            <img src={member.image} alt={member.name} class="w-16 h-16 rounded-full object-cover" />
+            <div class="ml-4">
+              <h3 class="font-bold text-lg">{member.name}</h3>
+              <p class="text-gray-600">{member.role}</p>
+            </div>
+            <div class="ml-auto arrow-icon">
+              <svg class="w-6 h-6 text-gray-400 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"></path></svg>
+            </div>
+          </div>
+          <div class="mobile-card-details overflow-hidden">
+            <div class="p-4 pt-0">
+              <p class="text-gray-700 mb-4">{member.description}</p>
+              <div class="flex gap-4">
+                <a href={member.linkedin} target="_blank" class="text-gray-500 hover:text-black transition">
+                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.74c0-1.42-.6-2.13-1.58-2.13-1.07 0-1.92.8-1.92 2.13V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.42c2.4 0 3.4 1.58 3.4 4.63z"/></svg>
+                </a>
+                <a href={member.github} target="_blank" class="text-gray-500 hover:text-black transition">
+                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { Flip } from "gsap/Flip";
+
+  // --- Desktop expanding cards ---
+  function setupExpandingCards() {
+    if (window.innerWidth < 768) return; // Don't run on mobile
+
+    gsap.registerPlugin(Flip);
+
+    const container = document.querySelector<HTMLElement>(".team-expanding-cards-container");
+    if (!container) return;
+    
+    const cards = gsap.utils.toArray<HTMLElement>(".team-card");
+    let activeCard: HTMLElement | null = null;
+
+    const animateContent = (card: HTMLElement, direction: 'in' | 'out') => {
+      const title = card.querySelector('h3');
+      const details = card.querySelector('.details');
+      const overlay = card.querySelector('.card-overlay');
+
+      gsap.killTweensOf([title, details, overlay]);
+
+      gsap.to(overlay, {
+        opacity: direction === 'in' ? 1 : 0.8,
+        duration: 0.6,
+        ease: 'expo.out',
+      });
+
+      gsap.to([title, details], {
+        y: direction === 'in' ? 0 : 20,
+        skewX: direction === 'in' ? 0 : -5,
+        opacity: direction === 'in' ? 1 : 0,
+        duration: 0.5,
+        stagger: direction === 'in' ? 0.08 : 0.05,
+        ease: 'expo.out'
+      });
+    }
+    
+    // Initial state: all cards are collapsed
+    cards.forEach(card => {
+      gsap.set(card, { flexGrow: 1 });
+      const overlay = card.querySelector('.card-overlay');
+      if(overlay) gsap.set(overlay, { opacity: 0.8 });
+      const title = card.querySelector('h3');
+      const details = card.querySelector('.details');
+      if(title && details) {
+        gsap.set([title, details], { y: 20, opacity: 0, skewX: -5 });
+      }
+    });
+    
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        if (card === activeCard) return;
+        if (activeCard) {
+          animateContent(activeCard, 'out');
+        }
+        const state = Flip.getState(cards, { props: "flexGrow" });
+        cards.forEach(c => {
+          gsap.set(c, { flexGrow: c === card ? 10 : 1 });
+        });
+        Flip.from(state, {
+          duration: 0.8,
+          ease: "expo.out",
+          absolute: true,
+        });
+        animateContent(card, 'in');
+        activeCard = card;
+      });
+    });
+
+    container.addEventListener('mouseleave', () => {
+      if (!activeCard) return;
+      animateContent(activeCard, 'out');
+      const state = Flip.getState(cards, { props: "flexGrow" });
+      cards.forEach(c => {
+        gsap.set(c, { flexGrow: 1 });
+      });
+      Flip.from(state, {
+        duration: 0.8,
+        ease: 'expo.out',
+        absolute: true,
+      });
+      activeCard = null;
+    });
+  }
+
+  // --- Mobile accordion ---
+  function setupMobileAccordion() {
+    if (window.innerWidth >= 768) return; // Don't run on desktop
+
+    const cards = gsap.utils.toArray<HTMLElement>('.mobile-team-card');
+
+    cards.forEach(card => {
+      const trigger = card.querySelector('.mobile-card-trigger');
+      const details = card.querySelector<HTMLElement>('.mobile-card-details');
+      const arrow = card.querySelector('.arrow-icon');
+      if (!trigger || !details || !arrow) return;
+
+      gsap.set(details, { height: 0, opacity: 0 });
+
+      trigger.addEventListener('click', () => {
+        const isOpen = card.classList.contains('is-open');
+
+        // Close all other cards
+        cards.forEach(otherCard => {
+          if (otherCard !== card && otherCard.classList.contains('is-open')) {
+            otherCard.classList.remove('is-open');
+            const otherDetails = otherCard.querySelector<HTMLElement>('.mobile-card-details');
+            const otherArrow = otherCard.querySelector('.arrow-icon');
+            if (otherDetails) gsap.to(otherDetails, { height: 0, opacity: 0, duration: 0.4, ease: 'power3.inOut' });
+            if (otherArrow) gsap.to(otherArrow, { rotate: 0, duration: 0.3 });
+          }
+        });
+
+        // Toggle the clicked card
+        card.classList.toggle('is-open');
+        gsap.to(details, {
+          height: isOpen ? 0 : 'auto',
+          opacity: isOpen ? 0 : 1,
+          duration: 0.4,
+          ease: 'power3.inOut'
+        });
+        gsap.to(arrow, { rotate: isOpen ? 0 : 180, duration: 0.3 });
+      });
+    });
+  }
+
+  function runScripts() {
+    setupExpandingCards();
+    setupMobileAccordion();
+  }
+
+  document.addEventListener('astro:page-load', runScripts);
+  document.addEventListener('DOMContentLoaded', runScripts);
+  window.addEventListener('resize', gsap.debounce(runScripts, 200));
+</script>
